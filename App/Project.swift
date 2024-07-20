@@ -7,18 +7,18 @@ let project = Project(
             name: "Pokedex",
             destinations: .iOS,
             product: .app,
-            bundleId: "io.tuist.Pokedex",
-            sources: ["App/Sources/**"],
-            resources: ["App/Resources/**"],
+            bundleId: "com.swiftly.andy.Pokedex",
+            sources: ["Sources/**"],
+            resources: ["Resources/**"],
             dependencies: []
         ),
         .target(
             name: "PokedexTests",
             destinations: .iOS,
             product: .unitTests,
-            bundleId: "io.tuist.PokedexTests",
+            bundleId: "come.swiftly.andy.PokedexTests",
             infoPlist: .default,
-            sources: ["App/Tests/**"],
+            sources: ["Tests/**"],
             resources: [],
             dependencies: [.target(name: "Pokedex")]
         ),
