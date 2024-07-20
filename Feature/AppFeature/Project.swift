@@ -11,7 +11,9 @@ let project = Project(
             bundleId: "com.swiftly.andy.PokedexAppFeature",
             infoPlist: .default,
             sources: ["Sources/AppFeature/**"],
-            dependencies: []
+            dependencies: [
+                .external(name: "ComposableArchitecture")
+            ]
         ),
         .target(
             name: "AppFeatureTests",

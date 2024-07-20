@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 import PackageDescription
 
 #if TUIST
@@ -15,8 +15,6 @@ import PackageDescription
 let package = Package(
     name: "Pokedex",
     dependencies: [
-        // Add your own dependencies here:
-        // .package(url: "https://github.com/Alamofire/Alamofire", from: "5.0.0"),
-        // You can read more about dependencies here: https://docs.tuist.io/documentation/tuist/dependencies
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.11.2"),
     ]
 )
