@@ -1,12 +1,13 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonListFeature.swift
 import ComposableArchitecture
 import SwiftUI
+import Models
 
 @Reducer
 public struct PokemonListFeature {
     @ObservableState
     public struct State: Equatable {
-        public var pokemons: IdentifiedArrayOf<Pokemon> = Pokemon.mockData
+        public var pokemons: IdentifiedArrayOf<Pokemon> = IdentifiedArrayOf<Pokemon>(uniqueElements: Pokemon.mockData)
         public var searchText: String = ""
 
         var filteredPokemons: [Pokemon] {

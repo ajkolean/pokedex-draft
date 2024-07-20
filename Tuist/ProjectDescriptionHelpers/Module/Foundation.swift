@@ -2,7 +2,7 @@
 import Foundation
 
 public enum Foundation: String, CaseIterable, Module {
-    case TempFoundationModule
+    case Models
     
     public var type: ModuleType { .foundation }
 }

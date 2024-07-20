@@ -1,19 +1,27 @@
-// Feature/PokemonListFeature/Sources/Pokemon.swift
-import ComposableArchitecture
+// Foundation/Models/Sources/Pokemon.swift
 import Foundation
 
 public struct Pokemon: Decodable, Identifiable, Equatable {
     public let id: Int
     public let name: String
-
+    
     public init(id: Int, name: String) {
         self.id = id
         self.name = name
     }
 }
 
+#if canImport(IdenifiedCollections)
+extension Array where Element == Pokemon {
+    public var asIdentified: IdentifiedArrayOf<Pokemon> {
+        return IdentifiedArrayOf<Pokemon>(uniqueElements: self)
+    }
+}
+#endif
+
+#if DEBUG
 extension Pokemon {
-    public static let mockData: IdentifiedArrayOf<Pokemon> = [
+    public static let mockData: [Pokemon] = [
         Pokemon(id: 1, name: "bulbasaur"),
         Pokemon(id: 2, name: "ivysaur"),
         Pokemon(id: 3, name: "venusaur"),
@@ -36,3 +44,5 @@ extension Pokemon {
         Pokemon(id: 20, name: "raticate"),
     ]
 }
+
+#endif
