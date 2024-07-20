@@ -15,7 +15,7 @@ extension Target {
         entitlements: Entitlements? = nil,
         scripts: [TargetScript] = [],
         dependencies: [TargetDependency] = [],
-        settings: Settings = .moduleSettings(),
+        settings: Settings? = Settings.settings(defaultSettings: .recommended),
         coreDataModels: [CoreDataModel] = [],
         environmentVariables: [String: EnvironmentVariable] = [:],
         launchArguments: [LaunchArgument] = [],

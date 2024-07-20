@@ -1,0 +1,24 @@
+import ComposableArchitecture
+import SwiftUI
+import {{ name }}
+
+@main
+struct {{ name }}ExampleApp: App {
+    static let store = Store(initialState: {{ name }}.State()) {
+        {{ name }}()
+    }
+    
+    var body: some Scene {
+        WindowGroup {
+            {{ name }}View(store: Self.store)
+        }
+    }
+}
+
+#Preview {
+    {{ name }}View(
+        store: Store(initialState: {{ name }}.State()) {
+            {{ name }}()
+        }
+    )
+}

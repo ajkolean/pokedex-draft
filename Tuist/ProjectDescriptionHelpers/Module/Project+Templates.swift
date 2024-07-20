@@ -6,7 +6,7 @@ extension Project {
         module: Module,
         options: Project.Options = .options(),
         packages: [Package] = [],
-        settings: Settings? = .moduleSettings(),
+        settings: Settings? = Settings.settings(defaultSettings: .recommended),
         targets: [Target] = [],
         schemes: [Scheme] = [],
         fileHeaderTemplate: FileHeaderTemplate? = nil,
@@ -24,19 +24,6 @@ extension Project {
             fileHeaderTemplate: fileHeaderTemplate,
             additionalFiles: additionalFiles,
             resourceSynthesizers: resourceSynthesizers
-        )
-        
-    }
-}
-
-extension Settings {
-    public static func moduleSettings() -> Self {
-        .settings(
-            base: [
-                "ONLY_ACTIVE_ARCH": "YES",
-                "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64",
-                "OTHER_LDFLAGS": "$(inherited) -ObjC"
-            ]
         )
         
     }

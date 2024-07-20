@@ -1,2 +1,14 @@
 [tools]
 tuist = "4.21.2"
+
+[settings]
+experimental = true
+
+[tasks.clean]
+description = "Cleans Projects"
+run = """
+#!/bin/bash
+    set -euo pipefail
+    rm -rf $HOME/Library/Developer/Xcode/DerivedData/
+    tuist clean
+"""
