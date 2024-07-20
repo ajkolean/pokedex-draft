@@ -1,8 +1,7 @@
-// Feature/AppFeature/Project.swift
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let feature = Feature.AppFeature
+let feature = Feature.PokemonListFeature
 
 let project: Project = .moduleProject(
     module: feature,
@@ -11,15 +10,7 @@ let project: Project = .moduleProject(
             module: feature,
             targetType: .implementation,
             dependencies: [
-                .ComposableArchitecture,
-                .PokemonListFeatureImplementation
-            ]
-        ),
-        .moduleTarget(
-            module: feature,
-            targetType: .tests,
-            dependencies: [
-                .AppFeatureImplementation
+                .ComposableArchitecture
             ]
         ),
         .moduleTarget(
@@ -27,9 +18,16 @@ let project: Project = .moduleProject(
             targetType: .exampleApp,
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
-                .AppFeatureImplementation
+                .PokemonListFeatureImplementation,
+                .ComposableArchitecture
+            ]
+        ),
+        .moduleTarget(
+            module: feature,
+            targetType: .tests,
+            dependencies: [
+                .PokemonListFeatureImplementation
             ]
         )
     ]
 )
-

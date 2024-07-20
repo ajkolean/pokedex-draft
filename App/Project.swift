@@ -8,6 +8,14 @@ let project = Project(
             destinations: .iOS,
             product: .app,
             bundleId: "com.swiftly.andy.Pokedex",
+            infoPlist: .extendingDefault(
+                with: [
+                    "UILaunchScreen": [
+                        "UIColorName": "",
+                        "UIImageName": "",
+                    ],
+                ]
+            ),
             sources: ["Sources/**"],
             resources: ["Resources/**"],
             dependencies: [

@@ -28,3 +28,14 @@ extension Project {
         
     }
 }
+
+extension InfoPlist {
+    public static let exampleAppInfoPlist: InfoPlist = .extendingDefault(
+        with: [
+            "UILaunchScreen": [
+                "UIColorName": "",
+                "UIImageName": "",
+            ],
+        ]
+    )
+}

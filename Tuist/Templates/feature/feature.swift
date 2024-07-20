@@ -24,7 +24,7 @@ private let projectFile =
                     .moduleTarget(
                         module: feature,
                         targetType: .exampleApp,
-                        infoPlist: .default,
+                        infoPlist: .exampleAppInfoPlist,
                         dependencies: [
                             .\(nameAttribute)Implementation,
                             .ComposableArchitecture
