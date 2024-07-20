@@ -10,7 +10,9 @@ let project = Project(
             bundleId: "com.swiftly.andy.Pokedex",
             sources: ["Sources/**"],
             resources: ["Resources/**"],
-            dependencies: []
+            dependencies: [
+                .project(target: "AppFeature", path: .relativeToRoot("Feature/AppFeature"))
+            ]
         ),
         .target(
             name: "PokedexTests",

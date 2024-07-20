@@ -2,5 +2,5 @@ import ProjectDescription
 
 let workspace = Workspace(
     name: "PokedexWorkspace",
-    projects: ["App"]
+    projects: ["App", "Feature/AppFeature"]
 )
