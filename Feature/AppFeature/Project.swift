@@ -1,41 +1,33 @@
+// Feature/AppFeature/Project.swift
 import ProjectDescription
+import ProjectDescriptionHelpers
 
-let project = Project(
-    name: "AppFeature",
-    organizationName: "com.swiftly.andy",
+let feature = Feature.AppFeature
+
+let project: Project = .moduleProject(
+    module: feature,
     targets: [
-        .target(
-            name: "AppFeature",
-            destinations: .iOS,
-            product: .framework,
-            bundleId: "com.swiftly.andy.PokedexAppFeature",
-            infoPlist: .default,
-            sources: ["Sources/AppFeature/**"],
+        .moduleTarget(
+            module: feature,
+            targetType: .implementation,
             dependencies: [
-                .external(name: "ComposableArchitecture")
+                .ComposableArchitecture
             ]
         ),
-        .target(
-            name: "AppFeatureTests",
-            destinations: .iOS,
-            product: .unitTests,
-            bundleId: "com.yourorganization.AppFeatureTests",
-            infoPlist: .default,
-            sources: ["Sources/AppFeatureTests/**"],
+        .moduleTarget(
+            module: feature,
+            targetType: .tests,
             dependencies: [
-                .target(name: "AppFeature"),
+                .AppFeatureImplementation
             ]
         ),
-        .target(
-            name: "AppFeatureExampleApp",
-            destinations: .iOS,
-            product: .app,
-            bundleId: "com.swiftly.andy.PokedexAppFeatureExampleApp",
-            infoPlist: .default,
-            sources: ["Sources/AppFeatureExampleApp/**"],
+        .moduleTarget(
+            module: feature,
+            targetType: .exampleApp,
             dependencies: [
-                .target(name: "AppFeature"),
+                .AppFeatureImplementation
             ]
         )
     ]
 )
+
