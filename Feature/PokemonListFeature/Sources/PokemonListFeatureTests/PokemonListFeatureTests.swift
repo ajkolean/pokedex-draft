@@ -3,6 +3,4 @@ import XCTest
 @testable import PokemonListFeature
 
 @MainActor
-final class PokemonListFeatureTests: XCTestCase {
-
-}
+final class PokemonListFeatureTests: XCTestCase {}

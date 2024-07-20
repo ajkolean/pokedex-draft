@@ -1,11 +1,11 @@
 // Feature/PokemonListFeature/Sources/Pokemon.swift
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 public struct Pokemon: Decodable, Identifiable, Equatable {
     public let id: Int
     public let name: String
-    
+
     public init(id: Int, name: String) {
         self.id = id
         self.name = name
@@ -33,6 +33,6 @@ extension Pokemon {
         Pokemon(id: 17, name: "pidgeotto"),
         Pokemon(id: 18, name: "pidgeot"),
         Pokemon(id: 19, name: "rattata"),
-        Pokemon(id: 20, name: "raticate")
+        Pokemon(id: 20, name: "raticate"),
     ]
 }

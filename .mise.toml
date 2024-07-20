@@ -1,5 +1,7 @@
 [tools]
 tuist = "4.21.2"
+swiftlint = "0.54.0"
+swiftformat = "0.53.3"
 
 [settings]
 experimental = true
@@ -7,8 +9,20 @@ experimental = true
 [tasks.clean]
 description = "Cleans Projects"
 run = """
-#!/bin/bash
+    #!/bin/bash
     set -euo pipefail
     rm -rf $HOME/Library/Developer/Xcode/DerivedData/
     tuist clean
 """
+
+[tasks.lint-fix]
+description = "Formats Projects"
+run = """
+    #!/bin/bash
+    set -euo pipefail
+
+    swiftformat $MISE_PROJECT_ROOT
+    swiftlint lint --fix --quiet --config $MISE_PROJECT_ROOT/.swiftlint.yml $MISE_PROJECT_ROOT
+"""
+
+

@@ -10,7 +10,7 @@ let project: Project = .moduleProject(
             module: feature,
             targetType: .implementation,
             dependencies: [
-                .ComposableArchitecture
+                .ComposableArchitecture,
             ]
         ),
         .moduleTarget(
@@ -19,15 +19,15 @@ let project: Project = .moduleProject(
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
                 .PokemonListFeatureImplementation,
-                .ComposableArchitecture
+                .ComposableArchitecture,
             ]
         ),
         .moduleTarget(
             module: feature,
             targetType: .tests,
             dependencies: [
-                .PokemonListFeatureImplementation
+                .PokemonListFeatureImplementation,
             ]
-        )
+        ),
     ]
 )

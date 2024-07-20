@@ -19,7 +19,7 @@ let project = Project(
             sources: ["Sources/**"],
             resources: ["Resources/**"],
             dependencies: [
-                .project(target: "AppFeature", path: .relativeToRoot("Feature/AppFeature"))
+                .project(target: "AppFeature", path: .relativeToRoot("Feature/AppFeature")),
             ]
         ),
         .target(
