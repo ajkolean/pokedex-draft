@@ -84,6 +84,7 @@ public struct PokemonListFeatureView: View {
             }
             .searchable(text: $store.searchText)
             .padding(10)
+            .navigationTitle("Pokédex")
             .onAppear {
                 store.send(.fetchPokemonList)
             }

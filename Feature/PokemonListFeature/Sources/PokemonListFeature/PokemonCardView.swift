@@ -32,7 +32,7 @@ struct PokemonCardView: View {
                         .frame(width: 100, height: 24)
                     
                     
-                    AsyncImage(
+                    CachedAsyncImage(
                         url: URL(string: pokemon.imageURL)!,
                         transaction: .init(animation: .easeInOut)) { phase in
                             if let image = phase.image {
