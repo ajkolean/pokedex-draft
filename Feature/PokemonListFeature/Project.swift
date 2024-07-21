@@ -1,3 +1,4 @@
+// Feature/PokemonListFeature/Project.swift
 import ProjectDescription
 import ProjectDescriptionHelpers
 
@@ -11,7 +12,9 @@ let project: Project = .moduleProject(
             targetType: .implementation,
             dependencies: [
                 .ComposableArchitecture,
-                .ModelsImplementation
+                .ModelsImplementation,
+                .PokemonAPIClientImplementation,
+                .PokemonAPIClientInterface
             ]
         ),
         .moduleTarget(
@@ -20,7 +23,7 @@ let project: Project = .moduleProject(
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
                 .PokemonListFeatureImplementation,
-                .ComposableArchitecture
+                .ComposableArchitecture,
             ]
         ),
         .moduleTarget(

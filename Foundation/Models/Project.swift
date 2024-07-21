@@ -1,3 +1,4 @@
+// Foundation/Models/Project.swift
 import ProjectDescription
 import ProjectDescriptionHelpers
 
@@ -10,8 +11,8 @@ let project: Project = .moduleProject(
             module: foundation,
             targetType: .implementation,
             dependencies: [
-                
+                .ComposableArchitecture,
             ]
-        )
+        ),
     ]
 )
