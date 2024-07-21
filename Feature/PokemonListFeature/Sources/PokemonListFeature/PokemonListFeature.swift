@@ -10,6 +10,7 @@ public struct PokemonListFeature {
     @ObservableState
     public struct State: Equatable {
         public var pokemons: IdentifiedArrayOf<PokemonIdentifier> = []
+        public var pokemonDetails = [PokemonIdentifier: PokemonDetails]()
         public var searchText: String = ""
 
         var filteredPokemons: [PokemonIdentifier] {
@@ -33,6 +34,8 @@ public struct PokemonListFeature {
         case binding(BindingAction<State>)
         case fetchPokemonIdentifiers
         case setPokemonList(Result<[PokemonIdentifier], Error>)
+        case displayedPokemonCard(PokemonIdentifier)
+        case setPokemonDetails(PokemonIdentifier, PokemonDetails?)
     }
 
     @Dependency(\.pokemonRepo) var pokemonRepo
@@ -60,6 +63,14 @@ public struct PokemonListFeature {
 
             case let .setPokemonList(.failure(error)):
                 fatalError("Failed to fetch pokemon list: \(error)")
+            case let .displayedPokemonCard(pokemon):
+                return .run { send in
+                    let details = try await pokemonRepo.fetchPokemon(pokemon.name)
+                    await send(.setPokemonDetails(pokemon, details))
+                }
+            case let .setPokemonDetails(identifier, details):
+                state.pokemonDetails[identifier] = details
+                return .none
             }
         }
     }
@@ -78,12 +89,14 @@ public struct PokemonListFeatureView: View {
             ScrollView {
                 LazyVGrid(columns: gridItems, spacing: 16) {
                     ForEach(store.filteredPokemons) { pokemon in
-                        PokemonCardView(pokemon: pokemon, details: nil)
+                        PokemonCardView(pokemon: pokemon, pokemonDetails: store.pokemonDetails[pokemon])
+                            .onAppear {
+                                store.send(.displayedPokemonCard(pokemon))
+                            }
                     }
                 }
             }
             .searchable(text: $store.searchText)
-            .padding(10)
             .navigationTitle("Pokédex")
             .onAppear {
                 store.send(.fetchPokemonIdentifiers)

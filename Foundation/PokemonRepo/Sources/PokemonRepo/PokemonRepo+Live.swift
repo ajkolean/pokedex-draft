@@ -29,11 +29,12 @@ extension PokemonRepo: DependencyKey {
             savePokemon: { pokemon in
                 try await dataStoreClient.savePokemon(pokemon)
             },
-            fetchPokemon: { id in
-                if let cachedPokemon = try await dataStoreClient.fetchPokemon(id) {
+            fetchPokemon: { name in
+                if let cachedPokemon = try await dataStoreClient.fetchPokemon(name) {
                     return cachedPokemon
                 } else {
-                    let pokemon = try await pokemonAPIClient.fetchPokemonDetails(id)
+                    let pokemon = try await pokemonAPIClient.fetchPokemonDetails(name)
+                    print("No cache for pokemon: \(pokemon.name)")
                     try await dataStoreClient.savePokemon(pokemon)
                     return pokemon
                 }

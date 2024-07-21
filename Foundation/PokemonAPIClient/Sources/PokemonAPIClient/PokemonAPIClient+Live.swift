@@ -18,7 +18,15 @@ extension PokemonAPIClient: DependencyKey {
                 return pokemons
             },
             fetchPokemonDetails: { id in
-                guard let url = URL(string: "\(baseURL)pokemon\(id)") else {
+                guard let url = URL(string: "\(baseURL)pokemon/\(id)") else {
+                    throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL format"])
+                }
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let pokemon = try JSONDecoder().decode(PokemonDetails.self, from: data)
+                return pokemon
+            },
+            fetchPokemonDetailsByURL: { url in
+                guard let url = URL(string: url) else {
                     throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL format"])
                 }
                 let (data, _) = try await URLSession.shared.data(from: url)

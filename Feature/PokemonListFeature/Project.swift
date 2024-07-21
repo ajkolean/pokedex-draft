@@ -15,7 +15,7 @@ let project: Project = .moduleProject(
                 .ModelsImplementation,
                 .PokemonRepoInterface,
                 .PokemonRepoImplementation,
-                .Kingfisher
+                .Kingfisher,
             ]
         ),
         .moduleTarget(

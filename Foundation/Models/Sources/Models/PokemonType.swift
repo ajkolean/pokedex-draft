@@ -4,12 +4,12 @@ import SwiftUI
 public struct PokemonType: Codable, Hashable {
     public let slot: Int
     public let type: TypeDetail
-    
+
     public init(slot: Int, type: TypeDetail) {
         self.slot = slot
         self.type = type
     }
-    
+
     public var backgroundColor: Color {
         type.backgroundColor
     }
@@ -30,6 +30,6 @@ extension TypeDetail {
         guard let typeName = TypeDetailName(rawValue: name.lowercased()) else {
             return .gray
         }
-       return  typeName.backgroundColor
+        return typeName.color()
     }
 }

@@ -1,14 +1,14 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonCardView.swift
 import ComposableArchitecture
+import Kingfisher
 import Models
 import SwiftUI
-import Kingfisher
 
 struct PokemonCardView: View {
     let pokemon: PokemonIdentifier
-    let details: PokemonDetails?
+    var pokemonDetails: PokemonDetails?
 
-    @Dependency(\.pokemonAPIClient) var pokemonAPIClient
+    @Dependency(\.pokemonRepo) var pokemonRepo
 
     var body: some View {
         ZStack {
@@ -28,7 +28,7 @@ struct PokemonCardView: View {
                 }
 
                 HStack {
-                    Text(details?.types.first?.type.name ?? "")
+                    Text(pokemonDetails?.types.first?.type.name ?? "Grass")
                         .font(.subheadline).bold()
                         .foregroundColor(.white)
                         .padding(.horizontal, 16)
@@ -38,6 +38,7 @@ struct PokemonCardView: View {
                                 .fill(Color.white.opacity(0.25))
                         )
                         .frame(width: 100, height: 24)
+                        .redacted(reason: pokemonDetails == nil ? .placeholder : [])
 
                     KFImage(URL(string: pokemon.imageURL))
                         .placeholder { value in
@@ -51,9 +52,30 @@ struct PokemonCardView: View {
                 }
             }
         }
-        .background(details?.backgroundColor ?? .gray)
+        .background(
+            ZStack {
+                if let pokemonDetails {
+                    pokemonDetails.backgroundColor
+                } else {
+                    Color.gray
+                        .blur(radius: 10)
+                        .edgesIgnoringSafeArea(.all)
+                }
+            }
+        )
         .cornerRadius(12)
-        .shadow(color: details?.backgroundColor ?? .gray, radius: 4, x: 1.0, y: 1.0)
+        .shadow(color: pokemonDetails?.backgroundColor ?? .gray, radius: 4, x: 1.0, y: 1.0)
+//        .onAppear {
+//            Task {
+//                do {
+//                    let details = try await pokemonRepo.fetchPokemon(pokemon.name)
+//                    pokemonDetails = details
+//
+//                } catch {
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        }
     }
 
     var formattedId: String {

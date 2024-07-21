@@ -6,13 +6,13 @@ public struct DataStoreClient: TestDependencyKey {
     public var savePokemonIdentifiers: @Sendable ([PokemonIdentifier]) async throws -> Void
     public var fetchPokemonIdentifiers: @Sendable () async throws -> [PokemonIdentifier]
     public var savePokemon: @Sendable (PokemonDetails) async throws -> Void
-    public var fetchPokemon: @Sendable (Int) async throws -> PokemonDetails?
+    public var fetchPokemon: @Sendable (String) async throws -> PokemonDetails?
 
     public init(
         savePokemonIdentifiers: @escaping @Sendable ([PokemonIdentifier]) async throws -> Void,
         fetchPokemonIdentifiers: @escaping @Sendable () async throws -> [PokemonIdentifier],
         savePokemon: @escaping @Sendable (PokemonDetails) async throws -> Void,
-        fetchPokemon: @escaping @Sendable (Int) async throws -> PokemonDetails?
+        fetchPokemon: @escaping @Sendable (String) async throws -> PokemonDetails?
     ) {
         self.savePokemonIdentifiers = savePokemonIdentifiers
         self.fetchPokemonIdentifiers = fetchPokemonIdentifiers
@@ -21,7 +21,7 @@ public struct DataStoreClient: TestDependencyKey {
     }
 
     public static let testValue: DataStoreClient = {
-        let pokemons = ActorIsolation<[Int: PokemonDetails]>([:])
+        let pokemons = ActorIsolation<[String: PokemonDetails]>([:])
         let pokemonShorts = ActorIsolation<[PokemonIdentifier]>(PokemonIdentifier.mockData)
 
         return DataStoreClient(
@@ -32,7 +32,7 @@ public struct DataStoreClient: TestDependencyKey {
                 return await pokemonShorts.value
             },
             savePokemon: { pokemon in
-                await pokemons.update { $0[pokemon.id] = pokemon }
+                await pokemons.update { $0[pokemon.name] = pokemon }
             },
             fetchPokemon: { id in
                 return await pokemons.value[id]
@@ -41,7 +41,7 @@ public struct DataStoreClient: TestDependencyKey {
     }()
 
     public static let previewValue: DataStoreClient = {
-        let pokemons = ActorIsolation<[Int: PokemonDetails]>([:])
+        let pokemons = ActorIsolation<[String: PokemonDetails]>([:])
         let pokemonShorts = ActorIsolation<[PokemonIdentifier]>(PokemonIdentifier.mockData)
 
         return DataStoreClient(
@@ -52,7 +52,7 @@ public struct DataStoreClient: TestDependencyKey {
                 return await pokemonShorts.value
             },
             savePokemon: { pokemon in
-                await pokemons.update { $0[pokemon.id] = pokemon }
+                await pokemons.update { $0[pokemon.name] = pokemon }
             },
             fetchPokemon: { id in
                 return await pokemons.value[id]

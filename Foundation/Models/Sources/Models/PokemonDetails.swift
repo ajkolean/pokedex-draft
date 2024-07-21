@@ -12,8 +12,11 @@ public struct PokemonDetails: Codable, Identifiable, Hashable {
     public let height: Int
     public let weight: Int
 
+    public var primaryType: PokemonType? {
+        types.first(where: { $0.slot == 1 }) ?? types.first
+    }
+
     public var backgroundColor: Color {
-        let type = types.first(where: { $0.slot == 2 }) ?? types.first
-        return type?.type.backgroundColor ?? .gray
+        primaryType?.type.backgroundColor ?? .gray
     }
 }
