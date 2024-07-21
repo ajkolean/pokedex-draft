@@ -28,7 +28,7 @@ struct PokemonCardView: View {
                 }
 
                 HStack {
-                    Text(pokemonDetails?.types.first?.type.name ?? "Grass")
+                    Text(pokemonDetails?.primaryType?.type.name.capitalized ?? "Grass")
                         .font(.subheadline).bold()
                         .foregroundColor(.white)
                         .padding(.horizontal, 16)
@@ -65,17 +65,6 @@ struct PokemonCardView: View {
         )
         .cornerRadius(12)
         .shadow(color: pokemonDetails?.backgroundColor ?? .gray, radius: 4, x: 1.0, y: 1.0)
-//        .onAppear {
-//            Task {
-//                do {
-//                    let details = try await pokemonRepo.fetchPokemon(pokemon.name)
-//                    pokemonDetails = details
-//
-//                } catch {
-//                    print(error.localizedDescription)
-//                }
-//            }
-//        }
     }
 
     var formattedId: String {
