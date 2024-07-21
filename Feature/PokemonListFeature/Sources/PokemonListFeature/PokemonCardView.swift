@@ -2,14 +2,14 @@
 import ComposableArchitecture
 import Models
 import SwiftUI
+import Kingfisher
 
 struct PokemonCardView: View {
-    let pokemon: PokemonShort
-    
-    init(pokemon: PokemonShort) {
-        self.pokemon = pokemon
-    }
-    
+    let pokemon: PokemonIdentifier
+    let details: PokemonDetails?
+
+    @Dependency(\.pokemonAPIClient) var pokemonAPIClient
+
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
@@ -19,44 +19,43 @@ struct PokemonCardView: View {
                         .foregroundColor(.white)
                         .padding(.top, 10)
                         .padding(.leading)
-                    
+
                     Text(formattedId)
                         .font(.subheadline)
                         .foregroundColor(.white)
                         .padding(.top, 10)
                         .padding(.leading, 2)
                 }
-                
+
                 HStack {
-                    Spacer()
+                    Text(details?.types.first?.type.name ?? "")
+                        .font(.subheadline).bold()
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color.white.opacity(0.25))
+                        )
                         .frame(width: 100, height: 24)
-                    
-                    
-                    CachedAsyncImage(
-                        url: URL(string: pokemon.imageURL)!,
-                        transaction: .init(animation: .easeInOut)) { phase in
-                            if let image = phase.image {
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .padding([.bottom, .trailing], 8)
-                            } else if let error = phase.error {
-                                Text("Error: \(error.localizedDescription)")
-                            } else {
-                                ProgressView()
-                                    .frame(width: 60, height: 60)
-                                    .padding([.bottom, .trailing], 8)
-                            }
+
+                    KFImage(URL(string: pokemon.imageURL))
+                        .placeholder { value in
+                            ProgressView(value: value.fractionCompleted)
                         }
+                        .fade(duration: 0.25)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60, height: 60)
+                        .padding([.bottom, .trailing], 8)
                 }
             }
         }
-        .background(Color.mint)
+        .background(details?.backgroundColor ?? .gray)
         .cornerRadius(12)
-        .shadow(color: Color.mint, radius: 4, x: 1.0, y: 1.0)
+        .shadow(color: details?.backgroundColor ?? .gray, radius: 4, x: 1.0, y: 1.0)
     }
-    
+
     var formattedId: String {
         if pokemon.id / 10 < 1 {
             return "#00\(pokemon.id)"

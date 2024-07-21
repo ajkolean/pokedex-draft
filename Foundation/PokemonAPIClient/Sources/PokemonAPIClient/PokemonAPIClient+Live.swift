@@ -1,5 +1,3 @@
-// Foundation/PokemonAPIClient/Sources/PokemonAPIClient/PokemonAPIClient+Live.swift
-
 import ComposableArchitecture
 import Foundation
 import Models
@@ -9,13 +7,13 @@ extension PokemonAPIClient: DependencyKey {
     private static let baseURL = "https://pokeapi.co/api/v2/"
     public static let liveValue: PokemonAPIClient = {
         let client = PokemonAPIClient(
-            fetchPokemonList: {
+            fetchPokemonIdentifiers: {
                 let url = URL(string: "\(baseURL)pokemon?offset=0&limit=1302")!
                 let (data, _) = try await URLSession.shared.data(from: url)
                 let listResponse = try JSONDecoder().decode(PokemonListResponse.self, from: data)
                 let pokemons = try listResponse.results.map { basic in
                     let id = try extractID(from: basic.url)
-                    return PokemonShort(id: id, name: basic.name)
+                    return PokemonIdentifier(id: id, name: basic.name, url: basic.url)
                 }
                 return pokemons
             },
@@ -24,7 +22,7 @@ extension PokemonAPIClient: DependencyKey {
                     throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL format"])
                 }
                 let (data, _) = try await URLSession.shared.data(from: url)
-                let pokemon = try JSONDecoder().decode(Pokemon.self, from: data)
+                let pokemon = try JSONDecoder().decode(PokemonDetails.self, from: data)
                 return pokemon
             }
         )

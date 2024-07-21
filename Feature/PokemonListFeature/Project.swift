@@ -13,8 +13,9 @@ let project: Project = .moduleProject(
             dependencies: [
                 .ComposableArchitecture,
                 .ModelsImplementation,
-                .PokemonAPIClientImplementation,
-                .PokemonAPIClientInterface
+                .PokemonRepoInterface,
+                .PokemonRepoImplementation,
+                .Kingfisher
             ]
         ),
         .moduleTarget(

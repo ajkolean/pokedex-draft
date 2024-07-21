@@ -4,31 +4,29 @@ import Foundation
 import Models
 
 public struct PokemonAPIClient {
-    public var fetchPokemonList: @Sendable () async throws -> [PokemonShort]
-    public var fetchPokemonDetails: @Sendable (Int) async throws -> Pokemon
+    public var fetchPokemonIdentifiers: @Sendable () async throws -> [PokemonIdentifier]
+    public var fetchPokemonDetails: @Sendable (Int) async throws -> PokemonDetails
 
     public init(
-        fetchPokemonList: @escaping @Sendable () async throws -> [PokemonShort],
-        fetchPokemonDetails: @escaping @Sendable (Int) async throws -> Pokemon
+        fetchPokemonIdentifiers: @escaping @Sendable () async throws -> [PokemonIdentifier],
+        fetchPokemonDetails: @escaping @Sendable (Int) async throws -> PokemonDetails
     ) {
-        self.fetchPokemonList = fetchPokemonList
+        self.fetchPokemonIdentifiers = fetchPokemonIdentifiers
         self.fetchPokemonDetails = fetchPokemonDetails
     }
 }
 
-#if DEBUG
-    extension PokemonAPIClient: TestDependencyKey {
-        public static let testValue: PokemonAPIClient = .init(
-            fetchPokemonList: { PokemonShort.mockData },
-            fetchPokemonDetails: { _ in fatalError() }
-        )
+extension PokemonAPIClient: TestDependencyKey {
+    public static let testValue: PokemonAPIClient = .init(
+        fetchPokemonIdentifiers: { PokemonIdentifier.mockData },
+        fetchPokemonDetails: { _ in fatalError() }
+    )
 
-        public static let previewValue: PokemonAPIClient = .init(
-            fetchPokemonList: { PokemonShort.mockData },
-            fetchPokemonDetails: { _ in fatalError() }
-        )
-    }
-#endif
+    public static let previewValue: PokemonAPIClient = .init(
+        fetchPokemonIdentifiers: { PokemonIdentifier.mockData },
+        fetchPokemonDetails: { _ in fatalError() }
+    )
+}
 
 extension DependencyValues {
     public var pokemonAPIClient: PokemonAPIClient {

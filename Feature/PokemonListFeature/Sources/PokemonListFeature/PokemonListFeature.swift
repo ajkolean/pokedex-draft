@@ -1,19 +1,19 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonListFeature.swift
 import ComposableArchitecture
 import Models
-import PokemonAPIClient
-import PokemonAPIClientInterface
+import PokemonRepo
+import PokemonRepoInterface
 import SwiftUI
 
 @Reducer
 public struct PokemonListFeature {
     @ObservableState
     public struct State: Equatable {
-        public var pokemons: IdentifiedArrayOf<PokemonShort> = []
+        public var pokemons: IdentifiedArrayOf<PokemonIdentifier> = []
         public var searchText: String = ""
 
-        var filteredPokemons: [PokemonShort] {
-            var filteredList: [PokemonShort] = []
+        var filteredPokemons: [PokemonIdentifier] {
+            var filteredList: [PokemonIdentifier] = []
 
             for pokemon in pokemons {
                 if pokemon.name.contains(searchText.lowercased()) {
@@ -31,11 +31,11 @@ public struct PokemonListFeature {
 
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case fetchPokemonList
-        case setPokemonList(Result<[PokemonShort], Error>)
+        case fetchPokemonIdentifiers
+        case setPokemonList(Result<[PokemonIdentifier], Error>)
     }
 
-    @Dependency(\.pokemonAPIClient) var pokemonAPIClient
+    @Dependency(\.pokemonRepo) var pokemonRepo
 
     public init() {}
 
@@ -45,10 +45,10 @@ public struct PokemonListFeature {
             switch action {
             case .binding:
                 return .none
-            case .fetchPokemonList:
+            case .fetchPokemonIdentifiers:
                 return .run { send in
                     do {
-                        let pokemon = try await pokemonAPIClient.fetchPokemonList()
+                        let pokemon = try await pokemonRepo.fetchPokemonIdentifiers()
                         await send(.setPokemonList(.success(pokemon)))
                     } catch {
                         await send(.setPokemonList(.failure(error)))
@@ -78,7 +78,7 @@ public struct PokemonListFeatureView: View {
             ScrollView {
                 LazyVGrid(columns: gridItems, spacing: 16) {
                     ForEach(store.filteredPokemons) { pokemon in
-                        PokemonCardView(pokemon: pokemon)
+                        PokemonCardView(pokemon: pokemon, details: nil)
                     }
                 }
             }
@@ -86,7 +86,7 @@ public struct PokemonListFeatureView: View {
             .padding(10)
             .navigationTitle("Pokédex")
             .onAppear {
-                store.send(.fetchPokemonList)
+                store.send(.fetchPokemonIdentifiers)
             }
         }
     }

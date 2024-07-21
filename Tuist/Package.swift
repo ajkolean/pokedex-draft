@@ -15,6 +15,8 @@ import PackageDescription
 let package = Package(
     name: "Pokedex",
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.11.2")
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.11.2"),
+        .package(url: "https://github.com/onevcat/Kingfisher.git", from: "7.12.0"),
+        
     ]
 )

@@ -4,6 +4,7 @@ import SwiftUI
 
 @main
 struct PokedexApp: App {
+    @MainActor
     static let store = Store(initialState: AppFeature.State()) {
         AppFeature()
     }
