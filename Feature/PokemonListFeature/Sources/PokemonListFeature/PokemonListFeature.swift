@@ -1,6 +1,7 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonListFeature.swift
 import ComposableArchitecture
 import Models
+import PokemonDetailFeature
 import PokemonRepo
 import PokemonRepoInterface
 import SwiftUI
@@ -9,33 +10,35 @@ import SwiftUI
 public struct PokemonListFeature {
     @ObservableState
     public struct State: Equatable {
-        public var pokemons: IdentifiedArrayOf<PokemonIdentifier> = []
-        public var pokemonDetails = [PokemonIdentifier: PokemonDetails]()
+        public var pokemonIdentifiers: IdentifiedArrayOf<PokemonIdentifier> = []
+        public var pokemon = [PokemonIdentifier: Pokemon]()
         public var searchText: String = ""
+        public var path = StackState<PokemonDetailFeature.State>()
 
         var filteredPokemons: [PokemonIdentifier] {
             var filteredList: [PokemonIdentifier] = []
 
-            for pokemon in pokemons {
-                if pokemon.name.contains(searchText.lowercased()) {
+            for pokemon in pokemonIdentifiers {
+                if pokemon.name.value.contains(searchText.lowercased()) {
                     filteredList.append(pokemon)
                 } else if searchText == "\(pokemon.id)" {
                     filteredList.append(pokemon)
                 }
             }
 
-            return searchText == "" ? pokemons.elements : filteredList
+            return searchText == "" ? pokemonIdentifiers.elements : filteredList
         }
 
         public init() {}
     }
 
-    public enum Action: BindableAction {
+    public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case fetchPokemonIdentifiers
-        case setPokemonList(Result<[PokemonIdentifier], Error>)
+        case setPokemonList(Result<[PokemonIdentifier], NSError>)
         case displayedPokemonCard(PokemonIdentifier)
-        case setPokemonDetails(PokemonIdentifier, PokemonDetails?)
+        case setPokemon(PokemonIdentifier, Pokemon?)
+        case path(StackAction<PokemonDetailFeature.State, PokemonDetailFeature.Action>)
     }
 
     @Dependency(\.pokemonRepo) var pokemonRepo
@@ -54,11 +57,11 @@ public struct PokemonListFeature {
                         let pokemon = try await pokemonRepo.fetchPokemonIdentifiers()
                         await send(.setPokemonList(.success(pokemon)))
                     } catch {
-                        await send(.setPokemonList(.failure(error)))
+                        await send(.setPokemonList(.failure(error as NSError)))
                     }
                 }
-            case let .setPokemonList(.success(pokemons)):
-                state.pokemons = .init(uniqueElements: pokemons)
+            case let .setPokemonList(.success(pokemonIdentifiers)):
+                state.pokemonIdentifiers = .init(uniqueElements: pokemonIdentifiers)
                 return .none
 
             case let .setPokemonList(.failure(error)):
@@ -66,12 +69,17 @@ public struct PokemonListFeature {
             case let .displayedPokemonCard(pokemon):
                 return .run { send in
                     let details = try await pokemonRepo.fetchPokemon(pokemon.name)
-                    await send(.setPokemonDetails(pokemon, details))
+                    await send(.setPokemon(pokemon, details))
                 }
-            case let .setPokemonDetails(identifier, details):
-                state.pokemonDetails[identifier] = details
+            case let .setPokemon(identifier, pokemon):
+                state.pokemon[identifier] = pokemon
+                return .none
+            case .path:
                 return .none
             }
+        }
+        .forEach(\.path, action: \.path) {
+            PokemonDetailFeature()
         }
     }
 }
@@ -85,14 +93,19 @@ public struct PokemonListFeatureView: View {
     }
 
     public var body: some View {
-        NavigationView {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             ScrollView {
                 LazyVGrid(columns: gridItems, spacing: 16) {
-                    ForEach(store.filteredPokemons) { pokemon in
-                        PokemonCardView(pokemon: pokemon, pokemonDetails: store.pokemonDetails[pokemon])
-                            .onAppear {
-                                store.send(.displayedPokemonCard(pokemon))
-                            }
+                    ForEach(store.filteredPokemons) { identifier in
+                        let pokemon = store.pokemon[identifier]
+
+                        NavigationLink(state: pokemon.map { PokemonDetailFeature.State(pokemon: $0) }) {
+                            PokemonCardView(identifier: identifier, pokemon: pokemon)
+                                .onAppear {
+                                    store.send(.displayedPokemonCard(identifier))
+                                }
+                        }
+                        .disabled(pokemon == nil)
                     }
                 }
             }
@@ -101,6 +114,8 @@ public struct PokemonListFeatureView: View {
             .onAppear {
                 store.send(.fetchPokemonIdentifiers)
             }
+        } destination: { store in
+            PokemonDetailView(store: store)
         }
     }
 }

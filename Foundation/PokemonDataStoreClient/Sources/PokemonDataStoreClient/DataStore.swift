@@ -3,17 +3,17 @@ import Models
 import UIKit
 
 public class DataStore {
-    private var pokemons: [String: PokemonDetails] = [:]
+    private var pokemons: [PokemonName: Pokemon] = [:]
     private var pokemonIdentifiers: [PokemonIdentifier] = []
-    private let pokemonsFileName = "pokemonDetails_sd.json"
-    private let pokemonIdentifiersFileName = "pokemon_identifiers.json"
+    private let pokemonsFileName = "pokemon_asdsdfss.json"
+    private let pokemonIdentifiersFileName = "pokemon_identifie-sdsdfsr.json"
     private let saveQueue = DispatchQueue(label: "com.example.DataStore.saveQueue", qos: .background)
     private var saveWorkItem: DispatchWorkItem?
 
     private let queue = DispatchQueue(label: "com.example.DataStore.queue", attributes: .concurrent)
 
     public init() {
-        createFileIfNeeded(fileName: pokemonsFileName, initialData: [PokemonDetails]())
+        createFileIfNeeded(fileName: pokemonsFileName, initialData: [Pokemon]())
         createFileIfNeeded(fileName: pokemonIdentifiersFileName, initialData: [PokemonIdentifier]())
         loadPokemons()
         loadPokemonIdentifiers()
@@ -40,14 +40,14 @@ public class DataStore {
         }
     }
 
-    public func savePokemon(_ pokemon: PokemonDetails) {
+    public func savePokemon(_ pokemon: Pokemon) {
         queue.async(flags: .barrier) {
-            self.pokemons[pokemon.name] = pokemon
+            self.pokemons[pokemon.details.name] = pokemon
             self.debounceSaveData(data: Array(self.pokemons.values), fileName: self.pokemonsFileName)
         }
     }
 
-    public func fetchPokemon(_ name: String) -> PokemonDetails? {
+    public func fetchPokemon(_ name: PokemonName) -> Pokemon? {
         return queue.sync {
             return pokemons[name]
         }
@@ -114,8 +114,8 @@ public class DataStore {
 
     private func loadPokemons() {
         queue.async(flags: .barrier) {
-            guard let loadedPokemons: [PokemonDetails] = self.loadFromFile(fileName: self.pokemonsFileName) else { return }
-            self.pokemons = Dictionary(uniqueKeysWithValues: loadedPokemons.map { ($0.name, $0) })
+            guard let loadedPokemons: [Pokemon] = self.loadFromFile(fileName: self.pokemonsFileName) else { return }
+            self.pokemons = Dictionary(uniqueKeysWithValues: loadedPokemons.map { ($0.details.name, $0) })
         }
     }
 

@@ -7,14 +7,14 @@ import PokemonDataStoreClientInterface
 public struct PokemonRepo: TestDependencyKey {
     public var savePokemonIdentifiers: @Sendable ([PokemonIdentifier]) async throws -> Void
     public var fetchPokemonIdentifiers: @Sendable () async throws -> [PokemonIdentifier]
-    public var savePokemon: @Sendable (PokemonDetails) async throws -> Void
-    public var fetchPokemon: @Sendable (String) async throws -> PokemonDetails?
+    public var savePokemon: @Sendable (Pokemon) async throws -> Void
+    public var fetchPokemon: @Sendable (PokemonName) async throws -> Pokemon?
 
     public init(
         savePokemonIdentifiers: @escaping @Sendable ([PokemonIdentifier]) async throws -> Void,
         fetchPokemonIdentifiers: @escaping @Sendable () async throws -> [PokemonIdentifier],
-        savePokemon: @escaping @Sendable (PokemonDetails) async throws -> Void,
-        fetchPokemon: @escaping @Sendable (String) async throws -> PokemonDetails?
+        savePokemon: @escaping @Sendable (Pokemon) async throws -> Void,
+        fetchPokemon: @escaping @Sendable (PokemonName) async throws -> Pokemon?
     ) {
         self.savePokemonIdentifiers = savePokemonIdentifiers
         self.fetchPokemonIdentifiers = fetchPokemonIdentifiers
@@ -23,7 +23,7 @@ public struct PokemonRepo: TestDependencyKey {
     }
 
     public static let testValue: PokemonRepo = {
-        let pokemons = ActorIsolation<[String: PokemonDetails]>([:])
+        let pokemons = ActorIsolation<[PokemonName: Pokemon]>([:])
         let pokemonShorts = ActorIsolation<[PokemonIdentifier]>(PokemonIdentifier.mockData)
 
         return PokemonRepo(
@@ -34,7 +34,7 @@ public struct PokemonRepo: TestDependencyKey {
                 return await pokemonShorts.value
             },
             savePokemon: { pokemon in
-                await pokemons.update { $0[pokemon.name] = pokemon }
+                await pokemons.update { $0[pokemon.details.name] = pokemon }
             },
             fetchPokemon: { name in
                 return await pokemons.value[name]
@@ -43,7 +43,7 @@ public struct PokemonRepo: TestDependencyKey {
     }()
 
     public static let previewValue: PokemonRepo = {
-        let pokemons = ActorIsolation<[String: PokemonDetails]>([:])
+        let pokemons = ActorIsolation<[PokemonName: Pokemon]>([:])
         let pokemonShorts = ActorIsolation<[PokemonIdentifier]>(PokemonIdentifier.mockData)
 
         return PokemonRepo(
@@ -54,7 +54,7 @@ public struct PokemonRepo: TestDependencyKey {
                 return await pokemonShorts.value
             },
             savePokemon: { pokemon in
-                await pokemons.update { $0[pokemon.name] = pokemon }
+                await pokemons.update { $0[pokemon.details.name] = pokemon }
             },
             fetchPokemon: { name in
                 return await pokemons.value[name]

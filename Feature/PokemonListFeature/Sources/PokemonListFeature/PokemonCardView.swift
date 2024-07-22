@@ -5,8 +5,12 @@ import Models
 import SwiftUI
 
 struct PokemonCardView: View {
-    let pokemon: PokemonIdentifier
-    var pokemonDetails: PokemonDetails?
+    let identifier: PokemonIdentifier
+    var pokemon: Pokemon?
+
+    var pokemonDetails: PokemonDetails? {
+        pokemon?.details
+    }
 
     @Dependency(\.pokemonRepo) var pokemonRepo
 
@@ -14,7 +18,7 @@ struct PokemonCardView: View {
         ZStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Text(pokemon.name.capitalized)
+                    Text(identifier.name.value.capitalized)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.top, 10)
@@ -40,7 +44,7 @@ struct PokemonCardView: View {
                         .frame(width: 100, height: 24)
                         .redacted(reason: pokemonDetails == nil ? .placeholder : [])
 
-                    KFImage(URL(string: pokemon.imageURL))
+                    KFImage(URL(string: identifier.imageURL))
                         .placeholder { value in
                             ProgressView(value: value.fractionCompleted)
                         }
@@ -68,12 +72,12 @@ struct PokemonCardView: View {
     }
 
     var formattedId: String {
-        if pokemon.id / 10 < 1 {
-            return "#00\(pokemon.id)"
-        } else if pokemon.id / 10 < 10 {
-            return "#0\(pokemon.id)"
+        if identifier.id / 10 < 1 {
+            return "#00\(identifier.id)"
+        } else if identifier.id / 10 < 10 {
+            return "#0\(identifier.id)"
         } else {
-            return "#\(pokemon.id)"
+            return "#\(identifier.id)"
         }
     }
 }

@@ -33,8 +33,8 @@ extension PokemonRepo: DependencyKey {
                 if let cachedPokemon = try await dataStoreClient.fetchPokemon(name) {
                     return cachedPokemon
                 } else {
-                    let pokemon = try await pokemonAPIClient.fetchPokemonDetails(name)
-                    print("No cache for pokemon: \(pokemon.name)")
+                    let pokemon = try await pokemonAPIClient.fetchPokemon(name)
+                    print("No cache for pokemon: \(pokemon.details.name)")
                     try await dataStoreClient.savePokemon(pokemon)
                     return pokemon
                 }
