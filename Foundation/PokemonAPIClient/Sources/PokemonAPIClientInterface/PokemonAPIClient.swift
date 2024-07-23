@@ -3,7 +3,7 @@ import ComposableArchitecture
 import Foundation
 import Models
 
-public struct PokemonAPIClient {
+public struct PokemonAPIClient: Sendable {
     public var fetchPokemonIdentifiers: @Sendable () async throws -> [PokemonIdentifier]
     public var fetchPokemonDetails: @Sendable (PokemonName) async throws -> PokemonDetails
     public var fetchPokemonSpecies: @Sendable (URL) async throws -> PokemonSpecies

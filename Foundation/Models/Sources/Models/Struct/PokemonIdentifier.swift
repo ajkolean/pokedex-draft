@@ -1,37 +1,10 @@
 // Foundation/Models/Sources/Models/PokemonIdentifier.swift
 import Foundation
+import SwiftData
 
-public struct PokemonName: Codable, Equatable, Hashable, ExpressibleByStringLiteral, CustomStringConvertible {
-    public let value: String
+public typealias PokemonName = String
 
-    public init(_ value: String) {
-        self.value = value
-    }
-
-    public init(stringLiteral value: String) {
-        self.value = value
-    }
-
-    public var description: String {
-        value
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        value = try container.decode(String.self)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(value)
-    }
-}
-
-public struct PokemonIdentifier: Codable, Identifiable, Hashable {
-    public var imageURL: String {
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(id).png"
-    }
-
+public struct PokemonIdentifier: Codable, Identifiable, Hashable, Sendable {
     public var id: Int
     public var name: PokemonName
     public var url: URL
@@ -43,8 +16,19 @@ public struct PokemonIdentifier: Codable, Identifiable, Hashable {
     }
 }
 
+extension PokemonIdentifier {
+    public var imageURL: String {
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(id).png"
+    }
+    public var asEntity: PokemonIdentifierEntity {
+        .init(id: id, name: name, url: url)
+    }
+}
+
+
 #if DEBUG
     extension PokemonIdentifier {
+
         public static let mockData: [PokemonIdentifier] = [
             //            PokemonIdentifier(id: 1, name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/"),
 //            PokemonIdentifier(id: 2, name: "ivysaur", url: "https://pokeapi.co/api/v2/pokemon/2/"),

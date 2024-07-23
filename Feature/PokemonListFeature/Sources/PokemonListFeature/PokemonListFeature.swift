@@ -19,7 +19,7 @@ public struct PokemonListFeature {
             var filteredList: [PokemonIdentifier] = []
 
             for pokemon in pokemonIdentifiers {
-                if pokemon.name.value.contains(searchText.lowercased()) {
+                if pokemon.name.contains(searchText.lowercased()) {
                     filteredList.append(pokemon)
                 } else if searchText == "\(pokemon.id)" {
                     filteredList.append(pokemon)

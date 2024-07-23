@@ -14,29 +14,24 @@ struct BarView: View {
                 .padding(.leading, 32)
                 .foregroundColor(.gray)
                 .frame(width: 100)
-
-            HStack {
-                Text("\(value)")
-                    .frame(width: 50)
-                    .padding(.trailing)
-
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .frame(width: 180, height: 20)
-                        .foregroundColor(Color(.systemGray5))
-
-                    Capsule()
-                        .frame(width: animatedWidth, height: 20)
-                        .foregroundColor(color)
-                        .animation(.easeOut(duration: 1), value: animatedWidth)
-                }
+            
+            Text("\(value)")
+                .padding([.leading, .trailing])
+            
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .frame(width: 200, height: 20)
+                    .foregroundColor(Color(.systemGray5))
                 
-                Spacer()
+                Capsule()
+                    .frame(width: animatedWidth, height: 20)
+                    .foregroundColor(color)
+                    .animation(.easeOut(duration: 1), value: animatedWidth)
             }
-            .padding(.leading)
+
         }
         .onAppear {
-            animatedWidth = value > 180 ? CGFloat(180) : CGFloat(value)
+            animatedWidth = value > 200 ? CGFloat(200) : CGFloat(value)
         }
     }
 }
@@ -59,12 +54,13 @@ struct BarChartView: View {
     ]
 
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             ForEach(Array(pokemon.details.stats.enumerated()), id: \.offset) { index, stat in
-                BarView(value: stat.baseStat, title: "\(stat.stat.name.capitalized)", color: colorArray[index % colorArray.count])
+                let title = stat.stat.name.capitalized
+                    .replacingOccurrences(of: "Special-Attack", with: "Sp. Atk")
+                    .replacingOccurrences(of: "Special-Defense", with: "Sp. Def")
+                BarView(value: stat.baseStat, title: "\(title)", color: colorArray[index % colorArray.count])
             }
-            BarView(value: pokemon.details.height, title: "Height", color: colorArray[pokemon.details.stats.count % colorArray.count])
-            BarView(value: pokemon.details.weight, title: "Weight", color: colorArray[(pokemon.details.stats.count + 1) % colorArray.count])
         }
     }
 }

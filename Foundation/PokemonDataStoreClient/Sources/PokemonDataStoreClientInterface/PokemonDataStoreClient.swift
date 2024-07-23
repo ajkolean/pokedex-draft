@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Foundation
 import Models
 
-public struct DataStoreClient: TestDependencyKey {
+public struct DataStoreClient: Sendable, TestDependencyKey {
     public var savePokemonIdentifiers: @Sendable ([PokemonIdentifier]) async throws -> Void
     public var fetchPokemonIdentifiers: @Sendable () async throws -> [PokemonIdentifier]
     public var savePokemon: @Sendable (Pokemon) async throws -> Void
