@@ -10,7 +10,7 @@ public final class PokemonDetailsEntity {
     public var order: Int
     public var species: PokemonForm
     public var stats: [Stat]
-    public var types: [PokemonType]
+    public var types: [PokemonDetailsType]
     public var weight: Int
 
     public init(
@@ -21,7 +21,7 @@ public final class PokemonDetailsEntity {
         order: Int,
         species: PokemonForm,
         stats: [Stat],
-        types: [PokemonType],
+        types: [PokemonDetailsType],
         weight: Int
     ) {
         self.baseExperience = baseExperience

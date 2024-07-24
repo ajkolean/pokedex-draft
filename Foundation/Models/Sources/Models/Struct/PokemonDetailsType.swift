@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-public struct PokemonType: Codable, Hashable {
+public struct PokemonDetailsType: Codable, Hashable {
     public struct TypeDetail: Codable, Hashable {
         public let name: String
         public let url: URL
@@ -11,7 +11,7 @@ public struct PokemonType: Codable, Hashable {
     public let type: TypeDetail
 }
 
-extension PokemonType {
+extension PokemonDetailsType {
     public var backgroundColor: Color {
         type.backgroundColor
     }
@@ -21,7 +21,7 @@ extension PokemonType {
     }
 }
 
-extension PokemonType.TypeDetail {
+extension PokemonDetailsType.TypeDetail {
     public var typeDetailName: TypeDetailName {
         return TypeDetailName(rawValue: name.lowercased()) ?? .unknown
     }

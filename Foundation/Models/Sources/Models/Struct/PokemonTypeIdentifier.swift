@@ -3,6 +3,7 @@ import SwiftUI
 
 public struct TypeIdentifier: Codable, Identifiable, Hashable, Sendable {
     public var id: Int
+    // TypeDetailName enum here instead
     public var name: String
     public var url: URL
 

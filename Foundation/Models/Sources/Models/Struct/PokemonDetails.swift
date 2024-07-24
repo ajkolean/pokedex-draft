@@ -2,6 +2,7 @@
 import Foundation
 import SwiftUI
 
+
 public struct PokemonDetails: Codable, Hashable, Identifiable {
 //    public let abilities: [PokemonAbility]
     public let baseExperience: Int
@@ -16,7 +17,7 @@ public struct PokemonDetails: Codable, Hashable, Identifiable {
     public let order: Int
     public let species: PokemonForm
     public let stats: [Stat]
-    public let types: [PokemonType]
+    public let types: [PokemonDetailsType]
     public let weight: Int
 
     enum CodingKeys: String, CodingKey {
@@ -47,11 +48,11 @@ extension PokemonDetails {
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/\(id).png"
     }
 
-    public var primaryType: PokemonType? {
+    public var primaryType: PokemonDetailsType? {
         types.first(where: { $0.slot == 1 }) ?? types.first
     }
 
-    public var secondaryType: PokemonType? {
+    public var secondaryType: PokemonDetailsType? {
         types.first(where: { $0.slot == 2 })
     }
 
