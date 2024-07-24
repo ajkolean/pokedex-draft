@@ -1,7 +1,7 @@
 import ComposableArchitecture
+import Models
 import PokemonListFeature
 import SwiftUI
-import Models
 
 @Reducer
 public struct AppFeature {
@@ -10,12 +10,12 @@ public struct AppFeature {
         public init() {}
         @Presents var destination: Destination.State?
     }
-    
+
     public enum Action {
         case destination(PresentationAction<Destination.Action>)
         case menuItemTapped(MenuItem)
     }
-    
+
     @Reducer(state: .equatable)
     public enum Destination {
         case pokemon(PokemonListFeature)
@@ -55,9 +55,9 @@ public struct AppView: View {
                 pokemonRedBackground()
                     .clipShape(BottomRoundedRectangle(radius: 40))
                     .ignoresSafeArea()
-                
+
                 Color(UIColor.systemBackground).offset(y: 300)
-                
+
                 ScrollView {
                     VStack(spacing: 0) {
                         VStack {
@@ -68,7 +68,7 @@ public struct AppView: View {
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
                                     .padding(.top, 40)
-                                
+
                                 HStack {
                                     Image(systemName: "magnifyingglass")
                                         .foregroundColor(.gray)
@@ -83,7 +83,7 @@ public struct AppView: View {
                             .background(pokemonRedBackground())
                             .clipShape(BottomRoundedRectangle(radius: 40))
                             .padding(.bottom, 20)
-                            
+
                             // Middle buttons section
                             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
                                 ForEach(MenuItem.allCases, id: \.self) { item in
@@ -96,6 +96,17 @@ public struct AppView: View {
                         }
                     }
                     .background(Color(UIColor.systemBackground))
+                    .overlay(
+                        ModelsAsset
+                            .spinningball
+                            .swiftUIImage
+                            .resizable()
+                            .scaledToFit()
+                            .opacity(0.2)
+                            .frame(width: 250, height: 250)
+                            .offset(x: 75, y: -125),
+                        alignment: .topTrailing
+                    )
                 }
             }
             .sheet(
@@ -107,8 +118,6 @@ public struct AppView: View {
             }
         }
     }
- 
-//        PokemonListFeatureView(store: store.scope(state: \.pokemonListFeature, action: \.pokemonListFeature))
 }
 
 #Preview {

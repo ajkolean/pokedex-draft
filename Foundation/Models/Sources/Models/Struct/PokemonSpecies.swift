@@ -1,9 +1,9 @@
 import Foundation
 import SwiftData
 
-public struct PokemonSpecies: Codable, Hashable, Sendable  {
+public struct PokemonSpecies: Codable, Hashable, Sendable {
     public let name: String
-    
+
     //    public let baseHappiness: Int
     //    public let captureRate: Int
     //    public let color: NamedAPIResource
@@ -30,7 +30,7 @@ public struct PokemonSpecies: Codable, Hashable, Sendable  {
     //    public let pokedexNumbers: [PokedexNumber]
     //    public let shape: NamedAPIResource
     //    public let varieties: [Variety]
-    
+
     enum CodingKeys: String, CodingKey {
         //        case baseHappiness = "base_happiness"
         //        case captureRate = "capture_rate"
@@ -60,41 +60,41 @@ public struct PokemonSpecies: Codable, Hashable, Sendable  {
         //        case shape
         //        case varieties
     }
-    
+
     public var asEntity: PokemonSpeciesEntity {
         .init(name: name, flavorTextEntries: flavorTextEntries)
     }
 }
 
-public struct NamedAPIResource: Codable, Hashable, Sendable  {
+public struct NamedAPIResource: Codable, Hashable, Sendable {
     public let name: String
     public let url: String
-    
+
     public init(name: String, url: String) {
         self.name = name
         self.url = url
     }
 }
 
-public struct APIResource: Codable, Hashable, Sendable  {
+public struct APIResource: Codable, Hashable, Sendable {
     public let url: String
-    
+
     public init(url: String) {
         self.url = url
     }
 }
 
-public struct FlavorTextEntry: Codable, Hashable, Sendable  {
+public struct FlavorTextEntry: Codable, Hashable, Sendable {
     public let flavorText: String
     public let language: NamedAPIResource
     public let version: NamedAPIResource
-    
+
     public init(flavorText: String, language: NamedAPIResource, version: NamedAPIResource) {
         self.flavorText = flavorText
         self.language = language
         self.version = version
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case flavorText = "flavor_text"
         case language
@@ -102,37 +102,37 @@ public struct FlavorTextEntry: Codable, Hashable, Sendable  {
     }
 }
 
-public struct Genus: Codable, Hashable, Sendable  {
+public struct Genus: Codable, Hashable, Sendable {
     public let genus: String
     public let language: NamedAPIResource
-    
+
     public init(genus: String, language: NamedAPIResource) {
         self.genus = genus
         self.language = language
     }
 }
 
-public struct Name: Codable, Hashable, Sendable  {
+public struct Name: Codable, Hashable, Sendable {
     public let language: NamedAPIResource
     public let name: String
-    
+
     public init(language: NamedAPIResource, name: String) {
         self.language = language
         self.name = name
     }
 }
 
-public struct PalParkEncounter: Codable, Hashable, Sendable  {
+public struct PalParkEncounter: Codable, Hashable, Sendable {
     public let area: NamedAPIResource
     public let baseScore: Int
     public let rate: Int
-    
+
     public init(area: NamedAPIResource, baseScore: Int, rate: Int) {
         self.area = area
         self.baseScore = baseScore
         self.rate = rate
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case area
         case baseScore = "base_score"
@@ -140,30 +140,30 @@ public struct PalParkEncounter: Codable, Hashable, Sendable  {
     }
 }
 
-public struct PokedexNumber: Codable, Hashable, Sendable  {
+public struct PokedexNumber: Codable, Hashable, Sendable {
     public let entryNumber: Int
     public let pokedex: NamedAPIResource
-    
+
     public init(entryNumber: Int, pokedex: NamedAPIResource) {
         self.entryNumber = entryNumber
         self.pokedex = pokedex
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case entryNumber = "entry_number"
         case pokedex
     }
 }
 
-public struct Variety: Codable, Hashable, Sendable  {
+public struct Variety: Codable, Hashable, Sendable {
     public let isDefault: Bool
     public let pokemon: NamedAPIResource
-    
+
     public init(isDefault: Bool, pokemon: NamedAPIResource) {
         self.isDefault = isDefault
         self.pokemon = pokemon
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case isDefault = "is_default"
         case pokemon

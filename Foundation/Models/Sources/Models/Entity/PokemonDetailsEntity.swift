@@ -1,4 +1,3 @@
-
 import SwiftData
 
 @Model
@@ -13,8 +12,18 @@ public final class PokemonDetailsEntity {
     public var stats: [Stat]
     public var types: [PokemonType]
     public var weight: Int
-    
-    public init(baseExperience: Int, height: Int, id: Int, name: PokemonName, order: Int, species: PokemonForm, stats: [Stat], types: [PokemonType], weight: Int) {
+
+    public init(
+        baseExperience: Int,
+        height: Int,
+        id: Int,
+        name: PokemonName,
+        order: Int,
+        species: PokemonForm,
+        stats: [Stat],
+        types: [PokemonType],
+        weight: Int
+    ) {
         self.baseExperience = baseExperience
         self.height = height
         self.id = id
@@ -25,8 +34,18 @@ public final class PokemonDetailsEntity {
         self.types = types
         self.weight = weight
     }
-    
+
     public var asEntity: PokemonDetails {
-        .init(baseExperience: baseExperience, height: height, id: id, name: name, order: order, species: species, stats: stats, types: types, weight: weight)
+        .init(
+            baseExperience: baseExperience,
+            height: height,
+            id: id,
+            name: name,
+            order: order,
+            species: species,
+            stats: stats,
+            types: types,
+            weight: weight
+        )
     }
 }

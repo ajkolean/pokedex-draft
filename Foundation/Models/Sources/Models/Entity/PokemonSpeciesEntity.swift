@@ -9,7 +9,7 @@ public final class PokemonSpeciesEntity {
         self.name = name
         self.flavorTextEntries = flavorTextEntries
     }
-    
+
     public var asModel: PokemonSpecies {
         .init(name: name, flavorTextEntries: flavorTextEntries)
     }

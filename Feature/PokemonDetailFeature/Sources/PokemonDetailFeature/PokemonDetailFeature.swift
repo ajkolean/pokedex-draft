@@ -53,7 +53,7 @@ public struct PokemonDetailView: View {
                 KFImage(URL(string: store.pokemon!.details.imageURL))
                     .resizable()
                     .frame(width: 200, height: 200)
-         
+
                 VStack {
                     Text(store.pokemon!.details.name.capitalized)
                         .font(.largeTitle)
@@ -133,7 +133,6 @@ public struct PokemonDetailView: View {
                     .padding(.top, 16)
                     .padding(.horizontal, 20)
 
-
                     BarChartView(pokemon: store.pokemon!)
                         .padding(.trailing)
                         .padding(.top, 24)
@@ -152,14 +151,13 @@ public struct PokemonDetailView: View {
             store.send(.onAppear)
         }
     }
-    
+
     var heightToString: String {
         let m = (Double(store.pokemon!.details.height) / 10.0)
         let ft = m * 3.281
         return String(format: "%.2f m (%.2f ft)", m, ft)
     }
-    
-    
+
     var weightToString: String {
         let kg = (Double(store.pokemon!.details.weight) / 10.0)
         let lbs = kg * 2.205

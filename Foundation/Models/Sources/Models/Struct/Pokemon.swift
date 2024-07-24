@@ -12,12 +12,11 @@ public struct Pokemon: Identifiable, Codable, Hashable {
         self.details = details
         self.species = species
     }
-    
+
     public var asEntity: PokemonEntity {
         .init(name: details.name, details: details.asEntity, species: species.asEntity)
     }
 }
-
 
 extension Pokemon {
     public var description: String {

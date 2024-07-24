@@ -1,18 +1,14 @@
 import Foundation
-import SwiftData
 import Models
+import SwiftData
 
 public class ModelContainerProvider {
-    public static let shared: ModelContainerProvider = {
-        return ModelContainerProvider(isTest: false)
-    }()
-    
-    public static let test: ModelContainerProvider = {
-        return ModelContainerProvider(isTest: true)
-    }()
-    
+    public static let shared: ModelContainerProvider = .init(isTest: false)
+
+    public static let test: ModelContainerProvider = .init(isTest: true)
+
     public let container: ModelContainer
-    
+
     private init(isTest: Bool) {
         do {
             let config: ModelConfiguration
@@ -23,7 +19,13 @@ public class ModelContainerProvider {
                 print(storeURL)
                 config = ModelConfiguration(url: storeURL, cloudKitDatabase: .none)
             }
-            container = try ModelContainer(for: PokemonEntity.self, PokemonIdentifierEntity.self, PokemonDetailsEntity.self, PokemonSpeciesEntity.self, configurations: config)
+            container = try ModelContainer(
+                for: PokemonEntity.self,
+                PokemonIdentifierEntity.self,
+                PokemonDetailsEntity.self,
+                PokemonSpeciesEntity.self,
+                configurations: config
+            )
         } catch {
             fatalError("Failed to configure SwiftData container.")
         }

@@ -21,54 +21,54 @@ public enum TypeDetailName: String, Codable {
     case fairy
     case stellar
     case unknown
-
-    public var backgroundColor: Color {
-        switch self {
-        case .normal:
-            return .gray
-        case .fighting:
-            return .red
-        case .flying:
-            return .blue
-        case .poison:
-            return .purple
-        case .ground:
-            return .brown
-        case .rock:
-            return Color(UIColor.systemGray2)
-        case .bug:
-            return .green
-        case .ghost:
-            return .indigo
-        case .steel:
-            return Color(UIColor.systemGray3)
-        case .fire:
-            return .red
-        case .water:
-            return .cyan
-        case .grass:
-            return .green
-        case .electric:
-            return .yellow
-        case .psychic:
-            return .pink
-        case .ice:
-            return .teal
-        case .dragon:
-            return .blue
-        case .dark:
-            return .black
-        case .fairy:
-            return .pink
-        case .stellar:
-            return .purple
-        case .unknown:
-            return Color(UIColor.systemGray4)
-        }
-    }
 }
 
 extension TypeDetailName {
+    public var icon: Image {
+        switch self {
+        case .normal:
+            return ModelsAsset.bugIcon.swiftUIImage
+        case .fighting:
+            return ModelsAsset.fightingIcn.swiftUIImage
+        case .flying:
+            return ModelsAsset.flyingIcon.swiftUIImage
+        case .poison:
+            return ModelsAsset.poisonIcon.swiftUIImage
+        case .ground:
+            return ModelsAsset.groundIcon.swiftUIImage
+        case .rock:
+            return ModelsAsset.rockIcon.swiftUIImage
+        case .bug:
+            return ModelsAsset.bugIcon.swiftUIImage
+        case .ghost:
+            return ModelsAsset.ghostIcon.swiftUIImage
+        case .steel:
+            return ModelsAsset.steelIcon.swiftUIImage
+        case .fire:
+            return ModelsAsset.fireIcon.swiftUIImage
+        case .water:
+            return ModelsAsset.waterIcon.swiftUIImage
+        case .grass:
+            return ModelsAsset.grassIcon.swiftUIImage
+        case .electric:
+            return ModelsAsset.electricIcon.swiftUIImage
+        case .psychic:
+            return ModelsAsset.psychicIcon.swiftUIImage
+        case .ice:
+            return ModelsAsset.iceIcon.swiftUIImage
+        case .dragon:
+            return ModelsAsset.dragonIcon.swiftUIImage
+        case .dark:
+            return ModelsAsset.darkIcon.swiftUIImage
+        case .fairy:
+            return ModelsAsset.fairyIcon.swiftUIImage
+        case .stellar:
+            return ModelsAsset.spinningball.swiftUIImage
+        case .unknown:
+            return ModelsAsset.spinningball.swiftUIImage
+        }
+    }
+
     public func color() -> Color {
         return Color(UIColor { traitCollection in
             switch self {

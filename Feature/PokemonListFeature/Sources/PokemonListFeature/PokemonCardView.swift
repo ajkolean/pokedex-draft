@@ -57,7 +57,7 @@ struct PokemonCardView: View {
             }
         }
         .background(
-            ZStack {
+            ZStack(alignment: .topLeading) {
                 if let pokemonDetails {
                     pokemonDetails.backgroundColor
                 } else {
@@ -65,12 +65,14 @@ struct PokemonCardView: View {
                         .blur(radius: 10)
                         .edgesIgnoringSafeArea(.all)
                 }
+
+                
             }
         )
         .cornerRadius(12)
         .shadow(color: pokemonDetails?.backgroundColor ?? .gray, radius: 4, x: 1.0, y: 1.0)
     }
-
+    
     var formattedId: String {
         if identifier.id / 10 < 1 {
             return "#00\(identifier.id)"
@@ -81,4 +83,3 @@ struct PokemonCardView: View {
         }
     }
 }
-

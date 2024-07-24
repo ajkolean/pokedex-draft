@@ -42,7 +42,7 @@ extension PokemonDetails {
     public var imageURL: String {
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(id).png"
     }
-    
+
     public var shinyImageURL: String {
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/\(id).png"
     }
@@ -54,8 +54,18 @@ extension PokemonDetails {
     public var backgroundColor: Color {
         primaryType?.type.backgroundColor ?? .gray
     }
-    
+
     public var asEntity: PokemonDetailsEntity {
-        .init(baseExperience: baseExperience, height: height, id: id, name: name, order: order, species: species, stats: stats, types: types, weight: weight)
+        .init(
+            baseExperience: baseExperience,
+            height: height,
+            id: id,
+            name: name,
+            order: order,
+            species: species,
+            stats: stats,
+            types: types,
+            weight: weight
+        )
     }
 }

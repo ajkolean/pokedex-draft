@@ -20,15 +20,14 @@ extension PokemonIdentifier {
     public var imageURL: String {
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(id).png"
     }
+
     public var asEntity: PokemonIdentifierEntity {
         .init(id: id, name: name, url: url)
     }
 }
 
-
 #if DEBUG
     extension PokemonIdentifier {
-
         public static let mockData: [PokemonIdentifier] = [
             //            PokemonIdentifier(id: 1, name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/"),
 //            PokemonIdentifier(id: 2, name: "ivysaur", url: "https://pokeapi.co/api/v2/pokemon/2/"),

@@ -13,7 +13,7 @@ let project: Project = .moduleProject(
                 .PokemonDataStoreClientInterface,
                 .ComposableArchitecture,
                 .ModelsImplementation,
-                .external(name: "SQLite")
+                .external(name: "SQLite"),
             ]
         ),
         .moduleTarget(

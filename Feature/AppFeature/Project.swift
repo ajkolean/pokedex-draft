@@ -13,7 +13,7 @@ let project: Project = .moduleProject(
             dependencies: [
                 .ComposableArchitecture,
                 .PokemonListFeatureImplementation,
-                .ModelsImplementation
+                .ModelsImplementation,
             ]
         ),
         .moduleTarget(
