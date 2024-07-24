@@ -15,7 +15,7 @@ public class ModelContainerProvider {
             if isTest {
                 config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
             } else {
-                let storeURL = URL.documentsDirectory.appending(path: "database.sqlite")
+                let storeURL = URL.documentsDirectory.appending(path: "database_type.sqlite")
                 print(storeURL)
                 config = ModelConfiguration(url: storeURL, cloudKitDatabase: .none)
             }
@@ -24,6 +24,7 @@ public class ModelContainerProvider {
                 PokemonIdentifierEntity.self,
                 PokemonDetailsEntity.self,
                 PokemonSpeciesEntity.self,
+                TypeIdentifierEntity.self,
                 configurations: config
             )
         } catch {

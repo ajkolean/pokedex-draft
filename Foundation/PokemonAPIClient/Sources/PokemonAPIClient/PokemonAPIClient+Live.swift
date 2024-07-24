@@ -40,16 +40,9 @@ extension PokemonAPIClient: DependencyKey {
     private static let idExtractionRegex = try! NSRegularExpression(pattern: "/pokemon/(\\d+)/")
 
     private static func extractID(from url: URL) throws -> Int {
-        let nsString = url.absoluteString as NSString
-        let results = idExtractionRegex.matches(in: url.absoluteString, range: NSRange(location: 0, length: nsString.length))
-
-        guard let match = results.first else {
-            throw CustomError.invalidURLFormat(url: url.absoluteString)
-        }
-
-        let idString = nsString.substring(with: match.range(at: 1))
-        guard let id = Int(idString) else {
-            throw CustomError.invalidIDFormat(idString: idString)
+        let components = url.pathComponents
+        guard let idString = components.last, let id = Int(idString) else {
+            throw CustomError.invalidIDFormat(idString: url.path)
         }
 
         return id

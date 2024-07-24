@@ -1,7 +1,7 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let feature = Feature.PokemonTypeListFeature
+let feature = Feature.TypeListFeature
 
 let project: Project = .moduleProject(
     module: feature,
@@ -10,7 +10,10 @@ let project: Project = .moduleProject(
             module: feature,
             targetType: .implementation,
             dependencies: [
-                .ComposableArchitecture
+                .ComposableArchitecture,
+                .ModelsImplementation,
+                .PokemonRepoInterface,
+                .PokemonRepoImplementation
             ]
         ),
         .moduleTarget(
@@ -18,7 +21,7 @@ let project: Project = .moduleProject(
             targetType: .exampleApp,
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
-                .PokemonTypeListFeatureImplementation,
+                .TypeListFeatureImplementation,
                 .ComposableArchitecture
             ]
         ),
@@ -26,7 +29,7 @@ let project: Project = .moduleProject(
             module: feature,
             targetType: .tests,
             dependencies: [
-                .PokemonTypeListFeatureImplementation
+                .TypeListFeatureImplementation
             ]
         )
     ]
