@@ -10,6 +10,7 @@ let project: Project = .moduleProject(
         .moduleTarget(
             module: foundation,
             targetType: .implementation,
+            includeResources: true,
             dependencies: [
                 .ComposableArchitecture,
             ]
