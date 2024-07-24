@@ -8,7 +8,7 @@ public protocol Database {
     func insert<T>(_ model: T) async where T: PersistentModel
     func save() async throws
     func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel
-    
+
     func delete<T: PersistentModel>(
         where predicate: Predicate<T>?
     ) async throws
@@ -20,39 +20,39 @@ public actor ModelActorDatabase: ModelActor, Database {
     private let debounceDelay: any BinaryInteger = 5
     private var saveTask: Task<Void, Error>?
     private var savesCancelled = 0
-    
+
     public init(modelContainer: ModelContainer) {
         let modelContext = ModelContext(modelContainer)
         modelExecutor = DefaultSerialModelExecutor(modelContext: modelContext)
         self.modelContainer = modelContainer
-        
+
         Task { @MainActor in
             self.setupNotificationObserver()
         }
     }
-    
+
     public func delete(_ model: some PersistentModel) async {
         modelContext.delete(model)
     }
-    
+
     public func insert(_ model: some PersistentModel) async {
         modelContext.insert(model)
     }
-    
+
     public func delete<T: PersistentModel>(
         where predicate: Predicate<T>?
     ) async throws {
         try modelContext.delete(model: T.self, where: predicate)
     }
-    
+
     public func save() async throws {
         try modelContext.save()
     }
-    
+
     public func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel {
         return try modelContext.fetch(descriptor)
     }
-    
+
     public func debounceSave() async throws {
         saveTask?.cancel()
         savesCancelled += 1
@@ -63,7 +63,7 @@ public actor ModelActorDatabase: ModelActor, Database {
             savesCancelled = 0
         }
     }
-    
+
     @MainActor
     private func setupNotificationObserver() {
         NotificationCenter.default.addObserver(
@@ -81,7 +81,7 @@ public actor ModelActorDatabase: ModelActor, Database {
             }
         }
     }
-    
+
     private func handleWillResignActive() async throws {
         try await save()
     }

@@ -36,7 +36,7 @@ public class DataStore {
         let fetchedPokemons = try await db.fetch(fetchDescriptor)
         return fetchedPokemons.first?.asModel
     }
-    
+
     public func fetchTypeIdentifiers() async throws -> [TypeIdentifier] {
         let sortDescriptor = SortDescriptor(\TypeIdentifierEntity.id, order: .forward)
         let fetchDescriptor = FetchDescriptor<TypeIdentifierEntity>(sortBy: [sortDescriptor])
@@ -44,7 +44,7 @@ public class DataStore {
         let identifiers = models.map(\.asModel)
         return identifiers
     }
-    
+
     public func saveTypeIdentifiers(_ identifiers: [TypeIdentifier]) async throws {
         for identifier in identifiers {
             let entity = TypeIdentifierEntity(identifier)
@@ -52,7 +52,6 @@ public class DataStore {
         }
         try await db.save()
     }
-
 }
 
 extension DataStore {

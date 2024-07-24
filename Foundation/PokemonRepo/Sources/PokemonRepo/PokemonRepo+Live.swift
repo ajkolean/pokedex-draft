@@ -38,7 +38,7 @@ extension PokemonRepo: DependencyKey {
                     try await dataStoreClient.savePokemon(pokemon)
                     return pokemon
                 }
-            }, 
+            },
             fetchTypeIdentifiers: {
                 let cachedTypes = try await dataStoreClient.fetchTypeIdentifiers()
                 if !cachedTypes.isEmpty {

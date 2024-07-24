@@ -47,7 +47,6 @@ public struct PokemonRepo: TestDependencyKey {
             },
             fetchTypeIdentifiers: { fatalError() },
             saveTypeIdentifiers: { _ in fatalError() }
-
         )
     }()
 

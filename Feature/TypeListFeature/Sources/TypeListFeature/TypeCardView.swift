@@ -6,15 +6,14 @@ import SwiftUI
 
 struct TypeCardView: View {
     let identifier: TypeIdentifier
-        
+
     var body: some View {
         ZStack {
- 
             VStack {
                 Spacer()
                 HStack {
                     Spacer()
-                    
+
                     identifier
                         .typeDetail
                         .icon
@@ -27,10 +26,8 @@ struct TypeCardView: View {
                         .padding(.trailing, 8)
                         .padding(.bottom, 8)
                 }
-                
             }
             HStack {
-                
                 Text(identifier.name.capitalized)
                     .font(.title3)
                     .bold()
@@ -44,6 +41,5 @@ struct TypeCardView: View {
         .background(identifier.typeDetail.color())
         .cornerRadius(12)
         .shadow(color: identifier.typeDetail.color(), radius: 4, x: 1.0, y: 1.0)
-
     }
 }

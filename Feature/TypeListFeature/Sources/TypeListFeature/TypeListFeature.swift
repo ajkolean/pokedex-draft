@@ -11,19 +11,19 @@ public struct TypeListFeature {
     @ObservableState
     public struct State: Equatable {
         public var typeIdentifiers: IdentifiedArrayOf<TypeIdentifier> = []
-        
+
         public init() {}
     }
-    
+
     public enum Action: Equatable {
         case fetchTypeIdentifiers
         case setTypeList(Result<[TypeIdentifier], NSError>)
     }
-    
+
     @Dependency(\.pokemonRepo) var pokemonRepo
-    
+
     public init() {}
-    
+
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -39,7 +39,7 @@ public struct TypeListFeature {
             case let .setTypeList(.success(types)):
                 state.typeIdentifiers = .init(uniqueElements: types)
                 return .none
-                
+
             case let .setTypeList(.failure(error)):
                 fatalError("Failed to fetch pokemon list: \(error)")
             }
@@ -50,11 +50,11 @@ public struct TypeListFeature {
 public struct TypeListFeatureView: View {
     @Bindable public var store: StoreOf<TypeListFeature>
     private let gridItems = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
-    
+
     public init(store: StoreOf<TypeListFeature>) {
         self.store = store
     }
-    
+
     public var body: some View {
         NavigationStack {
             ScrollView {
@@ -64,8 +64,6 @@ public struct TypeListFeatureView: View {
                     }
                 }
                 .padding()
-                
-
             }
             .navigationTitle("Types")
             .onAppear {
