@@ -49,7 +49,7 @@ public struct TypeListFeature {
 
 public struct TypeListFeatureView: View {
     @Bindable public var store: StoreOf<TypeListFeature>
-    private let gridItems = [GridItem(.flexible()), GridItem(.flexible())]
+    private let gridItems = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
     
     public init(store: StoreOf<TypeListFeature>) {
         self.store = store
@@ -60,9 +60,12 @@ public struct TypeListFeatureView: View {
             ScrollView {
                 LazyVGrid(columns: gridItems, spacing: 16) {
                     ForEach(store.typeIdentifiers) { identifier in
-                        Text(identifier.name)
+                        TypeCardView(identifier: identifier)
                     }
                 }
+                .padding()
+                
+
             }
             .navigationTitle("Types")
             .onAppear {

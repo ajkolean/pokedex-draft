@@ -27,7 +27,7 @@ extension TypeDetailName {
     public var icon: Image {
         switch self {
         case .normal:
-            return ModelsAsset.bugIcon.swiftUIImage
+            return ModelsAsset.normalIcon.swiftUIImage
         case .fighting:
             return ModelsAsset.fightingIcn.swiftUIImage
         case .flying:
