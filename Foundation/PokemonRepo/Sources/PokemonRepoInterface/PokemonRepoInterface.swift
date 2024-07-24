@@ -9,17 +9,23 @@ public struct PokemonRepo: TestDependencyKey {
     public var fetchPokemonIdentifiers: @Sendable () async throws -> [PokemonIdentifier]
     public var savePokemon: @Sendable (Pokemon) async throws -> Void
     public var fetchPokemon: @Sendable (PokemonName) async throws -> Pokemon?
+    public var fetchTypeIdentifiers: @Sendable () async throws -> [TypeIdentifier]
+    public var saveTypeIdentifiers: @Sendable ([TypeIdentifier]) async throws -> Void
 
     public init(
         savePokemonIdentifiers: @escaping @Sendable ([PokemonIdentifier]) async throws -> Void,
         fetchPokemonIdentifiers: @escaping @Sendable () async throws -> [PokemonIdentifier],
         savePokemon: @escaping @Sendable (Pokemon) async throws -> Void,
-        fetchPokemon: @escaping @Sendable (PokemonName) async throws -> Pokemon?
+        fetchPokemon: @escaping @Sendable (PokemonName) async throws -> Pokemon?,
+        fetchTypeIdentifiers: @escaping @Sendable () async throws -> [TypeIdentifier],
+        saveTypeIdentifiers: @escaping @Sendable ([TypeIdentifier]) async throws -> Void
     ) {
         self.savePokemonIdentifiers = savePokemonIdentifiers
         self.fetchPokemonIdentifiers = fetchPokemonIdentifiers
         self.savePokemon = savePokemon
         self.fetchPokemon = fetchPokemon
+        self.fetchTypeIdentifiers = fetchTypeIdentifiers
+        self.saveTypeIdentifiers = saveTypeIdentifiers
     }
 
     public static let testValue: PokemonRepo = {
@@ -38,7 +44,10 @@ public struct PokemonRepo: TestDependencyKey {
             },
             fetchPokemon: { name in
                 return await pokemons.value[name]
-            }
+            },
+            fetchTypeIdentifiers: { fatalError() },
+            saveTypeIdentifiers: { _ in fatalError() }
+
         )
     }()
 
@@ -58,7 +67,9 @@ public struct PokemonRepo: TestDependencyKey {
             },
             fetchPokemon: { name in
                 return await pokemons.value[name]
-            }
+            },
+            fetchTypeIdentifiers: { fatalError() },
+            saveTypeIdentifiers: { _ in fatalError() }
         )
     }()
 }

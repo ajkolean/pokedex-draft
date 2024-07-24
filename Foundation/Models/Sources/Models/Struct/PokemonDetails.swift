@@ -50,6 +50,10 @@ extension PokemonDetails {
     public var primaryType: PokemonType? {
         types.first(where: { $0.slot == 1 }) ?? types.first
     }
+    
+    public var secondaryType: PokemonType? {
+        types.first(where: { $0.slot == 2 })
+    }
 
     public var backgroundColor: Color {
         primaryType?.type.backgroundColor ?? .gray

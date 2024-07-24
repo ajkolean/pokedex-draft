@@ -1,6 +1,5 @@
 // Foundation/Models/Sources/Models/PokemonIdentifier.swift
 import Foundation
-import SwiftData
 
 public typealias PokemonName = String
 

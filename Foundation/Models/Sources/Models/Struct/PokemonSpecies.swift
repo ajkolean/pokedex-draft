@@ -68,9 +68,9 @@ public struct PokemonSpecies: Codable, Hashable, Sendable {
 
 public struct NamedAPIResource: Codable, Hashable, Sendable {
     public let name: String
-    public let url: String
+    public let url: URL
 
-    public init(name: String, url: String) {
+    public init(name: String, url: URL) {
         self.name = name
         self.url = url
     }
