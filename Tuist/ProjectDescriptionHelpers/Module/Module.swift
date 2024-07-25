@@ -41,10 +41,10 @@ extension Module {
     }
     
     public func sources(_ target: TargetType) -> SourceFilesList {
-        ["Sources/\(name(target))/**"]
+        ["\(target.directory)/**"]
     }
     
     public func resources(_ target: TargetType) -> ResourceFileElements {
-        ["Sources/\(name(target))/Resources/**"]
+        ["\(target.directory)/Resources/**"]
     }
 }

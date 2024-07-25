@@ -20,9 +20,17 @@ extension TargetType {
     public static let foundationTypes: [TargetType] = [
         .implementation,
         .interface,
-        .testSupport,
         .tests
     ]
+    
+    public var directory: String {
+        switch self {
+        case .implementation:
+            return "Sources"
+        case .interface, .exampleApp, .testSupport, .tests, .custom:
+            return name
+        }
+    }
     
     public var name: String {
         switch self {

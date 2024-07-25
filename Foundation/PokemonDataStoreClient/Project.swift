@@ -27,14 +27,6 @@ let project: Project = .moduleProject(
         ),
         .moduleTarget(
             module: foundation,
-            targetType: .testSupport,
-            infoPlist: .default,
-            dependencies: [
-                .PokemonDataStoreClientInterface,
-            ]
-        ),
-        .moduleTarget(
-            module: foundation,
             targetType: .tests,
             dependencies: [
                 .PokemonDataStoreClientImplementation,

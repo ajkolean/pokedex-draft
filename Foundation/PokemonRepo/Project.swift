@@ -22,7 +22,6 @@ let project: Project = .moduleProject(
         .moduleTarget(
             module: foundation,
             targetType: .interface,
-            infoPlist: .default,
             dependencies: [
                 .ComposableArchitecture,
                 .ModelsImplementation,
@@ -30,14 +29,6 @@ let project: Project = .moduleProject(
                 .PokemonAPIClientInterface,
                 .PokemonDataStoreClientImplementation,
                 .PokemonDataStoreClientInterface,
-            ]
-        ),
-        .moduleTarget(
-            module: foundation,
-            targetType: .testSupport,
-            infoPlist: .default,
-            dependencies: [
-                .PokemonRepoInterface,
             ]
         ),
         .moduleTarget(
