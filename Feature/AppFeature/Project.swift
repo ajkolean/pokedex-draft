@@ -14,6 +14,8 @@ let project: Project = .moduleProject(
                 .ComposableArchitecture,
                 .PokemonListFeatureImplementation,
                 .TypeListFeatureImplementation,
+                .TypeDetailFeatureImplementation,
+                .PokemonDetailFeatureImplementation,
                 .ModelsImplementation,
             ]
         ),

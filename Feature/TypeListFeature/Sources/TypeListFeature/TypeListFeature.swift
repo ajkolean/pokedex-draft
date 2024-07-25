@@ -8,11 +8,10 @@ import SwiftUI
 import TypeDetailFeature
 
 @Reducer
-public struct TypeListFeature {
+public struct TypeListFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
         public var typeIdentifiers: IdentifiedArrayOf<TypeIdentifier> = []
-        public var path = StackState<TypeDetailFeature.State>()
 
         public init() {}
     }
@@ -20,7 +19,7 @@ public struct TypeListFeature {
     public enum Action: Equatable {
         case fetchTypeIdentifiers
         case setTypeList(Result<[TypeIdentifier], EquatableError>)
-        case path(StackAction<TypeDetailFeature.State, TypeDetailFeature.Action>)
+        case typeDetailTapped(TypeIdentifier)
     }
 
     @Dependency(\.pokemonRepo) var pokemonRepo
@@ -28,7 +27,7 @@ public struct TypeListFeature {
     public init() {}
 
     public var body: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
             case .fetchTypeIdentifiers:
                 return .run { send in
@@ -45,12 +44,9 @@ public struct TypeListFeature {
 
             case let .setTypeList(.failure(error)):
                 fatalError("Failed to fetch pokemon list: \(error)")
-            case .path:
+            case .typeDetailTapped:
                 return .none
             }
-        }
-        .forEach(\.path, action: \.path) {
-            TypeDetailFeature()
         }
     }
 }
@@ -64,23 +60,19 @@ public struct TypeListFeatureView: View {
     }
 
     public var body: some View {
-        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-            ScrollView {
-                LazyVGrid(columns: gridItems, spacing: 16) {
-                    ForEach(store.typeIdentifiers) { identifier in
-                        NavigationLink(state: TypeDetailFeature.State(typeIdentifier: identifier)) {
-                            TypeCardView(identifier: identifier)
-                        }
+        ScrollView {
+            LazyVGrid(columns: gridItems, spacing: 16) {
+                ForEach(store.typeIdentifiers) { identifier in
+                    TypeCardView(identifier: identifier).tappable {
+                        store.send(.typeDetailTapped(identifier))
                     }
                 }
-                .padding()
             }
-            .navigationTitle("Types")
-            .onAppear {
-                store.send(.fetchTypeIdentifiers)
-            }
-        } destination: { store in
-            TypeDetailView(store: store)
+            .padding()
+        }
+        .navigationTitle("Types")
+        .onAppear {
+            store.send(.fetchTypeIdentifiers)
         }
     }
 }

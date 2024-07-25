@@ -7,7 +7,7 @@ import PokemonRepoInterface
 import SwiftUI
 
 @Reducer
-public struct PokemonListFeature {
+public struct PokemonListFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
         public var pokemonIdentifiers: IdentifiedArrayOf<PokemonIdentifier> = []
@@ -47,7 +47,7 @@ public struct PokemonListFeature {
 
     public var body: some ReducerOf<Self> {
         BindingReducer()
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
             case .binding:
                 return .none

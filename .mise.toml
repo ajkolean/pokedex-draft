@@ -16,7 +16,7 @@ run = """
 """
 
 [tasks.lint-fix]
-description = "Formats Projects"
+description = "Lint the workspace fixing issues"
 run = """
     #!/bin/bash
     set -euo pipefail
@@ -25,4 +25,12 @@ run = """
     swiftlint lint --fix --quiet --config $MISE_PROJECT_ROOT/.swiftlint.yml $MISE_PROJECT_ROOT
 """
 
+[tasks.lint]
+description = "Lint the workspace"
+run = """
+    #!/bin/bash
+    set -euo pipefail
 
+    swiftformat $MISE_PROJECT_ROOT --lint
+    swiftlint lint --quiet --config $MISE_PROJECT_ROOT/.swiftlint.yml $MISE_PROJECT_ROOT
+"""

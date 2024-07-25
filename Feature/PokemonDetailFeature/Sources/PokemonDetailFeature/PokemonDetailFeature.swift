@@ -4,7 +4,7 @@ import Models
 import SwiftUI
 
 @Reducer
-public struct PokemonDetailFeature {
+public struct PokemonDetailFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
         public var pokemon: Pokemon?
@@ -21,7 +21,7 @@ public struct PokemonDetailFeature {
     public init() {}
 
     public var body: some ReducerOf<Self> {
-        Reduce { _, action in
+        Reduce<State, Action> { _, action in
             switch action {
             case .onAppear:
                 // You can add any side effects or logic here if needed

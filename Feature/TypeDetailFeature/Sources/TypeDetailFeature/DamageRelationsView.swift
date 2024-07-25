@@ -19,15 +19,15 @@ struct DamageRelationsStackView: View {
 
     var offensivePropertiesView: some View {
         VStack(alignment: .center, spacing: 20) {
-                Text("Offensive properties of \(typeDetails.name.capitalized)-type moves")
-                    .font(.headline)
-                    .multilineTextAlignment(.center)
-                    .bold()
-                    .padding()
-                    .background(color)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    .shadow(color: color, radius: 4, x: 1.0, y: 1.0)
+            Text("Offensive properties of \(typeDetails.name.capitalized)-type moves")
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .bold()
+                .padding()
+                .background(color)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                .shadow(color: color, radius: 4, x: 1.0, y: 1.0)
 
             HStack(alignment: .top, spacing: 8) {
                 DamageRelationView(title: "Super effective (×2)", types: typeDetails.damageRelations.doubleDamageTo)
@@ -38,6 +38,7 @@ struct DamageRelationsStackView: View {
             .background(Color.gray.opacity(0.2))
             .cornerRadius(8)
             .frame(maxWidth: .infinity)
+            .shadow(color: Color.gray, radius: 4, x: 1.0, y: 1.0)
         }
     }
 
@@ -62,6 +63,7 @@ struct DamageRelationsStackView: View {
             .background(Color.gray.opacity(0.2))
             .cornerRadius(8)
             .frame(maxWidth: .infinity)
+            .shadow(color: Color.gray, radius: 4, x: 1.0, y: 1.0)
         }
     }
 }

@@ -19,7 +19,31 @@ type_name:
   min_length:
     error: 1
     warning: 1
+function_body_length:
+  warning: 120
+  # error: 150
 excluded: 
   - Tuist
-
-
+  - "**/Derived/**"
+custom_rules:
+  explicit_reducer_conformance: # rule identifier
+    included:
+      - ".*\\.swift" # regex that defines paths to include during linting. optional.
+    excluded:
+      - ".*Test\\.swift" # regex that defines paths to exclude during linting. optional
+    name: "Explicit Reducer Conformance"
+    regex: "Reduce \\{ [a-zA-Z0-9_]+, [a-zA-Z0-9_]+ in" # matching pattern
+    capture_group: 0 # number of regex capture group to highlight the rule violation at. optional.
+    message: "Reduce<State, Action> { state, action in"
+    severity: warning # violation severity. optional.
+  explicit_generics_in_reduce: # rule identifier
+    included:
+      - ".*\\.swift" # regex that defines paths to include during linting. optional.
+    excluded:
+      - ".*Test\\.swift" # regex that defines paths to exclude during linting. optional
+    name: "Explicit Generics in Reduce"
+    regex: "@Reducer\\s*(public\\s+|internal\\s+|private\\s+|fileprivate\\s+)?struct\\s+([a-zA-Z0-9_]+)\\s*\\{"
+    capture_group: 2
+    message: "Add explicit Reducer conformance: struct <Name>: Reducer {"
+    severity: warning # violation severity. optional.
+ 

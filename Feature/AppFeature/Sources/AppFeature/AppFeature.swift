@@ -1,48 +1,58 @@
 import ComposableArchitecture
 import Models
+import PokemonDetailFeature
 import PokemonListFeature
 import SwiftUI
+import TypeDetailFeature
 import TypeListFeature
 
 @Reducer
-public struct AppFeature {
+public struct AppFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
         public init() {}
-        @Presents var destination: Destination.State?
+        var path = StackState<Path.State>()
     }
 
     public enum Action {
-        case destination(PresentationAction<Destination.Action>)
+        case path(StackActionOf<Path>)
         case menuItemTapped(MenuItem)
     }
 
-    @Reducer(state: .equatable)
-    public enum Destination {
+    @Reducer(state: .equatable, .sendable, action: .sendable)
+    public enum Path {
         case pokemon(PokemonListFeature)
+        case typeDetail(TypeDetailFeature)
         case typeList(TypeListFeature)
+        case pokemonDetail(PokemonDetailFeature)
     }
 
     public init() {}
 
     public var body: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
-            case .destination:
-                return .none
             case let .menuItemTapped(item):
                 switch item {
                 case .pokedex:
-                    state.destination = .pokemon(PokemonListFeature.State())
+                    state.path.append(.pokemon(PokemonListFeature.State()))
                 case .types:
-                    state.destination = .typeList(TypeListFeature.State())
+                    state.path.append(.typeList(TypeListFeature.State()))
                 default:
                     return .none
                 }
                 return .none
+            case let .path(.element(id: _, action: .typeList(.typeDetailTapped(typeIdentifier)))):
+                state.path.append(.typeDetail(TypeDetailFeature.State(typeIdentifier: typeIdentifier)))
+                return .none
+            case let .path(.element(id: _, action: .typeDetail(.pokemonCardTapped(pokemon)))):
+                state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemon: pokemon)))
+                return .none
+            case .path:
+                return .none
             }
         }
-        .ifLet(\.$destination, action: \.destination)
+        .forEach(\.path, action: \.path)
     }
 }
 
@@ -54,7 +64,9 @@ public struct AppView: View {
     }
 
     public var body: some View {
-        NavigationStack {
+        NavigationStack(
+            path: $store.scope(state: \.path, action: \.path)
+        ) {
             ZStack {
                 pokemonRedBackground()
                     .clipShape(BottomRoundedRectangle(radius: 40))
@@ -113,19 +125,16 @@ public struct AppView: View {
                     )
                 }
             }
-            .sheet(
-                item: $store.scope(state: \.destination?.pokemon, action: \.destination.pokemon)
-            ) { store in
-                NavigationStack {
-                    PokemonListFeatureView(store: store)
-                }
-            }
-            .sheet(
-                item: $store.scope(state: \.destination?.typeList, action: \.destination.typeList)
-            ) { store in
-                NavigationStack {
-                    TypeListFeatureView(store: store)
-                }
+        } destination: { store in
+            switch store.case {
+            case let .pokemon(store):
+                PokemonListFeatureView(store: store)
+            case let .typeList(store):
+                TypeListFeatureView(store: store)
+            case let .typeDetail(store):
+                TypeDetailView(store: store)
+            case let .pokemonDetail(store):
+                PokemonDetailView(store: store)
             }
         }
     }

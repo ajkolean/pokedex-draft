@@ -114,6 +114,7 @@ extension PokemonType {
         }
     }
 
+    // swiftlint:disable:next function_body_length
     public func color() -> Color {
         return Color(UIColor { traitCollection in
             switch self {

@@ -10,11 +10,12 @@ extension TypeIdentifier {
 }
 
 @Reducer
-public struct TypeDetailFeature {
+public struct TypeDetailFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
         public let typeIdentifier: TypeIdentifier
         public var typeDetails: PokemonTypeDetails?
+        public var pokemon = [PokemonIdentifier: Pokemon]()
 
         public init(typeIdentifier: TypeIdentifier) {
             self.typeIdentifier = typeIdentifier
@@ -24,6 +25,9 @@ public struct TypeDetailFeature {
     public enum Action: Equatable {
         case onAppear
         case setTypeDetails(Result<PokemonTypeDetails?, EquatableError>)
+        case displayedPokemonCard(PokemonIdentifier)
+        case setPokemon(PokemonIdentifier, Pokemon?)
+        case pokemonCardTapped(Pokemon)
     }
 
     @Dependency(\.pokemonRepo) var pokemonRepo
@@ -31,7 +35,7 @@ public struct TypeDetailFeature {
     public init() {}
 
     public var body: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
                 return .run { [identifer = state.typeIdentifier] send in
@@ -48,13 +52,23 @@ public struct TypeDetailFeature {
             case let .setTypeDetails(.failure(error)):
                 print(error.localizedDescription)
                 return .none
+            case let .displayedPokemonCard(pokemon):
+                return .run { send in
+                    let details = try await pokemonRepo.fetchPokemon(pokemon.name)
+                    await send(.setPokemon(pokemon, details))
+                }
+            case let .setPokemon(identifier, pokemon):
+                state.pokemon[identifier] = pokemon
+                return .none
+            case .pokemonCardTapped:
+                return .none
             }
         }
     }
 }
 
 public struct TypeDetailView: View {
-    public let store: StoreOf<TypeDetailFeature>
+    @Bindable public var store: StoreOf<TypeDetailFeature>
 
     public init(store: StoreOf<TypeDetailFeature>) {
         self.store = store
@@ -103,7 +117,7 @@ public struct TypeDetailView: View {
                         DamageRelationsStackView(typeIdentifier: store.typeIdentifier, typeDetails: typeDetails)
                             .padding(.top, 24)
                     }
-                    
+
                     Text("Pokemon")
                         .font(.title2)
                         .bold()
@@ -112,16 +126,26 @@ public struct TypeDetailView: View {
                         .foregroundColor(.white)
                         .cornerRadius(8)
                         .shadow(color: store.typeIdentifier.type.color(), radius: 4, x: 1.0, y: 1.0)
+                        .padding(.bottom, 24)
 
-                    HStack {
-                        Text("Description")
-                            .font(.system(size: 18, weight: .semibold))
-                        Spacer()
+                    if let typeDetails = store.typeDetails {
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                            ForEach(typeDetails.pokemon.map(\.pokemon)) { identifier in
+                                let pokemon = store.pokemon[identifier]
+
+                                PokemonCardView(identifier: identifier, pokemon: pokemon)
+                                    .unWrapping(pokemon) { view, pokemon in
+                                        view.tappable {
+                                            store.send(.pokemonCardTapped(pokemon))
+                                        }
+                                    }
+
+                                    .onAppear {
+                                        store.send(.displayedPokemonCard(identifier))
+                                    }
+                            }
+                        }
                     }
-                    .padding(.top, 20)
-                    .padding(.horizontal)
-
-                    HStack { Spacer() }
                 }
 
                 .background(Color(UIColor.systemBackground))
