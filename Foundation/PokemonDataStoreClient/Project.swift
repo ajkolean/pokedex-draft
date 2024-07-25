@@ -12,7 +12,7 @@ let project: Project = .moduleProject(
             dependencies: [
                 .PokemonDataStoreClientInterface,
                 .ComposableArchitecture,
-                .ModelsImplementation,
+                .Models,
                 .external(name: "SQLite"),
             ]
         ),
@@ -22,14 +22,14 @@ let project: Project = .moduleProject(
             infoPlist: .default,
             dependencies: [
                 .ComposableArchitecture,
-                .ModelsImplementation,
+                .Models,
             ]
         ),
         .moduleTarget(
             module: foundation,
             targetType: .tests,
             dependencies: [
-                .PokemonDataStoreClientImplementation,
+                .PokemonDataStoreClient,
             ]
         ),
     ]

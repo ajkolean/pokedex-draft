@@ -39,7 +39,7 @@ private let projectFile =
                         module: foundation,
                         targetType: .tests,
                         dependencies: [
-                            .\(nameAttribute)Implementation
+                            .\(nameAttribute)
                         ]
                     )
                 ]
@@ -51,9 +51,8 @@ private let dependencyFile =
             import ProjectDescription
             
             extension TargetDependency {
-                public static let \(nameAttribute)Implementation: TargetDependency = Foundation.\(nameAttribute).target(.implementation)
+                public static let \(nameAttribute): TargetDependency = Foundation.\(nameAttribute).target(.implementation)
                 public static let \(nameAttribute)Interface: TargetDependency = Foundation.\(nameAttribute).target(.interface)
-                public static let \(nameAttribute)TestSupport: TargetDependency = Foundation.\(nameAttribute).target(.testSupport)
                 public static let \(nameAttribute)Tests: TargetDependency = Foundation.\(nameAttribute).target(.tests)
 
             }
@@ -61,7 +60,7 @@ private let dependencyFile =
 
 private let targetItems: [Template.Item] = TargetType.foundationTypes.map { type in
         .file(
-            path: "Foundation/\(nameAttribute)/Sources/\(nameAttribute)\(type.name)/\(nameAttribute)\(type.name).swift",
+            path: "Foundation/\(nameAttribute)/\(type.directory)/\(nameAttribute)\(type.name).swift",
             templatePath: "stencils/Foundation\(type.name).stencil"
         )
 }

@@ -12,18 +12,18 @@ let project: Project = .moduleProject(
             targetType: .implementation,
             dependencies: [
                 .ComposableArchitecture,
-                .PokemonListFeatureImplementation,
-                .TypeListFeatureImplementation,
-                .TypeDetailFeatureImplementation,
-                .PokemonDetailFeatureImplementation,
-                .ModelsImplementation,
+                .PokemonListFeature,
+                .TypeListFeature,
+                .TypeDetailFeature,
+                .PokemonDetailFeature,
+                .Models,
             ]
         ),
         .moduleTarget(
             module: feature,
             targetType: .tests,
             dependencies: [
-                .AppFeatureImplementation,
+                .AppFeature,
             ]
         ),
         .moduleTarget(
@@ -31,7 +31,7 @@ let project: Project = .moduleProject(
             targetType: .exampleApp,
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
-                .AppFeatureImplementation,
+                .AppFeature,
             ]
         ),
     ]

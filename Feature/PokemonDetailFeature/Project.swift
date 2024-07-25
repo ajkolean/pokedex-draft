@@ -11,7 +11,7 @@ let project: Project = .moduleProject(
             targetType: .implementation,
             dependencies: [
                 .ComposableArchitecture,
-                .ModelsImplementation,
+                .Models,
                 .Kingfisher,
             ]
         ),
@@ -20,7 +20,7 @@ let project: Project = .moduleProject(
             targetType: .exampleApp,
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
-                .PokemonDetailFeatureImplementation,
+                .PokemonDetailFeature,
                 .ComposableArchitecture,
             ]
         ),
@@ -28,7 +28,7 @@ let project: Project = .moduleProject(
             module: feature,
             targetType: .tests,
             dependencies: [
-                .PokemonDetailFeatureImplementation,
+                .PokemonDetailFeature,
             ]
         ),
     ]

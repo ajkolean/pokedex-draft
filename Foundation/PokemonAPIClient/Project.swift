@@ -11,7 +11,7 @@ let project: Project = .moduleProject(
             targetType: .implementation,
             dependencies: [
                 .PokemonAPIClientInterface,
-                .ModelsImplementation,
+                .Models,
                 .ComposableArchitecture,
             ]
         ),
@@ -20,7 +20,7 @@ let project: Project = .moduleProject(
             targetType: .interface,
             infoPlist: .default,
             dependencies: [
-                .ModelsImplementation,
+                .Models,
                 .ComposableArchitecture,
             ]
         ),
@@ -28,7 +28,7 @@ let project: Project = .moduleProject(
             module: foundation,
             targetType: .tests,
             dependencies: [
-                .PokemonAPIClientImplementation,
+                .PokemonAPIClient,
             ]
         ),
     ]
