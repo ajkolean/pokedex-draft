@@ -13,7 +13,7 @@ extension Target {
         copyFiles: [CopyFilesAction]? = nil,
         headers: Headers? = nil,
         entitlements: Entitlements? = nil,
-        scripts: [TargetScript] = [.swiftLintScript],
+        scripts: [TargetScript] = [],
         dependencies: [TargetDependency] = [],
         settings: Settings? = .module,
         coreDataModels: [CoreDataModel] = [],
@@ -65,6 +65,6 @@ extension TargetScript {
 }
 
 extension Settings {
-    public static let module: Settings = .settings(base: ["ENABLE_MODULE_VERIFIER": "YES", "ENABLE_USER_SCRIPT_SANDBOXING": "YES"], defaultSettings: .recommended)
-    public static let project: Settings = .settings(base: ["ENABLE_USER_SCRIPT_SANDBOXING": "YES"], defaultSettings: .recommended)
+    public static let module: Settings = .settings(base: ["ENABLE_MODULE_VERIFIER": "NO", "ENABLE_USER_SCRIPT_SANDBOXING": "NO"], defaultSettings: .recommended)
+    public static let project: Settings = .settings(base: ["ENABLE_USER_SCRIPT_SANDBOXING": "NO"], defaultSettings: .recommended)
 }

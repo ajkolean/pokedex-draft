@@ -6,7 +6,7 @@ extension Project {
         module: Module,
         options: Project.Options = .options(),
         packages: [Package] = [],
-        settings: Settings? = .project,
+        settings: Settings? = .settings(),
         targets: [Target] = [],
         schemes: [Scheme] = [],
         fileHeaderTemplate: FileHeaderTemplate? = nil,

@@ -1,7 +1,6 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonListFeature.swift
 import ComposableArchitecture
 import Models
-import PokemonDetailFeature
 import PokemonRepo
 import PokemonRepoInterface
 import SwiftUI
@@ -13,11 +12,10 @@ public struct PokemonListFeature: Reducer {
         public var pokemonIdentifiers: IdentifiedArrayOf<PokemonIdentifier> = []
         public var pokemon = [PokemonIdentifier: Pokemon]()
         public var searchText: String = ""
-        public var path = StackState<PokemonDetailFeature.State>()
-
+        
         var filteredPokemons: [PokemonIdentifier] {
             var filteredList: [PokemonIdentifier] = []
-
+            
             for pokemon in pokemonIdentifiers {
                 if pokemon.name.contains(searchText.lowercased()) {
                     filteredList.append(pokemon)
@@ -25,26 +23,26 @@ public struct PokemonListFeature: Reducer {
                     filteredList.append(pokemon)
                 }
             }
-
+            
             return searchText == "" ? pokemonIdentifiers.elements : filteredList
         }
-
+        
         public init() {}
     }
-
+    
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case fetchPokemonIdentifiers
         case setPokemonList(Result<[PokemonIdentifier], NSError>)
         case displayedPokemonCard(PokemonIdentifier)
         case setPokemon(PokemonIdentifier, Pokemon?)
-        case path(StackAction<PokemonDetailFeature.State, PokemonDetailFeature.Action>)
+        case pokemonCardTapped(Pokemon)
     }
-
+    
     @Dependency(\.pokemonRepo) var pokemonRepo
-
+    
     public init() {}
-
+    
     public var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce<State, Action> { state, action in
@@ -63,7 +61,7 @@ public struct PokemonListFeature: Reducer {
             case let .setPokemonList(.success(pokemonIdentifiers)):
                 state.pokemonIdentifiers = .init(uniqueElements: pokemonIdentifiers)
                 return .none
-
+                
             case let .setPokemonList(.failure(error)):
                 fatalError("Failed to fetch pokemon list: \(error)")
             case let .displayedPokemonCard(pokemon):
@@ -74,12 +72,9 @@ public struct PokemonListFeature: Reducer {
             case let .setPokemon(identifier, pokemon):
                 state.pokemon[identifier] = pokemon
                 return .none
-            case .path:
+            case .pokemonCardTapped:
                 return .none
             }
-        }
-        .forEach(\.path, action: \.path) {
-            PokemonDetailFeature()
         }
     }
 }
@@ -87,35 +82,34 @@ public struct PokemonListFeature: Reducer {
 public struct PokemonListFeatureView: View {
     @Bindable public var store: StoreOf<PokemonListFeature>
     private let gridItems = [GridItem(.flexible()), GridItem(.flexible())]
-
+    
     public init(store: StoreOf<PokemonListFeature>) {
         self.store = store
     }
-
+    
     public var body: some View {
-        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-            ScrollView {
-                LazyVGrid(columns: gridItems, spacing: 16) {
-                    ForEach(store.filteredPokemons) { identifier in
-                        let pokemon = store.pokemon[identifier]
-
-                        NavigationLink(state: pokemon.map { PokemonDetailFeature.State(pokemon: $0) }) {
-                            PokemonCardView(identifier: identifier, pokemon: pokemon)
-                                .onAppear {
-                                    store.send(.displayedPokemonCard(identifier))
-                                }
+        ScrollView {
+            LazyVGrid(columns: gridItems, spacing: 16) {
+                ForEach(store.filteredPokemons) { identifier in
+                    let pokemon = store.pokemon[identifier]
+                    
+                    PokemonCardView(identifier: identifier, pokemon: pokemon)
+                        .unWrapping(pokemon) { view, pokemon in
+                            view.tappable {
+                                store.send(.pokemonCardTapped(pokemon))
+                            }
+                        }
+                        .onAppear {
+                            store.send(.displayedPokemonCard(identifier))
                         }
                         .disabled(pokemon == nil)
-                    }
                 }
             }
-            .searchable(text: $store.searchText)
-            .navigationTitle("Pokédex")
-            .onAppear {
-                store.send(.fetchPokemonIdentifiers)
-            }
-        } destination: { store in
-            PokemonDetailView(store: store)
+        }
+        .searchable(text: $store.searchText)
+        .navigationTitle("Pokédex")
+        .onAppear {
+            store.send(.fetchPokemonIdentifiers)
         }
     }
 }
