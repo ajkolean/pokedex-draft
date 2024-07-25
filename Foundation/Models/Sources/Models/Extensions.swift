@@ -1,13 +1,12 @@
-
 import Foundation
 
 extension URL {
-    public func extractID() -> Int? {
-        let components = self.pathComponents
+    public func extractID() -> Int {
+        let components = pathComponents
         guard let idString = components.last, let id = Int(idString) else {
-            return nil
+            fatalError("Failed to extract id: \(components.joined(separator: "/"))")
         }
-        
+
         return id
     }
 }

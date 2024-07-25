@@ -22,8 +22,8 @@ extension PokemonDetailsType {
 }
 
 extension PokemonDetailsType.TypeDetail {
-    public var typeDetailName: TypeDetailName {
-        return TypeDetailName(rawValue: name.lowercased()) ?? .unknown
+    public var typeDetailName: PokemonType {
+        return PokemonType(rawValue: name.lowercased()) ?? .unknown
     }
 
     public var backgroundColor: Color {

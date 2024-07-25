@@ -5,19 +5,22 @@ import PokemonDetailFeature
 import PokemonRepo
 import PokemonRepoInterface
 import SwiftUI
+import TypeDetailFeature
 
 @Reducer
 public struct TypeListFeature {
     @ObservableState
     public struct State: Equatable {
         public var typeIdentifiers: IdentifiedArrayOf<TypeIdentifier> = []
+        public var path = StackState<TypeDetailFeature.State>()
 
         public init() {}
     }
 
     public enum Action: Equatable {
         case fetchTypeIdentifiers
-        case setTypeList(Result<[TypeIdentifier], NSError>)
+        case setTypeList(Result<[TypeIdentifier], EquatableError>)
+        case path(StackAction<TypeDetailFeature.State, TypeDetailFeature.Action>)
     }
 
     @Dependency(\.pokemonRepo) var pokemonRepo
@@ -33,7 +36,7 @@ public struct TypeListFeature {
                         let types = try await pokemonRepo.fetchTypeIdentifiers()
                         await send(.setTypeList(.success(types)))
                     } catch {
-                        await send(.setTypeList(.failure(error as NSError)))
+                        await send(.setTypeList(.failure(EquatableError(error))))
                     }
                 }
             case let .setTypeList(.success(types)):
@@ -42,7 +45,12 @@ public struct TypeListFeature {
 
             case let .setTypeList(.failure(error)):
                 fatalError("Failed to fetch pokemon list: \(error)")
+            case .path:
+                return .none
             }
+        }
+        .forEach(\.path, action: \.path) {
+            TypeDetailFeature()
         }
     }
 }
@@ -56,11 +64,13 @@ public struct TypeListFeatureView: View {
     }
 
     public var body: some View {
-        NavigationStack {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             ScrollView {
                 LazyVGrid(columns: gridItems, spacing: 16) {
                     ForEach(store.typeIdentifiers) { identifier in
-                        TypeCardView(identifier: identifier)
+                        NavigationLink(state: TypeDetailFeature.State(typeIdentifier: identifier)) {
+                            TypeCardView(identifier: identifier)
+                        }
                     }
                 }
                 .padding()
@@ -69,6 +79,8 @@ public struct TypeListFeatureView: View {
             .onAppear {
                 store.send(.fetchTypeIdentifiers)
             }
+        } destination: { store in
+            TypeDetailView(store: store)
         }
     }
 }

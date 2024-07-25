@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum TypeDetailName: String, Codable {
+public enum PokemonType: String, Codable {
     case normal
     case fighting
     case flying
@@ -23,7 +23,7 @@ public enum TypeDetailName: String, Codable {
     case unknown
 }
 
-extension TypeDetailName {
+extension PokemonType {
     public var icon: Image {
         switch self {
         case .normal:
@@ -62,6 +62,51 @@ extension TypeDetailName {
             return ModelsAsset.darkIcon.swiftUIImage
         case .fairy:
             return ModelsAsset.fairyIcon.swiftUIImage
+        case .stellar:
+            return ModelsAsset.spinningball.swiftUIImage
+        case .unknown:
+            return ModelsAsset.spinningball.swiftUIImage
+        }
+    }
+
+    public var pokemonImage: Image {
+        switch self {
+        case .normal:
+            return ModelsAsset.normalCover.swiftUIImage
+        case .fighting:
+            return ModelsAsset.fightingCover.swiftUIImage
+        case .flying:
+            return ModelsAsset.flyingCover.swiftUIImage
+        case .poison:
+            return ModelsAsset.poisonCover.swiftUIImage
+        case .ground:
+            return ModelsAsset.groundCover.swiftUIImage
+        case .rock:
+            return ModelsAsset.rockCover.swiftUIImage
+        case .bug:
+            return ModelsAsset.bugCover.swiftUIImage
+        case .ghost:
+            return ModelsAsset.ghostCover.swiftUIImage
+        case .steel:
+            return ModelsAsset.steelCover.swiftUIImage
+        case .fire:
+            return ModelsAsset.fireCover.swiftUIImage
+        case .water:
+            return ModelsAsset.waterCover.swiftUIImage
+        case .grass:
+            return ModelsAsset.grassCover.swiftUIImage
+        case .electric:
+            return ModelsAsset.electricCover.swiftUIImage
+        case .psychic:
+            return ModelsAsset.psychicCover.swiftUIImage
+        case .ice:
+            return ModelsAsset.iceCover.swiftUIImage
+        case .dragon:
+            return ModelsAsset.dragonCover.swiftUIImage
+        case .dark:
+            return ModelsAsset.darkCover.swiftUIImage
+        case .fairy:
+            return ModelsAsset.fairyCover.swiftUIImage
         case .stellar:
             return ModelsAsset.spinningball.swiftUIImage
         case .unknown:

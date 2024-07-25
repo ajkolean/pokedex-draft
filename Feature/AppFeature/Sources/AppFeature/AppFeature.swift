@@ -2,6 +2,7 @@ import ComposableArchitecture
 import Models
 import PokemonListFeature
 import SwiftUI
+import TypeListFeature
 
 @Reducer
 public struct AppFeature {
@@ -19,6 +20,7 @@ public struct AppFeature {
     @Reducer(state: .equatable)
     public enum Destination {
         case pokemon(PokemonListFeature)
+        case typeList(TypeListFeature)
     }
 
     public init() {}
@@ -32,6 +34,8 @@ public struct AppFeature {
                 switch item {
                 case .pokedex:
                     state.destination = .pokemon(PokemonListFeature.State())
+                case .types:
+                    state.destination = .typeList(TypeListFeature.State())
                 default:
                     return .none
                 }
@@ -114,6 +118,13 @@ public struct AppView: View {
             ) { store in
                 NavigationStack {
                     PokemonListFeatureView(store: store)
+                }
+            }
+            .sheet(
+                item: $store.scope(state: \.destination?.typeList, action: \.destination.typeList)
+            ) { store in
+                NavigationStack {
+                    TypeListFeatureView(store: store)
                 }
             }
         }

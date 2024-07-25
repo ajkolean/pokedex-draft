@@ -2,7 +2,6 @@
 import Foundation
 import SwiftUI
 
-
 public struct PokemonDetails: Codable, Hashable, Identifiable {
 //    public let abilities: [PokemonAbility]
     public let baseExperience: Int

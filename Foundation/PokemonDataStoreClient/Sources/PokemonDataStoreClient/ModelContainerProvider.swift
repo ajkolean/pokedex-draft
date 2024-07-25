@@ -25,6 +25,7 @@ public class ModelContainerProvider {
                 PokemonDetailsEntity.self,
                 PokemonSpeciesEntity.self,
                 TypeIdentifierEntity.self,
+                PokemonTypeDetailsEntity.self,
                 configurations: config
             )
         } catch {

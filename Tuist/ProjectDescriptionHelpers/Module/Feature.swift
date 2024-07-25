@@ -6,6 +6,7 @@ public enum Feature: String, CaseIterable, Module {
     case PokemonListFeature
     case PokemonDetailFeature
     case TypeListFeature
+    case TypeDetailFeature
     
     public var type: ModuleType { .feature }
 }

@@ -15,7 +15,7 @@ struct TypeCardView: View {
                     Spacer()
 
                     identifier
-                        .typeDetail
+                        .type
                         .icon
                         .resizable()
                         .renderingMode(.template)
@@ -38,8 +38,8 @@ struct TypeCardView: View {
                 Spacer()
             }
         }
-        .background(identifier.typeDetail.color())
+        .background(identifier.type.color())
         .cornerRadius(12)
-        .shadow(color: identifier.typeDetail.color(), radius: 4, x: 1.0, y: 1.0)
+        .shadow(color: identifier.type.color(), radius: 4, x: 1.0, y: 1.0)
     }
 }
