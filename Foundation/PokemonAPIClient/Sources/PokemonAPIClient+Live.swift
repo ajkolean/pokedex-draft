@@ -27,16 +27,17 @@ extension PokemonAPIClient: DependencyKey {
                 let species = try await Self.liveValue.fetchPokemonSpecies(details.species.url)
                 return Pokemon(details: details, species: species)
             },
-            fetchTypeIdentifiers: {
+            fetchPokemonTypeIdentifiers: {
                 let url = URL(string: "\(baseURL)type?offset=0&limit=50")!
                 return try await fetchAndDecode(from: url, as: NameListResponse.self).results.map { basic in
                     return TypeIdentifier(name: basic.name, url: basic.url)
                 }
             },
-            fetchTypeDetails: { typeName in
+            fetchPokemonTypeDetails: { typeName in
                 let url = URL(string: "\(baseURL)type/\(typeName)")!
                 do {
-                    return try await fetchAndDecode(from: url, as: PokemonTypeResponse.self)
+                    let typeResponse = try await fetchAndDecode(from: url, as: PokemonTypeResponse.self)
+                    return PokemonTypeDetails(typeResponse)
                 } catch {
                     fatalError(error.localizedDescription)
                 }

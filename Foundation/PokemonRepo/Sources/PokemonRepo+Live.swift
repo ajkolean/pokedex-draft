@@ -13,9 +13,6 @@ extension PokemonRepo: DependencyKey {
         let pokemonAPIClient = PokemonAPIClient.liveValue
 
         return PokemonRepo(
-            savePokemonIdentifiers: { shorts in
-                try await dataStoreClient.savePokemonIdentifiers(shorts)
-            },
             fetchPokemonIdentifiers: {
                 let cachedPokemons = try await dataStoreClient.fetchPokemonIdentifiers()
                 if !cachedPokemons.isEmpty {
@@ -26,41 +23,50 @@ extension PokemonRepo: DependencyKey {
                     return pokemons
                 }
             },
-            savePokemon: { pokemon in
-                try await dataStoreClient.savePokemon(pokemon)
-            },
             fetchPokemon: { name in
                 if let cachedPokemon = try await dataStoreClient.fetchPokemon(name) {
                     return cachedPokemon
                 } else {
                     let pokemon = try await pokemonAPIClient.fetchPokemon(name)
-                    print("No cache for pokemon: \(pokemon.details.name)")
-                    try await dataStoreClient.savePokemon(pokemon)
+                    if let pokemon {
+                        try await dataStoreClient.savePokemon(pokemon)
+                    }
                     return pokemon
                 }
             },
-            fetchTypeIdentifiers: {
-                let cachedTypes = try await dataStoreClient.fetchTypeIdentifiers()
+            fetchPokemonTypeIdentifiers: {
+                let cachedTypes = try await dataStoreClient.fetchPokemonTypeIdentifiers()
                 if !cachedTypes.isEmpty {
                     return cachedTypes
                 } else {
-                    let types = try await pokemonAPIClient.fetchTypeIdentifiers()
+                    let types = try await pokemonAPIClient.fetchPokemonTypeIdentifiers()
                     try await dataStoreClient.saveTypeIdentifiers(types)
                     return types
                 }
-            },
-            saveTypeIdentifiers: { types in
-                try await dataStoreClient.saveTypeIdentifiers(types)
             },
             fetchPokemonTypeDetails: { name in
                 if let cachedItem = try await dataStoreClient.fetchPokemonTypeDetails(name) {
                     return cachedItem
                 } else {
-                    let typeResponse = try await pokemonAPIClient.fetchTypeDetails(name)
-                    let details = PokemonTypeDetails(typeResponse)
-                    try await dataStoreClient.savePokemonTypeDetails(details)
+                    let details = try await pokemonAPIClient.fetchPokemonTypeDetails(name)
+                    if let details {
+                        try await dataStoreClient.savePokemonTypeDetails(details)
+                    }
                     return details
                 }
+            }, 
+            savePokemonIdentifiers: { pokemon in
+                try await dataStoreClient.savePokemonIdentifiers(pokemon)
+            },
+            
+            savePokemon: { shorts in
+                try await dataStoreClient.savePokemon(shorts)
+            },
+            saveTypeIdentifiers: { types in
+                try await dataStoreClient.saveTypeIdentifiers(types)
+            },
+            savePokemonTypeDetails: { typeDetails in
+                try await dataStoreClient.savePokemonTypeDetails(typeDetails)
             }
         )
     }()

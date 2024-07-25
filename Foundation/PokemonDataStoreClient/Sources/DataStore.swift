@@ -3,7 +3,7 @@ import Models
 import SwiftData
 import UIKit
 
-public class DataStore {
+public final class DataStore {
     private let db: ModelActorDatabase
     private init(container: ModelContainer) {
         db = ModelActorDatabase(modelContainer: container)
@@ -37,7 +37,7 @@ public class DataStore {
         return fetchedPokemons.first?.asModel
     }
 
-    public func fetchTypeIdentifiers() async throws -> [TypeIdentifier] {
+    public func fetchPokemonTypeIdentifiers() async throws -> [TypeIdentifier] {
         let sortDescriptor = SortDescriptor(\TypeIdentifierEntity.name, order: .forward)
         let fetchDescriptor = FetchDescriptor<TypeIdentifierEntity>(sortBy: [sortDescriptor])
         let models = try await db.fetch(fetchDescriptor)
@@ -59,7 +59,7 @@ public class DataStore {
         return results.first?.asModel
     }
 
-    public func saveTypeDetails(_ details: PokemonTypeDetails) async throws {
+    public func savePokemonTypeDetails(_ details: PokemonTypeDetails) async throws {
         let entity = PokemonTypeDetailsEntity(details)
         await db.insert(entity)
         try await db.debounceSave()
