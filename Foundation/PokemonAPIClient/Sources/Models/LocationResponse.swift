@@ -4,7 +4,7 @@ struct LocationResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: LocationName
     /// The region this location can be found in.
     let region: NamedAPIResource
     /// The name of this resource listed in different languages.
@@ -19,7 +19,7 @@ struct LocationAreaResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: LocationAreaName
     /// The internal id of an API resource within game data.
     let game_index: Int
     /// A list of methods in which Pokémon may be encountered in this area and how likely the method will occur depending on the version of the game.
@@ -57,7 +57,7 @@ struct PalParkAreaResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: PalParkAreaName
     /// The name of this resource listed in different languages.
     let names: [NameResponse]
     /// A list of Pokémon encountered in this pal park area along with details.
@@ -77,7 +77,7 @@ struct RegionResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: RegionName
     /// A list of locations that can be found in this region.
     let locations: [NamedAPIResource]
     /// The generation this region was introduced in.

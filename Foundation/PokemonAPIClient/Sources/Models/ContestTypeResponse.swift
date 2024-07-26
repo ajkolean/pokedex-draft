@@ -13,7 +13,7 @@ struct ContestTypeResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: ContestTypeName
     /// The berry flavor that correlates with this contest type.
     let berry_flavor: NamedAPIResource
     /// The name of this contest type listed in different languages.
@@ -22,7 +22,7 @@ struct ContestTypeResponse: Codable {
 
 struct ContestEffectResponse: Codable {
     /// The identifier for this resource.
-    let id: Int
+    let id: ContestEffectID
     /// The base number of hearts the user of this move gets.
     let appeal: Int
     /// The base number of hearts the user's opponent loses.
@@ -35,7 +35,7 @@ struct ContestEffectResponse: Codable {
 
 struct SuperContestEffectResponse: Codable {
     /// The identifier for this resource.
-    let id: Int
+    let id: SuperContestEffectID
     /// The level of appeal this super contest effect has.
     let appeal: Int
     /// The flavor text of this super contest effect listed in different languages.

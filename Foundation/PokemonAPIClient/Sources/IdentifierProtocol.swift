@@ -1,213 +1,411 @@
 import Foundation
 
-protocol IdentifierProtocol: RawRepresentable, Codable, Equatable {}
+public protocol IdentifierProtocol: RawRepresentable, Codable, Hashable {}
 
 extension IdentifierProtocol where Self: ExpressibleByStringLiteral, RawValue == String {
-    init(stringLiteral value: String) {
+    public init(stringLiteral value: String) {
         self.init(rawValue: value)!
     }
 }
 
 extension IdentifierProtocol where Self: ExpressibleByIntegerLiteral, RawValue == Int {
-    init(integerLiteral value: Int) {
+    public init(integerLiteral value: Int) {
         self.init(rawValue: value)!
     }
+    
+
 }
 
 // Identifiers for endpoints that accept names (String)
-struct PokemonName: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct PokemonName: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct BerryName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct BerryName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct BerryFlavorName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct BerryFlavorName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct BerryFirmnessName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct BerryFirmnessName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct LocationName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct LocationName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct LocationAreaName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct LocationAreaName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct PalParkAreaName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct PalParkAreaName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct RegionName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct RegionName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct ContestTypeName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct ContestTypeName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct EncounterMethodName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct EncounterMethodName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct EncounterConditionName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct EncounterConditionName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct EncounterConditionValueName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct EncounterConditionValueName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct EvolutionTriggerName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct EvolutionTriggerName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct GenerationName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct GenerationName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct PokedexName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct PokedexName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct VersionName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct VersionName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct VersionGroupName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct VersionGroupName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct ItemName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct ItemName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct ItemAttributeName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct ItemAttributeName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct ItemCategoryName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct ItemCategoryName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct ItemFlingEffectName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct ItemFlingEffectName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct ItemPocketName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct ItemPocketName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct MoveName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct MoveName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct MoveAilmentName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct MoveAilmentName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct MoveBattleStyleName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct MoveBattleStyleName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct MoveCategoryName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct MoveCategoryName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct MoveDamageClassName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct MoveDamageClassName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct MoveLearnMethodName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct MoveLearnMethodName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct MoveTargetName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct MoveTargetName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct AbilityName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct AbilityName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct EggGroupName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct EggGroupName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct GenderName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct GenderName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct GrowthRateName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct GrowthRateName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct NatureName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct NatureName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct PokeathlonStatName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct PokeathlonStatName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct PokemonColorName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct PokemonColorName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct PokemonFormName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct PokemonFormName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct PokemonHabitatName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct PokemonHabitatName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct PokemonShapeName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct PokemonShapeName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct PokemonSpeciesName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct PokemonSpeciesName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct StatName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct StatName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct TypeName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct TypeName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
-struct LanguageName: IdentifierProtocol, ExpressibleByStringLiteral {
-    let rawValue: String
+public struct LanguageName: IdentifierProtocol, ExpressibleByStringLiteral {
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
 
 // Identifiers for endpoints that accept IDs (Int)
-struct ContestEffectID: IdentifierProtocol, ExpressibleByIntegerLiteral {
-    let rawValue: Int
+public struct ContestEffectID: IdentifierProtocol, ExpressibleByIntegerLiteral {
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 }
 
-struct SuperContestEffectID: IdentifierProtocol, ExpressibleByIntegerLiteral {
-    let rawValue: Int
+public struct SuperContestEffectID: IdentifierProtocol, ExpressibleByIntegerLiteral {
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 }
 
-struct EvolutionChainID: IdentifierProtocol, ExpressibleByIntegerLiteral {
-    let rawValue: Int
+public struct EvolutionChainID: IdentifierProtocol, ExpressibleByIntegerLiteral {
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 }
 
-struct CharacteristicID: IdentifierProtocol, ExpressibleByIntegerLiteral {
-    let rawValue: Int
+public struct CharacteristicID: IdentifierProtocol, ExpressibleByIntegerLiteral {
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 }
 
-struct MachineID: IdentifierProtocol, ExpressibleByIntegerLiteral {
-    let rawValue: Int
+public struct MachineID: IdentifierProtocol, ExpressibleByIntegerLiteral {
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 }
 
-struct EncounterConditionValueID: IdentifierProtocol, ExpressibleByIntegerLiteral {
-    let rawValue: Int
+public struct EncounterConditionValueID: IdentifierProtocol, ExpressibleByIntegerLiteral {
+    public let rawValue: Int
+    
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
 }

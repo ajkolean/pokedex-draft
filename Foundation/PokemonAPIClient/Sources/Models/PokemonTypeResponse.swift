@@ -30,7 +30,7 @@ struct AbilityResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: AbilityName
     /// Whether or not this ability originated in the main series of the video games.
     let is_main_series: Bool
     /// The generation this ability originated in.
@@ -49,7 +49,7 @@ struct AbilityResponse: Codable {
 
 struct CharacteristicResponse: Codable {
     /// The identifier for this resource.
-    let id: Int
+    let id: CharacteristicID
     /// The gene modulo.
     let gene_modulo: Int
     /// The possible values.
@@ -64,7 +64,7 @@ struct EggGroupResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: EggGroupName
     /// The name of this resource listed in different languages.
     let names: [NameResponse]
     /// A list of Pokémon species that are members of this egg group.
@@ -82,7 +82,7 @@ struct GenderResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: GenderName
     /// A list of Pokémon species details.
     let pokemon_species_details: [PokemonSpeciesGenderResponse]
     /// A list of Pokémon species that require this gender in order to evolve.
@@ -100,7 +100,7 @@ struct GrowthRateResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: GrowthRateName
     /// The formula used to calculate the rate at which the Pokémon species gains level.
     let formula: String
     /// The descriptions of this resource listed in different languages.
@@ -131,7 +131,7 @@ struct NatureResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: NatureName
     /// The stat decreased by this nature.
     let decreased_stat: NamedAPIResource
     /// The stat increased by this nature.
@@ -166,7 +166,7 @@ struct PokeathlonStatResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: PokeathlonStatName
     /// The name of this resource listed in different languages.
     let names: [NameResponse]
     /// A detail of natures which affect this Pokéathlon stat positively or negatively.
@@ -265,7 +265,7 @@ struct PokemonResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: PokemonName
     /// The base experience gained for defeating this Pokémon.
     let base_experience: Int
     /// The height of this Pokémon in decimetres.
@@ -327,7 +327,7 @@ struct PokemonColorResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: PokemonColorName
     /// The name of this resource listed in different languages.
     let names: [NameResponse]
     /// A list of Pokémon species that have this color.
@@ -357,7 +357,7 @@ struct PokemonFormResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: PokemonFormName
     /// The order in which forms should be sorted within all forms.
     let order: Int
     /// The order in which forms should be sorted within a species' forms.
@@ -388,7 +388,7 @@ struct PokemonHabitatResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: PokemonHabitatName
     /// The name of this resource listed in different languages.
     let names: [NameResponse]
     /// A list of Pokémon species that can be found in this habitat.
@@ -406,7 +406,7 @@ struct PokemonShapeResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: PokemonShapeName
     /// The "scientific" name of this Pokémon shape listed in different languages.
     let awesome_names: [AwesomeNameResponse]
     /// The name of this resource listed in different languages.
@@ -449,7 +449,7 @@ struct PokemonSpeciesResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: PokemonSpeciesName
     /// The order in which species should be sorted.
     let order: Int
     /// The chance of this Pokémon being female, in eighths; or -1 for genderless.
@@ -527,7 +527,7 @@ struct StatResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: StatName
     /// The internal id of an API resource within game data.
     let game_index: Int
     /// Whether this stat only exists within a battle.
@@ -577,7 +577,7 @@ struct TypeResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: TypeName
     /// A detail of how effective this type is toward others and vice versa.
     let damage_relations: TypeRelationsResponse
     /// A list of details showing how effective this type was toward others and vice versa in previous generations.

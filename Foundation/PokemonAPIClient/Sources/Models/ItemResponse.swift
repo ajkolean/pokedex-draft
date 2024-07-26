@@ -23,7 +23,7 @@ struct ItemResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: ItemName
     /// The price of this item in stores.
     let cost: Int
     /// The power of the move Fling when used with this item.
@@ -54,7 +54,7 @@ struct ItemAttributeResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: ItemAttributeName
     /// A list of items that have this attribute.
     let items: [NamedAPIResource]
     /// The name of this item attribute listed in different languages.
@@ -67,7 +67,7 @@ struct ItemCategoryResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: ItemCategoryName
     /// A list of items that are a part of this category.
     let items: [NamedAPIResource]
     /// The name of this item category listed in different languages.
@@ -80,7 +80,7 @@ struct ItemFlingEffectResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: ItemFlingEffectName
     /// The result of this fling effect listed in different languages.
     let effect_entries: [EffectResponse]
     /// A list of items that have this fling effect.
@@ -91,7 +91,7 @@ struct ItemPocketResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: ItemPocketName
     /// A list of item categories that are relevant to this item pocket.
     let categories: [NamedAPIResource]
     /// The name of this resource listed in different languages.

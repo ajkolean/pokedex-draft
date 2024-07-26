@@ -63,7 +63,7 @@ struct EvolutionTriggerResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: EvolutionTriggerName
     /// The name of this resource listed in different languages.
     let names: [NameResponse]
     /// A list of Pokémon species that result from this evolution trigger.

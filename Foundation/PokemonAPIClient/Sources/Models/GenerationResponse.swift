@@ -4,7 +4,7 @@ struct GenerationResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: GenerationName
     /// A list of abilities that were introduced in this generation.
     let abilities: [NamedAPIResource]
     /// The name of this resource listed in different languages.
@@ -32,7 +32,7 @@ struct PokedexResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: PokedexName
     /// Whether or not this Pokédex originated in the main series of the video games.
     let is_main_series: Bool
     /// The description of this resource listed in different languages.
@@ -51,7 +51,7 @@ struct VersionResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: VersionName
     /// The name of this resource listed in different languages.
     let names: [NameResponse]
     /// The version group this version belongs to.
@@ -62,7 +62,7 @@ struct VersionGroupResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: VersionGroupName
     /// Order for sorting. Almost by date of release, except similar versions are grouped together.
     let order: Int
     /// The generation this version was introduced in.

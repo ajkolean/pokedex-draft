@@ -13,7 +13,7 @@ struct BerryResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: BerryName
     /// Time it takes the tree to grow one stage, in hours. Berry trees go through four of these growth stages before they can be picked.
     let growth_time: Int
     /// The maximum number of these berries that can grow on one tree in Generation IV.
@@ -41,7 +41,7 @@ struct BerryFirmnessResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: BerryFirmnessName
     /// A list of the berries with this firmness.
     let berries: [NamedAPIResource]
     /// The name of this resource listed in different languages.
@@ -61,7 +61,7 @@ struct BerryFlavorResponse: Codable {
     /// The identifier for this resource.
     let id: Int
     /// The name for this resource.
-    let name: String
+    let name: BerryFlavorName
     /// A list of the berries with this flavor.
     let berries: [FlavorBerryMapResponse]
     /// The contest type that correlates with this berry flavor.
