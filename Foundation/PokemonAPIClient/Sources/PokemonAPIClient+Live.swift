@@ -10,7 +10,7 @@ extension PokemonAPIClient: DependencyKey {
         let client = PokemonAPIClient(
             fetchPokemonIdentifiers: {
                 let url = URL(string: "\(baseURL)pokemon?offset=0&limit=1302")!
-                return try await fetchAndDecode(from: url, as: NameListResponse.self).results.map { basic in
+                return try await fetchAndDecode(from: url, as: NamedListResponse.self).results.map { basic in
                     let id = try extractID(from: basic.url)
                     return PokemonIdentifier(id: id, name: basic.name, url: basic.url)
                 }
@@ -29,7 +29,7 @@ extension PokemonAPIClient: DependencyKey {
             },
             fetchPokemonTypeIdentifiers: {
                 let url = URL(string: "\(baseURL)type?offset=0&limit=50")!
-                return try await fetchAndDecode(from: url, as: NameListResponse.self).results.map { basic in
+                return try await fetchAndDecode(from: url, as: NamedListResponse.self).results.map { basic in
                     return TypeIdentifier(name: basic.name, url: basic.url)
                 }
             },

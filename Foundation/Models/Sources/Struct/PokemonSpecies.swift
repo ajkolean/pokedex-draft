@@ -66,23 +66,6 @@ public struct PokemonSpecies: Codable, Hashable, Sendable {
     }
 }
 
-public struct NamedAPIResource: Codable, Hashable, Sendable {
-    public let name: String
-    public let url: URL
-
-    public init(name: String, url: URL) {
-        self.name = name
-        self.url = url
-    }
-}
-
-public struct APIResource: Codable, Hashable, Sendable {
-    public let url: String
-
-    public init(url: String) {
-        self.url = url
-    }
-}
 
 public struct FlavorTextEntry: Codable, Hashable, Sendable {
     public let flavorText: String
@@ -137,21 +120,6 @@ public struct PalParkEncounter: Codable, Hashable, Sendable {
         case area
         case baseScore = "base_score"
         case rate
-    }
-}
-
-public struct PokedexNumber: Codable, Hashable, Sendable {
-    public let entryNumber: Int
-    public let pokedex: NamedAPIResource
-
-    public init(entryNumber: Int, pokedex: NamedAPIResource) {
-        self.entryNumber = entryNumber
-        self.pokedex = pokedex
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case entryNumber = "entry_number"
-        case pokedex
     }
 }
 

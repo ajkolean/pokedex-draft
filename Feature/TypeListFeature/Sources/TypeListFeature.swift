@@ -1,11 +1,9 @@
 // Feature/TypeListFeature/Sources/TypeListFeature/TypeListFeature.swift
 import ComposableArchitecture
 import Models
-import PokemonDetailFeature
 import PokemonRepo
 import PokemonRepoInterface
 import SwiftUI
-import TypeDetailFeature
 
 @Reducer
 public struct TypeListFeature: Reducer {
@@ -32,7 +30,7 @@ public struct TypeListFeature: Reducer {
             case .fetchTypeIdentifiers:
                 return .run { send in
                     do {
-                        let types = try await pokemonRepo.fetchTypeIdentifiers()
+                        let types = try await pokemonRepo.fetchPokemonTypeIdentifiers()
                         await send(.setTypeList(.success(types)))
                     } catch {
                         await send(.setTypeList(.failure(EquatableError(error))))
