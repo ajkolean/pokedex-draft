@@ -17,15 +17,15 @@ extension PokemonAPIClient: DependencyKey {
             },
             fetchPokemonDetails: { name in
                 let url = URL(string: "\(baseURL)pokemon/\(name)")!
-                return try await fetchAndDecode(from: url, as: PokemonDetails.self)
+                return try await fetchAndDecode(from: url, as: Models.PokemonDetails.self)
             },
             fetchPokemonSpecies: { url in
-                return try await fetchAndDecode(from: url, as: PokemonSpecies.self)
+                return try await fetchAndDecode(from: url, as: Models.PokemonSpecies.self)
             },
             fetchPokemon: { name in
                 let details = try await Self.liveValue.fetchPokemonDetails(name)
                 let species = try await Self.liveValue.fetchPokemonSpecies(details.species.url)
-                return Pokemon(details: details, species: species)
+                return Models.Pokemon(details: details, species: species)
             },
             fetchPokemonTypeIdentifiers: {
                 let url = URL(string: "\(baseURL)type?offset=0&limit=50")!

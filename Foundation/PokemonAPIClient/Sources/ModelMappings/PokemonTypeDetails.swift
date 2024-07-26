@@ -1,18 +1,18 @@
 import Foundation
 import Models
 
-extension PokemonTypeDetails {
+extension Models.PokemonTypeDetails {
     init(_ response: TypeResponse) {
         self.init(
             damageRelations: .init(response.damage_relations),
             id: response.id,
-            name: response.name,
+            name: response.name.rawValue,
             pokemon: .init(response.pokemon)
         )
     }
 }
 
-extension DamageRelations {
+extension Models.DamageRelations {
      init(_ response: TypeRelationsResponse) {
         self.init(
             doubleDamageFrom: .init(response.double_damage_from),
@@ -25,13 +25,13 @@ extension DamageRelations {
     }
 }
 
-extension PokemonTypeSlot {
+extension Models.PokemonTypeSlot {
      init(_ response: TypePokemonResponse) {
         self.init(pokemon: PokemonIdentifier(response.pokemon), slot: response.slot)
     }
 }
 
-extension [PokemonTypeSlot] {
+extension [Models.PokemonTypeSlot] {
      init(_ resources: [TypePokemonResponse]) {
         self = resources.map { PokemonTypeSlot($0) }
     }
