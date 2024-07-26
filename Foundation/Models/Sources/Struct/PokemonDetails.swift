@@ -3,15 +3,9 @@ import Foundation
 import SwiftUI
 
 public struct PokemonDetails: Codable, Hashable, Identifiable {
-//    public let abilities: [PokemonAbility]
     public let baseExperience: Int
-//    public let cries: PokemonCry
-//    public let forms: [PokemonForm]
     public let height: Int
     public let id: Int
-//    public let isDefault: Bool
-//    public let locationAreaEncounters: URL
-//    public let moves: [Move]
     public let name: PokemonName
     public let order: Int
     public let species: PokemonForm
@@ -20,15 +14,9 @@ public struct PokemonDetails: Codable, Hashable, Identifiable {
     public let weight: Int
 
     enum CodingKeys: String, CodingKey {
-//        case abilities
         case baseExperience = "base_experience"
-//        case cries
-//        case forms
         case height
         case id
-//        case isDefault = "is_default"
-//        case locationAreaEncounters = "location_area_encounters"
-//        case moves
         case name
         case order
         case species

@@ -23,6 +23,15 @@ public struct DamageRelations: Hashable, Codable {
     public let halfDamageTo: [TypeIdentifier]
     public let noDamageFrom: [TypeIdentifier]
     public let noDamageTo: [TypeIdentifier]
+    
+    public init(doubleDamageFrom: [TypeIdentifier], doubleDamageTo: [TypeIdentifier], halfDamageFrom: [TypeIdentifier], halfDamageTo: [TypeIdentifier], noDamageFrom: [TypeIdentifier], noDamageTo: [TypeIdentifier]) {
+        self.doubleDamageFrom = doubleDamageFrom
+        self.doubleDamageTo = doubleDamageTo
+        self.halfDamageFrom = halfDamageFrom
+        self.halfDamageTo = halfDamageTo
+        self.noDamageFrom = noDamageFrom
+        self.noDamageTo = noDamageTo
+    }
 }
 
 // MARK: - Pokemon Slot
@@ -30,40 +39,9 @@ public struct DamageRelations: Hashable, Codable {
 public struct PokemonTypeSlot: Hashable, Codable, Sendable {
     public let pokemon: PokemonIdentifier
     public let slot: Int
-}
-
-extension PokemonTypeDetails {
-    public init(_ response: PokemonTypeResponse) {
-        self.init(
-            damageRelations: .init(response.damageRelations),
-            id: response.id,
-            name: response.name,
-            pokemon: .init(response.pokemon)
-        )
-    }
-}
-
-extension DamageRelations {
-    public init(_ response: DamageRelationsResponse) {
-        self.init(
-            doubleDamageFrom: .init(response.doubleDamageFrom),
-            doubleDamageTo: .init(response.doubleDamageTo),
-            halfDamageFrom: .init(response.halfDamageFrom),
-            halfDamageTo: .init(response.halfDamageTo),
-            noDamageFrom: .init(response.noDamageFrom),
-            noDamageTo: .init(response.noDamageTo)
-        )
-    }
-}
-
-extension PokemonTypeSlot {
-    public init(_ response: PokemonSlotResponse) {
-        self.init(pokemon: .init(response.pokemon), slot: response.slot)
-    }
-}
-
-extension [PokemonTypeSlot] {
-    public init(_ resources: [PokemonSlotResponse]) {
-        self = resources.map { PokemonTypeSlot($0) }
+    
+    public init(pokemon: PokemonIdentifier, slot: Int) {
+        self.pokemon = pokemon
+        self.slot = slot
     }
 }

@@ -3,7 +3,7 @@ import Foundation
 // Common Models
 struct APIResource: Codable {
     /// The URL of the referenced resource.
-    let url: String
+    let url: URL
 }
 
 struct DescriptionResponse: Codable {
@@ -67,7 +67,7 @@ struct NamedAPIResource: Codable {
     /// The name of the referenced resource.
     let name: String
     /// The URL of the referenced resource.
-    let url: String
+    let url: URL
 }
 
 struct VerboseEffectResponse: Codable {

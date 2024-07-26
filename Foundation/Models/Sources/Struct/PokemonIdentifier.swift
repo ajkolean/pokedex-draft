@@ -25,17 +25,7 @@ extension PokemonIdentifier {
     }
 }
 
-extension PokemonIdentifier {
-    public init(_ response: NamedAPIResource) {
-        self.init(id: response.url.extractID(), name: response.name, url: response.url)
-    }
-}
 
-extension [PokemonIdentifier] {
-    public init(_ resources: [NamedAPIResource]) {
-        self = resources.map { PokemonIdentifier($0) }
-    }
-}
 
 #if DEBUG
     extension PokemonIdentifier {

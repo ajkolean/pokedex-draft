@@ -19,14 +19,3 @@ extension TypeIdentifier {
     }
 }
 
-extension TypeIdentifier {
-    public init(_ response: NamedAPIResource) {
-        self.init(name: response.name, url: response.url)
-    }
-}
-
-extension [TypeIdentifier] {
-    public init(_ resources: [NamedAPIResource]) {
-        self = resources.map { TypeIdentifier($0) }
-    }
-}
