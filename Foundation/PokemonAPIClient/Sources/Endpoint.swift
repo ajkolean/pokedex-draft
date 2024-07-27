@@ -1,7 +1,7 @@
 import Foundation
 
 enum Endpoint: String {
-    case berry = "berry"
+    case berry
     case berryFirmness = "berry-firmness"
     case berryFlavor = "berry-flavor"
     case contestType = "contest-type"
@@ -12,41 +12,41 @@ enum Endpoint: String {
     case encounterConditionValue = "encounter-condition-value"
     case evolutionChain = "evolution-chain"
     case evolutionTrigger = "evolution-trigger"
-    case generation = "generation"
-    case pokedex = "pokedex"
-    case version = "version"
+    case generation
+    case pokedex
+    case version
     case versionGroup = "version-group"
-    case item = "item"
+    case item
     case itemAttribute = "item-attribute"
     case itemCategory = "item-category"
     case itemFlingEffect = "item-fling-effect"
     case itemPocket = "item-pocket"
-    case location = "location"
+    case location
     case locationArea = "location-area"
     case palParkArea = "pal-park-area"
-    case region = "region"
-    case machine = "machine"
-    case move = "move"
+    case region
+    case machine
+    case move
     case moveAilment = "move-ailment"
     case moveBattleStyle = "move-battle-style"
     case moveCategory = "move-category"
     case moveDamageClass = "move-damage-class"
     case moveLearnMethod = "move-learn-method"
     case moveTarget = "move-target"
-    case ability = "ability"
-    case characteristic = "characteristic"
+    case ability
+    case characteristic
     case eggGroup = "egg-group"
-    case gender = "gender"
+    case gender
     case growthRate = "growth-rate"
-    case nature = "nature"
+    case nature
     case pokeathlonStat = "pokeathlon-stat"
-    case pokemon = "pokemon"
+    case pokemon
     case pokemonColor = "pokemon-color"
     case pokemonForm = "pokemon-form"
     case pokemonHabitat = "pokemon-habitat"
     case pokemonShape = "pokemon-shape"
     case pokemonSpecies = "pokemon-species"
-    case stat = "stat"
-    case type = "type"
-    case language = "language"
+    case stat
+    case type
+    case language
 }

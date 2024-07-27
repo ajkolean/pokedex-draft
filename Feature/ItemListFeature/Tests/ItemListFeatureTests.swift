@@ -3,6 +3,4 @@ import XCTest
 @testable import ItemListFeature
 
 @MainActor
-final class ItemListFeatureTests: XCTestCase {
-
-}
+final class ItemListFeatureTests: XCTestCase {}

@@ -11,7 +11,7 @@ public struct Generation: Codable, Hashable, Identifiable {
     public let pokemonSpecies: [PokemonSpeciesName]
     public let types: [TypeName]
     public let versionGroups: [VersionGroupName]
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -34,12 +34,12 @@ public struct Pokedex: Codable, Hashable, Identifiable {
     public let pokemonEntries: [PokemonEntry]
     public let region: RegionName
     public let versionGroups: [VersionGroupName]
-    
+
     public struct Description: Codable, Hashable {
         public let description: String
         public let language: LanguageName
     }
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -52,7 +52,7 @@ public struct Version: Codable, Hashable, Identifiable {
     public let name: VersionName
     public let names: [Name]
     public let versionGroup: VersionGroupName
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -73,56 +73,59 @@ public struct VersionGroup: Codable, Hashable, Identifiable {
 
 extension Generation {
     init(apiModel: GenerationResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.abilities = apiModel.abilities.map { AbilityName(rawValue: $0.name) }
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.mainRegion = RegionName(rawValue: apiModel.main_region.name)
-        self.moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
-        self.pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
-        self.types = apiModel.types.map { TypeName(rawValue: $0.name) }
-        self.versionGroups = apiModel.version_groups.map { VersionGroupName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        abilities = apiModel.abilities.map { AbilityName(rawValue: $0.name) }
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        mainRegion = RegionName(rawValue: apiModel.main_region.name)
+        moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
+        pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
+        types = apiModel.types.map { TypeName(rawValue: $0.name) }
+        versionGroups = apiModel.version_groups.map { VersionGroupName(rawValue: $0.name) }
     }
 }
 
 extension PokemonEntry {
     init(apiModel: PokemonEntryResponse) {
-        self.entryNumber = apiModel.entry_number
-        self.pokemonSpecies = PokemonSpeciesName(rawValue: apiModel.pokemon_species.name)
+        entryNumber = apiModel.entry_number
+        pokemonSpecies = PokemonSpeciesName(rawValue: apiModel.pokemon_species.name)
     }
 }
 
 extension Pokedex {
     init(apiModel: PokedexResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.isMainSeries = apiModel.is_main_series
-        self.descriptions = apiModel.descriptions.map { Description(description: $0.description, language: LanguageName(rawValue: $0.language.name)) }
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.pokemonEntries = apiModel.pokemon_entries.map { PokemonEntry(apiModel: $0) }
-        self.region = RegionName(rawValue: apiModel.region.name)
-        self.versionGroups = apiModel.version_groups.map { VersionGroupName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        isMainSeries = apiModel.is_main_series
+        descriptions = apiModel.descriptions.map { Description(
+            description: $0.description,
+            language: LanguageName(rawValue: $0.language.name)
+        ) }
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        pokemonEntries = apiModel.pokemon_entries.map { PokemonEntry(apiModel: $0) }
+        region = RegionName(rawValue: apiModel.region.name)
+        versionGroups = apiModel.version_groups.map { VersionGroupName(rawValue: $0.name) }
     }
 }
 
 extension Version {
     init(apiModel: VersionResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
+        id = apiModel.id
+        name = apiModel.name
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
     }
 }
 
 extension VersionGroup {
     init(apiModel: VersionGroupResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.order = apiModel.order
-        self.generation = GenerationName(rawValue: apiModel.generation.name)
-        self.moveLearnMethods = apiModel.move_learn_methods.map { MoveLearnMethodName(rawValue: $0.name) }
-        self.pokedexes = apiModel.pokedexes.map { PokedexName(rawValue: $0.name) }
-        self.regions = apiModel.regions.map { RegionName(rawValue: $0.name) }
-        self.versions = apiModel.versions.map { VersionName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        order = apiModel.order
+        generation = GenerationName(rawValue: apiModel.generation.name)
+        moveLearnMethods = apiModel.move_learn_methods.map { MoveLearnMethodName(rawValue: $0.name) }
+        pokedexes = apiModel.pokedexes.map { PokedexName(rawValue: $0.name) }
+        regions = apiModel.regions.map { RegionName(rawValue: $0.name) }
+        versions = apiModel.versions.map { VersionName(rawValue: $0.name) }
     }
 }

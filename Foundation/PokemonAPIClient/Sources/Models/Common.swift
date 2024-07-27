@@ -34,7 +34,9 @@ struct EncounterResponse: Codable {
 }
 
 struct FlavorTextResponse: Codable {
-    /// The localized flavor text for an API resource in a specific language. Note that this text is left unprocessed as it is found in game files. This means that it contains special characters that one might want to replace with their visible decodable version.
+    /// The localized flavor text for an API resource in a specific language. Note that this text is left unprocessed as it is
+    /// found in game files. This means that it contains special characters that one might want to replace with their visible
+    /// decodable version.
     let flavor_text: String
     /// The language this flavor text is in.
     let language: NamedAPIResource

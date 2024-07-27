@@ -6,9 +6,8 @@ public struct PokemonSpecies: Codable, Hashable, Sendable {
     public let flavorTextEntries: [FlavorTextEntry]
 
     enum CodingKeys: String, CodingKey {
-        
         case flavorTextEntries = "flavor_text_entries"
-        
+
         case name
     }
 
@@ -17,17 +16,14 @@ public struct PokemonSpecies: Codable, Hashable, Sendable {
     }
 }
 
-
 public struct FlavorTextEntry: Codable, Hashable, Sendable {
     public let flavorText: String
 
     public init(flavorText: String) {
         self.flavorText = flavorText
-   
     }
 
     enum CodingKeys: String, CodingKey {
         case flavorText = "flavor_text"
-
     }
 }

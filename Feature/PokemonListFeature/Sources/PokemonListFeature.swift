@@ -12,10 +12,10 @@ public struct PokemonListFeature: Reducer {
         public var pokemonIdentifiers: IdentifiedArrayOf<PokemonIdentifier> = []
         public var pokemon = [PokemonIdentifier: Pokemon]()
         public var searchText: String = ""
-        
+
         var filteredPokemons: [PokemonIdentifier] {
             var filteredList: [PokemonIdentifier] = []
-            
+
             for pokemon in pokemonIdentifiers {
                 if pokemon.name.contains(searchText.lowercased()) {
                     filteredList.append(pokemon)
@@ -23,13 +23,13 @@ public struct PokemonListFeature: Reducer {
                     filteredList.append(pokemon)
                 }
             }
-            
+
             return searchText == "" ? pokemonIdentifiers.elements : filteredList
         }
-        
+
         public init() {}
     }
-    
+
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case fetchPokemonIdentifiers
@@ -38,11 +38,11 @@ public struct PokemonListFeature: Reducer {
         case setPokemon(PokemonIdentifier, Pokemon?)
         case pokemonCardTapped(Pokemon)
     }
-    
+
     @Dependency(\.pokemonRepo) var pokemonRepo
-    
+
     public init() {}
-    
+
     public var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce<State, Action> { state, action in
@@ -61,7 +61,7 @@ public struct PokemonListFeature: Reducer {
             case let .setPokemonList(.success(pokemonIdentifiers)):
                 state.pokemonIdentifiers = .init(uniqueElements: pokemonIdentifiers)
                 return .none
-                
+
             case let .setPokemonList(.failure(error)):
                 fatalError("Failed to fetch pokemon list: \(error)")
             case let .displayedPokemonCard(pokemon):
@@ -82,17 +82,17 @@ public struct PokemonListFeature: Reducer {
 public struct PokemonListFeatureView: View {
     @Bindable public var store: StoreOf<PokemonListFeature>
     private let gridItems = [GridItem(.flexible()), GridItem(.flexible())]
-    
+
     public init(store: StoreOf<PokemonListFeature>) {
         self.store = store
     }
-    
+
     public var body: some View {
         ScrollView {
             LazyVGrid(columns: gridItems, spacing: 16) {
                 ForEach(store.filteredPokemons) { identifier in
                     let pokemon = store.pokemon[identifier]
-                    
+
                     PokemonCardView(identifier: identifier, pokemon: pokemon)
                         .unWrapping(pokemon) { view, pokemon in
                             view.tappable {

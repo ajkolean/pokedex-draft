@@ -11,29 +11,29 @@ public struct Ability: Codable, Hashable, Identifiable {
     public let effectChanges: [EffectChange]
     public let flavorTextEntries: [FlavorText]
     public let pokemon: [AbilityPokemon]
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
     }
-    
+
     public struct VerboseEffect: Codable, Hashable {
         public let effect: String
         public let shortEffect: String
         public let language: LanguageName
     }
-    
+
     public struct EffectChange: Codable, Hashable {
         public let versionGroup: VersionGroupName
         public let effectEntries: [VerboseEffect]
     }
-    
+
     public struct FlavorText: Codable, Hashable {
         public let flavorText: String
         public let language: LanguageName
         public let versionGroup: VersionGroupName
     }
-    
+
     public struct AbilityPokemon: Codable, Hashable {
         public let isHidden: Bool
         public let slot: Int
@@ -43,15 +43,34 @@ public struct Ability: Codable, Hashable, Identifiable {
 
 extension Ability {
     init(apiModel: AbilityResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.isMainSeries = apiModel.is_main_series
-        self.generation = GenerationName(rawValue: apiModel.generation.name)
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.effectEntries = apiModel.effect_entries.map { VerboseEffect(effect: $0.effect, shortEffect: $0.short_effect, language: LanguageName(rawValue: $0.language.name)) }
-        self.effectChanges = apiModel.effect_changes.map { EffectChange(versionGroup: VersionGroupName(rawValue: $0.version_group.name), effectEntries: $0.effect_entries.map { VerboseEffect(effect: $0.effect, shortEffect: $0.short_effect, language: LanguageName(rawValue: $0.language.name)) }) }
-        self.flavorTextEntries = apiModel.flavor_text_entries.map { FlavorText(flavorText: $0.flavor_text, language: LanguageName(rawValue: $0.language.name), versionGroup: VersionGroupName(rawValue: $0.version_group.name)) }
-        self.pokemon = apiModel.pokemon.map { AbilityPokemon(isHidden: $0.is_hidden, slot: $0.slot, pokemon: PokemonName(rawValue: $0.pokemon.name)) }
+        id = apiModel.id
+        name = apiModel.name
+        isMainSeries = apiModel.is_main_series
+        generation = GenerationName(rawValue: apiModel.generation.name)
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        effectEntries = apiModel.effect_entries.map { VerboseEffect(
+            effect: $0.effect,
+            shortEffect: $0.short_effect,
+            language: LanguageName(rawValue: $0.language.name)
+        ) }
+        effectChanges = apiModel.effect_changes.map { EffectChange(
+            versionGroup: VersionGroupName(rawValue: $0.version_group.name),
+            effectEntries: $0.effect_entries.map { VerboseEffect(
+                effect: $0.effect,
+                shortEffect: $0.short_effect,
+                language: LanguageName(rawValue: $0.language.name)
+            ) }
+        ) }
+        flavorTextEntries = apiModel.flavor_text_entries.map { FlavorText(
+            flavorText: $0.flavor_text,
+            language: LanguageName(rawValue: $0.language.name),
+            versionGroup: VersionGroupName(rawValue: $0.version_group.name)
+        ) }
+        pokemon = apiModel.pokemon.map { AbilityPokemon(
+            isHidden: $0.is_hidden,
+            slot: $0.slot,
+            pokemon: PokemonName(rawValue: $0.pokemon.name)
+        ) }
     }
 }
 
@@ -62,7 +81,7 @@ public struct Characteristic: Codable, Hashable, Identifiable {
     public let possibleValues: [Int]
     public let highestStat: StatName
     public let descriptions: [Description]
-    
+
     public struct Description: Codable, Hashable {
         public let description: String
         public let language: LanguageName
@@ -71,11 +90,14 @@ public struct Characteristic: Codable, Hashable, Identifiable {
 
 extension Characteristic {
     init(apiModel: CharacteristicResponse) {
-        self.id = apiModel.id
-        self.geneModulo = apiModel.gene_modulo
-        self.possibleValues = apiModel.possible_values
-        self.highestStat = StatName(rawValue: apiModel.highest_stat.name)
-        self.descriptions = apiModel.descriptions.map { Description(description: $0.description, language: LanguageName(rawValue: $0.language.name)) }
+        id = apiModel.id
+        geneModulo = apiModel.gene_modulo
+        possibleValues = apiModel.possible_values
+        highestStat = StatName(rawValue: apiModel.highest_stat.name)
+        descriptions = apiModel.descriptions.map { Description(
+            description: $0.description,
+            language: LanguageName(rawValue: $0.language.name)
+        ) }
     }
 }
 
@@ -85,7 +107,7 @@ public struct EggGroup: Codable, Hashable, Identifiable {
     public let name: EggGroupName
     public let names: [Name]
     public let pokemonSpecies: [PokemonSpeciesName]
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -94,10 +116,10 @@ public struct EggGroup: Codable, Hashable, Identifiable {
 
 extension EggGroup {
     init(apiModel: EggGroupResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
     }
 }
 
@@ -107,7 +129,7 @@ public struct Gender: Codable, Hashable, Identifiable {
     public let name: GenderName
     public let pokemonSpeciesDetails: [PokemonSpeciesGender]
     public let requiredForEvolution: [PokemonSpeciesName]
-    
+
     public struct PokemonSpeciesGender: Codable, Hashable {
         public let rate: Int
         public let pokemonSpecies: PokemonSpeciesName
@@ -116,10 +138,13 @@ public struct Gender: Codable, Hashable, Identifiable {
 
 extension Gender {
     init(apiModel: GenderResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.pokemonSpeciesDetails = apiModel.pokemon_species_details.map { PokemonSpeciesGender(rate: $0.rate, pokemonSpecies: PokemonSpeciesName(rawValue: $0.pokemon_species.name)) }
-        self.requiredForEvolution = apiModel.required_for_evolution.map { PokemonSpeciesName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        pokemonSpeciesDetails = apiModel.pokemon_species_details.map { PokemonSpeciesGender(
+            rate: $0.rate,
+            pokemonSpecies: PokemonSpeciesName(rawValue: $0.pokemon_species.name)
+        ) }
+        requiredForEvolution = apiModel.required_for_evolution.map { PokemonSpeciesName(rawValue: $0.name) }
     }
 }
 
@@ -131,12 +156,12 @@ public struct GrowthRate: Codable, Hashable, Identifiable {
     public let descriptions: [Description]
     public let levels: [ExperienceLevel]
     public let pokemonSpecies: [PokemonSpeciesName]
-    
+
     public struct Description: Codable, Hashable {
         public let description: String
         public let language: LanguageName
     }
-    
+
     public struct ExperienceLevel: Codable, Hashable {
         public let level: Int
         public let experience: Int
@@ -145,12 +170,15 @@ public struct GrowthRate: Codable, Hashable, Identifiable {
 
 extension GrowthRate {
     init(apiModel: GrowthRateResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.formula = apiModel.formula
-        self.descriptions = apiModel.descriptions.map { Description(description: $0.description, language: LanguageName(rawValue: $0.language.name)) }
-        self.levels = apiModel.levels.map { ExperienceLevel(level: $0.level, experience: $0.experience) }
-        self.pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        formula = apiModel.formula
+        descriptions = apiModel.descriptions.map { Description(
+            description: $0.description,
+            language: LanguageName(rawValue: $0.language.name)
+        ) }
+        levels = apiModel.levels.map { ExperienceLevel(level: $0.level, experience: $0.experience) }
+        pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
     }
 }
 
@@ -165,18 +193,18 @@ public struct Nature: Codable, Hashable, Identifiable {
     public let pokeathlonStatChanges: [StatChange]
     public let moveBattleStylePreferences: [MoveBattleStylePreference]
     public let names: [Name]
-    
+
     public struct StatChange: Codable, Hashable {
         public let maxChange: Int
         public let pokeathlonStat: PokeathlonStatName
     }
-    
+
     public struct MoveBattleStylePreference: Codable, Hashable {
         public let lowHPPreference: Int
         public let highHPPreference: Int
         public let moveBattleStyle: MoveBattleStyleName
     }
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -185,15 +213,22 @@ public struct Nature: Codable, Hashable, Identifiable {
 
 extension Nature {
     init(apiModel: NatureResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.decreasedStat = StatName(rawValue: apiModel.decreased_stat.name)
-        self.increasedStat = StatName(rawValue: apiModel.increased_stat.name)
-        self.hatesFlavor = BerryFlavorName(rawValue: apiModel.hates_flavor.name)
-        self.likesFlavor = BerryFlavorName(rawValue: apiModel.likes_flavor.name)
-        self.pokeathlonStatChanges = apiModel.pokeathlon_stat_changes.map { StatChange(maxChange: $0.max_change, pokeathlonStat: PokeathlonStatName(rawValue: $0.pokeathlon_stat.name)) }
-        self.moveBattleStylePreferences = apiModel.move_battle_style_preferences.map { MoveBattleStylePreference(lowHPPreference: $0.low_hp_preference, highHPPreference: $0.high_hp_preference, moveBattleStyle: MoveBattleStyleName(rawValue: $0.move_battle_style.name)) }
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        id = apiModel.id
+        name = apiModel.name
+        decreasedStat = StatName(rawValue: apiModel.decreased_stat.name)
+        increasedStat = StatName(rawValue: apiModel.increased_stat.name)
+        hatesFlavor = BerryFlavorName(rawValue: apiModel.hates_flavor.name)
+        likesFlavor = BerryFlavorName(rawValue: apiModel.likes_flavor.name)
+        pokeathlonStatChanges = apiModel.pokeathlon_stat_changes.map { StatChange(
+            maxChange: $0.max_change,
+            pokeathlonStat: PokeathlonStatName(rawValue: $0.pokeathlon_stat.name)
+        ) }
+        moveBattleStylePreferences = apiModel.move_battle_style_preferences.map { MoveBattleStylePreference(
+            lowHPPreference: $0.low_hp_preference,
+            highHPPreference: $0.high_hp_preference,
+            moveBattleStyle: MoveBattleStyleName(rawValue: $0.move_battle_style.name)
+        ) }
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
     }
 }
 
@@ -203,16 +238,16 @@ public struct PokeathlonStat: Codable, Hashable, Identifiable {
     public let name: PokeathlonStatName
     public let names: [Name]
     public let affectingNatures: AffectingNatures
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
     }
-    
+
     public struct AffectingNatures: Codable, Hashable {
         public let increase: [NatureStatChange]
         public let decrease: [NatureStatChange]
-        
+
         public struct NatureStatChange: Codable, Hashable {
             public let maxChange: Int
             public let nature: NatureName
@@ -222,10 +257,19 @@ public struct PokeathlonStat: Codable, Hashable, Identifiable {
 
 extension PokeathlonStat {
     init(apiModel: PokeathlonStatResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.affectingNatures = AffectingNatures(increase: apiModel.affecting_natures.increase.map { AffectingNatures.NatureStatChange(maxChange: $0.max_change, nature: NatureName(rawValue: $0.nature.name)) }, decrease: apiModel.affecting_natures.decrease.map { AffectingNatures.NatureStatChange(maxChange: $0.max_change, nature: NatureName(rawValue: $0.nature.name)) })
+        id = apiModel.id
+        name = apiModel.name
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        affectingNatures = AffectingNatures(
+            increase: apiModel.affecting_natures.increase.map { AffectingNatures.NatureStatChange(
+                maxChange: $0.max_change,
+                nature: NatureName(rawValue: $0.nature.name)
+            ) },
+            decrease: apiModel.affecting_natures.decrease.map { AffectingNatures.NatureStatChange(
+                maxChange: $0.max_change,
+                nature: NatureName(rawValue: $0.nature.name)
+            ) }
+        )
     }
 }
 
@@ -250,44 +294,44 @@ public struct Pokemon: Codable, Hashable, Identifiable {
     public let species: PokemonSpeciesName
     public let stats: [Stat]
     public let types: [TypeSlot]
-    
+
     public struct Ability: Codable, Hashable {
         public let isHidden: Bool
         public let slot: Int
         public let ability: AbilityName
     }
-    
+
     public struct GameIndex: Codable, Hashable {
         public let gameIndex: Int
         public let version: VersionName
     }
-    
+
     public struct HeldItem: Codable, Hashable {
         public let item: ItemName
         public let versionDetails: [VersionDetail]
-        
+
         public struct VersionDetail: Codable, Hashable {
             public let version: VersionName
             public let rarity: Int
         }
     }
-    
+
     public struct Move: Codable, Hashable {
         public let move: MoveName
         public let versionGroupDetails: [VersionGroupDetail]
-        
+
         public struct VersionGroupDetail: Codable, Hashable {
             public let moveLearnMethod: MoveLearnMethodName
             public let versionGroup: VersionGroupName
             public let levelLearnedAt: Int
         }
     }
-    
+
     public struct PastType: Codable, Hashable {
         public let generation: GenerationName
         public let types: [TypeSlot]
     }
-    
+
     public struct Sprites: Codable, Hashable {
         public let backDefault: String?
         public let backFemale: String?
@@ -298,18 +342,18 @@ public struct Pokemon: Codable, Hashable, Identifiable {
         public let frontShiny: String?
         public let frontShinyFemale: String?
     }
-    
+
     public struct Cries: Codable, Hashable {
         public let latest: String
         public let legacy: String
     }
-    
+
     public struct Stat: Codable, Hashable {
         public let baseStat: Int
         public let effort: Int
         public let stat: StatName
     }
-    
+
     public struct TypeSlot: Codable, Hashable {
         public let slot: Int
         public let type: TypeName
@@ -318,25 +362,57 @@ public struct Pokemon: Codable, Hashable, Identifiable {
 
 extension Pokemon {
     init(apiModel: PokemonResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.baseExperience = apiModel.base_experience
-        self.height = apiModel.height
-        self.isDefault = apiModel.is_default
-        self.order = apiModel.order
-        self.weight = apiModel.weight
-        self.abilities = apiModel.abilities.map { Ability(isHidden: $0.is_hidden, slot: $0.slot, ability: AbilityName(rawValue: $0.ability.name)) }
-        self.forms = apiModel.forms.map { PokemonFormName(rawValue: $0.name) }
-        self.gameIndices = apiModel.game_indices.map { GameIndex(gameIndex: $0.game_index, version: VersionName(rawValue: $0.version.name)) }
-        self.heldItems = apiModel.held_items.map { HeldItem(item: ItemName(rawValue: $0.item.name), versionDetails: $0.version_details.map { HeldItem.VersionDetail(version: VersionName(rawValue: $0.version.name), rarity: $0.rarity) }) }
-        self.locationAreaEncounters = apiModel.location_area_encounters
-        self.moves = apiModel.moves.map { Move(move: MoveName(rawValue: $0.move.name), versionGroupDetails: $0.version_group_details.map { Move.VersionGroupDetail(moveLearnMethod: MoveLearnMethodName(rawValue: $0.move_learn_method.name), versionGroup: VersionGroupName(rawValue: $0.version_group.name), levelLearnedAt: $0.level_learned_at) }) }
-        self.pastTypes = apiModel.past_types.map { PastType(generation: GenerationName(rawValue: $0.generation.name), types: $0.types.map { TypeSlot(slot: $0.slot, type: TypeName(rawValue: $0.type.name)) }) }
-        self.sprites = Sprites(backDefault: apiModel.sprites.back_default, backFemale: apiModel.sprites.back_female, backShiny: apiModel.sprites.back_shiny, backShinyFemale: apiModel.sprites.back_shiny_female, frontDefault: apiModel.sprites.front_default, frontFemale: apiModel.sprites.front_female, frontShiny: apiModel.sprites.front_shiny, frontShinyFemale: apiModel.sprites.front_shiny_female)
-        self.cries = Cries(latest: apiModel.cries.latest, legacy: apiModel.cries.legacy)
-        self.species = PokemonSpeciesName(rawValue: apiModel.species.name)
-        self.stats = apiModel.stats.map { Stat(baseStat: $0.base_stat, effort: $0.effort, stat: StatName(rawValue: $0.stat.name)) }
-        self.types = apiModel.types.map { TypeSlot(slot: $0.slot, type: TypeName(rawValue: $0.type.name)) }
+        id = apiModel.id
+        name = apiModel.name
+        baseExperience = apiModel.base_experience
+        height = apiModel.height
+        isDefault = apiModel.is_default
+        order = apiModel.order
+        weight = apiModel.weight
+        abilities = apiModel.abilities.map { Ability(
+            isHidden: $0.is_hidden,
+            slot: $0.slot,
+            ability: AbilityName(rawValue: $0.ability.name)
+        ) }
+        forms = apiModel.forms.map { PokemonFormName(rawValue: $0.name) }
+        gameIndices = apiModel.game_indices.map { GameIndex(
+            gameIndex: $0.game_index,
+            version: VersionName(rawValue: $0.version.name)
+        ) }
+        heldItems = apiModel.held_items.map { HeldItem(
+            item: ItemName(rawValue: $0.item.name),
+            versionDetails: $0.version_details.map { HeldItem.VersionDetail(
+                version: VersionName(rawValue: $0.version.name),
+                rarity: $0.rarity
+            ) }
+        ) }
+        locationAreaEncounters = apiModel.location_area_encounters
+        moves = apiModel.moves.map { Move(
+            move: MoveName(rawValue: $0.move.name),
+            versionGroupDetails: $0.version_group_details.map { Move.VersionGroupDetail(
+                moveLearnMethod: MoveLearnMethodName(rawValue: $0.move_learn_method.name),
+                versionGroup: VersionGroupName(rawValue: $0.version_group.name),
+                levelLearnedAt: $0.level_learned_at
+            ) }
+        ) }
+        pastTypes = apiModel.past_types.map { PastType(
+            generation: GenerationName(rawValue: $0.generation.name),
+            types: $0.types.map { TypeSlot(slot: $0.slot, type: TypeName(rawValue: $0.type.name)) }
+        ) }
+        sprites = Sprites(
+            backDefault: apiModel.sprites.back_default,
+            backFemale: apiModel.sprites.back_female,
+            backShiny: apiModel.sprites.back_shiny,
+            backShinyFemale: apiModel.sprites.back_shiny_female,
+            frontDefault: apiModel.sprites.front_default,
+            frontFemale: apiModel.sprites.front_female,
+            frontShiny: apiModel.sprites.front_shiny,
+            frontShinyFemale: apiModel.sprites.front_shiny_female
+        )
+        cries = Cries(latest: apiModel.cries.latest, legacy: apiModel.cries.legacy)
+        species = PokemonSpeciesName(rawValue: apiModel.species.name)
+        stats = apiModel.stats.map { Stat(baseStat: $0.base_stat, effort: $0.effort, stat: StatName(rawValue: $0.stat.name)) }
+        types = apiModel.types.map { TypeSlot(slot: $0.slot, type: TypeName(rawValue: $0.type.name)) }
     }
 }
 
@@ -346,7 +422,7 @@ public struct PokemonColor: Codable, Hashable, Identifiable {
     public let name: PokemonColorName
     public let names: [Name]
     public let pokemonSpecies: [PokemonSpeciesName]
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -355,10 +431,10 @@ public struct PokemonColor: Codable, Hashable, Identifiable {
 
 extension PokemonColor {
     init(apiModel: PokemonColorResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
     }
 }
 
@@ -378,12 +454,12 @@ public struct PokemonForm: Codable, Hashable, Identifiable {
     public let versionGroup: VersionGroupName
     public let names: [Name]
     public let formNames: [FormName]
-    
+
     public struct TypeSlot: Codable, Hashable {
         public let slot: Int
         public let type: TypeName
     }
-    
+
     public struct Sprites: Codable, Hashable {
         public let backDefault: String?
         public let backFemale: String?
@@ -394,12 +470,12 @@ public struct PokemonForm: Codable, Hashable, Identifiable {
         public let frontShiny: String?
         public let frontShinyFemale: String?
     }
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
     }
-    
+
     public struct FormName: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -408,20 +484,29 @@ public struct PokemonForm: Codable, Hashable, Identifiable {
 
 extension PokemonForm {
     init(apiModel: PokemonFormResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.order = apiModel.order
-        self.formOrder = apiModel.form_order
-        self.isDefault = apiModel.is_default
-        self.isBattleOnly = apiModel.is_battle_only
-        self.isMega = apiModel.is_mega
-        self.formName = apiModel.form_name
-        self.pokemon = PokemonName(rawValue: apiModel.pokemon.name)
-        self.types = apiModel.types.map { TypeSlot(slot: $0.slot, type: TypeName(rawValue: $0.type.name)) }
-        self.sprites = Sprites(backDefault: apiModel.sprites.back_default, backFemale: apiModel.sprites.back_female, backShiny: apiModel.sprites.back_shiny, backShinyFemale: apiModel.sprites.back_shiny_female, frontDefault: apiModel.sprites.front_default, frontFemale: apiModel.sprites.front_female, frontShiny: apiModel.sprites.front_shiny, frontShinyFemale: apiModel.sprites.front_shiny_female)
-        self.versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.formNames = apiModel.form_names.map { FormName(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        id = apiModel.id
+        name = apiModel.name
+        order = apiModel.order
+        formOrder = apiModel.form_order
+        isDefault = apiModel.is_default
+        isBattleOnly = apiModel.is_battle_only
+        isMega = apiModel.is_mega
+        formName = apiModel.form_name
+        pokemon = PokemonName(rawValue: apiModel.pokemon.name)
+        types = apiModel.types.map { TypeSlot(slot: $0.slot, type: TypeName(rawValue: $0.type.name)) }
+        sprites = Sprites(
+            backDefault: apiModel.sprites.back_default,
+            backFemale: apiModel.sprites.back_female,
+            backShiny: apiModel.sprites.back_shiny,
+            backShinyFemale: apiModel.sprites.back_shiny_female,
+            frontDefault: apiModel.sprites.front_default,
+            frontFemale: apiModel.sprites.front_female,
+            frontShiny: apiModel.sprites.front_shiny,
+            frontShinyFemale: apiModel.sprites.front_shiny_female
+        )
+        versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        formNames = apiModel.form_names.map { FormName(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
     }
 }
 
@@ -431,7 +516,7 @@ public struct PokemonHabitat: Codable, Hashable, Identifiable {
     public let name: PokemonHabitatName
     public let names: [Name]
     public let pokemonSpecies: [PokemonSpeciesName]
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -440,10 +525,10 @@ public struct PokemonHabitat: Codable, Hashable, Identifiable {
 
 extension PokemonHabitat {
     init(apiModel: PokemonHabitatResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
     }
 }
 
@@ -454,12 +539,12 @@ public struct PokemonShape: Codable, Hashable, Identifiable {
     public let awesomeNames: [AwesomeName]
     public let names: [Name]
     public let pokemonSpecies: [PokemonSpeciesName]
-    
+
     public struct AwesomeName: Codable, Hashable {
         public let awesomeName: String
         public let language: LanguageName
     }
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -468,11 +553,14 @@ public struct PokemonShape: Codable, Hashable, Identifiable {
 
 extension PokemonShape {
     init(apiModel: PokemonShapeResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.awesomeNames = apiModel.awesome_names.map { AwesomeName(awesomeName: $0.awesome_name, language: LanguageName(rawValue: $0.language.name)) }
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        awesomeNames = apiModel.awesome_names.map { AwesomeName(
+            awesomeName: $0.awesome_name,
+            language: LanguageName(rawValue: $0.language.name)
+        ) }
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
     }
 }
 
@@ -505,39 +593,39 @@ public struct PokemonSpecies: Codable, Hashable, Identifiable {
     public let formDescriptions: [Description]
     public let genera: [Genus]
     public let varieties: [Variety]
-    
+
     public struct PokedexNumber: Codable, Hashable {
         public let entryNumber: Int
         public let pokedex: PokedexName
     }
-    
+
     public struct PalParkEncounter: Codable, Hashable {
         public let baseScore: Int
         public let rate: Int
         public let area: PalParkAreaName
     }
-    
+
     public struct FlavorText: Codable, Hashable {
         public let flavorText: String
         public let language: LanguageName
         public let version: VersionName
     }
-    
+
     public struct Description: Codable, Hashable {
         public let description: String
         public let language: LanguageName
     }
-    
+
     public struct Genus: Codable, Hashable {
         public let genus: String
         public let language: LanguageName
     }
-    
+
     public struct Variety: Codable, Hashable {
         public let isDefault: Bool
         public let pokemon: PokemonName
     }
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -546,33 +634,47 @@ public struct PokemonSpecies: Codable, Hashable, Identifiable {
 
 extension PokemonSpecies {
     init(apiModel: PokemonSpeciesResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.order = apiModel.order
-        self.genderRate = apiModel.gender_rate
-        self.captureRate = apiModel.capture_rate
-        self.baseHappiness = apiModel.base_happiness
-        self.isBaby = apiModel.is_baby
-        self.isLegendary = apiModel.is_legendary
-        self.isMythical = apiModel.is_mythical
-        self.hatchCounter = apiModel.hatch_counter
-        self.hasGenderDifferences = apiModel.has_gender_differences
-        self.formsSwitchable = apiModel.forms_switchable
-        self.growthRate = GrowthRateName(rawValue: apiModel.growth_rate.name)
-        self.pokedexNumbers = apiModel.pokedex_numbers.map { PokedexNumber(entryNumber: $0.entry_number, pokedex: PokedexName(rawValue: $0.pokedex.name)) }
-        self.eggGroups = apiModel.egg_groups.map { EggGroupName(rawValue: $0.name) }
-        self.color = PokemonColorName(rawValue: apiModel.color.name)
-        self.shape = PokemonShapeName(rawValue: apiModel.shape.name)
-        self.evolvesFromSpecies = nil //apiModel.evolves_from_species?.name.map(PokemonSpeciesName.init(rawValue:))
-        self.evolutionChain = apiModel.evolution_chain.url
-        self.habitat = nil //apiModel.habitat?.name.map { PokemonHabitatName.init(rawValue: $0) }
-        self.generation = GenerationName(rawValue: apiModel.generation.name)
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.palParkEncounters = apiModel.pal_park_encounters.map { PalParkEncounter(baseScore: $0.base_score, rate: $0.rate, area: PalParkAreaName(rawValue: $0.area.name)) }
-        self.flavorTextEntries = apiModel.flavor_text_entries.map { FlavorText(flavorText: $0.flavor_text, language: LanguageName(rawValue: $0.language.name), version: VersionName(rawValue: $0.version.name)) }
-        self.formDescriptions = apiModel.form_descriptions.map { Description(description: $0.description, language: LanguageName(rawValue: $0.language.name)) }
-        self.genera = apiModel.genera.map { Genus(genus: $0.genus, language: LanguageName(rawValue: $0.language.name)) }
-        self.varieties = apiModel.varieties.map { Variety(isDefault: $0.is_default, pokemon: PokemonName(rawValue: $0.pokemon.name)) }
+        id = apiModel.id
+        name = apiModel.name
+        order = apiModel.order
+        genderRate = apiModel.gender_rate
+        captureRate = apiModel.capture_rate
+        baseHappiness = apiModel.base_happiness
+        isBaby = apiModel.is_baby
+        isLegendary = apiModel.is_legendary
+        isMythical = apiModel.is_mythical
+        hatchCounter = apiModel.hatch_counter
+        hasGenderDifferences = apiModel.has_gender_differences
+        formsSwitchable = apiModel.forms_switchable
+        growthRate = GrowthRateName(rawValue: apiModel.growth_rate.name)
+        pokedexNumbers = apiModel.pokedex_numbers.map { PokedexNumber(
+            entryNumber: $0.entry_number,
+            pokedex: PokedexName(rawValue: $0.pokedex.name)
+        ) }
+        eggGroups = apiModel.egg_groups.map { EggGroupName(rawValue: $0.name) }
+        color = PokemonColorName(rawValue: apiModel.color.name)
+        shape = PokemonShapeName(rawValue: apiModel.shape.name)
+        evolvesFromSpecies = nil // apiModel.evolves_from_species?.name.map(PokemonSpeciesName.init(rawValue:))
+        evolutionChain = apiModel.evolution_chain.url
+        habitat = nil // apiModel.habitat?.name.map { PokemonHabitatName.init(rawValue: $0) }
+        generation = GenerationName(rawValue: apiModel.generation.name)
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        palParkEncounters = apiModel.pal_park_encounters.map { PalParkEncounter(
+            baseScore: $0.base_score,
+            rate: $0.rate,
+            area: PalParkAreaName(rawValue: $0.area.name)
+        ) }
+        flavorTextEntries = apiModel.flavor_text_entries.map { FlavorText(
+            flavorText: $0.flavor_text,
+            language: LanguageName(rawValue: $0.language.name),
+            version: VersionName(rawValue: $0.version.name)
+        ) }
+        formDescriptions = apiModel.form_descriptions.map { Description(
+            description: $0.description,
+            language: LanguageName(rawValue: $0.language.name)
+        ) }
+        genera = apiModel.genera.map { Genus(genus: $0.genus, language: LanguageName(rawValue: $0.language.name)) }
+        varieties = apiModel.varieties.map { Variety(isDefault: $0.is_default, pokemon: PokemonName(rawValue: $0.pokemon.name)) }
     }
 }
 
@@ -587,22 +689,22 @@ public struct Stat: Codable, Hashable, Identifiable {
     public let characteristics: [URL]
     public let moveDamageClass: MoveDamageClassName
     public let names: [Name]
-    
+
     public struct AffectingMoves: Codable, Hashable {
         public let increase: [MoveStatChange]
         public let decrease: [MoveStatChange]
-        
+
         public struct MoveStatChange: Codable, Hashable {
             public let change: Int
             public let move: MoveName
         }
     }
-    
+
     public struct AffectingNatures: Codable, Hashable {
         public let increase: [NatureName]
         public let decrease: [NatureName]
     }
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -611,15 +713,27 @@ public struct Stat: Codable, Hashable, Identifiable {
 
 extension Stat {
     init(apiModel: StatResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.gameIndex = apiModel.game_index
-        self.isBattleOnly = apiModel.is_battle_only
-        self.affectingMoves = AffectingMoves(increase: apiModel.affecting_moves.increase.map { AffectingMoves.MoveStatChange(change: $0.change, move: MoveName(rawValue: $0.move.name)) }, decrease: apiModel.affecting_moves.decrease.map { AffectingMoves.MoveStatChange(change: $0.change, move: MoveName(rawValue: $0.move.name)) })
-        self.affectingNatures = AffectingNatures(increase: apiModel.affecting_natures.increase.map { NatureName(rawValue: $0.name) }, decrease: apiModel.affecting_natures.decrease.map { NatureName(rawValue: $0.name) })
-        self.characteristics = apiModel.characteristics.map { $0.url }
-        self.moveDamageClass = MoveDamageClassName(rawValue: apiModel.move_damage_class.name)
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        id = apiModel.id
+        name = apiModel.name
+        gameIndex = apiModel.game_index
+        isBattleOnly = apiModel.is_battle_only
+        affectingMoves = AffectingMoves(
+            increase: apiModel.affecting_moves.increase.map { AffectingMoves.MoveStatChange(
+                change: $0.change,
+                move: MoveName(rawValue: $0.move.name)
+            ) },
+            decrease: apiModel.affecting_moves.decrease.map { AffectingMoves.MoveStatChange(
+                change: $0.change,
+                move: MoveName(rawValue: $0.move.name)
+            ) }
+        )
+        affectingNatures = AffectingNatures(
+            increase: apiModel.affecting_natures.increase.map { NatureName(rawValue: $0.name) },
+            decrease: apiModel.affecting_natures.decrease.map { NatureName(rawValue: $0.name) }
+        )
+        characteristics = apiModel.characteristics.map(\.url)
+        moveDamageClass = MoveDamageClassName(rawValue: apiModel.move_damage_class.name)
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
     }
 }
 
@@ -635,7 +749,7 @@ public struct PokemonType: Codable, Hashable, Identifiable {
     public let names: [Name]
     public let pokemon: [TypePokemon]
     public let moves: [MoveName]
-    
+
     public struct DamageRelations: Codable, Hashable {
         public let noDamageTo: [TypeName]
         public let halfDamageTo: [TypeName]
@@ -644,22 +758,22 @@ public struct PokemonType: Codable, Hashable, Identifiable {
         public let halfDamageFrom: [TypeName]
         public let doubleDamageFrom: [TypeName]
     }
-    
+
     public struct PastDamageRelations: Codable, Hashable {
         public let generation: GenerationName
         public let damageRelations: DamageRelations
     }
-    
+
     public struct GameIndex: Codable, Hashable {
         public let gameIndex: Int
         public let generation: GenerationName
     }
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
     }
-    
+
     public struct TypePokemon: Codable, Hashable {
         public let slot: Int
         public let pokemon: PokemonName
@@ -668,15 +782,35 @@ public struct PokemonType: Codable, Hashable, Identifiable {
 
 extension PokemonType {
     init(apiModel: TypeResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.damageRelations = DamageRelations(noDamageTo: apiModel.damage_relations.no_damage_to.map { TypeName(rawValue: $0.name) }, halfDamageTo: apiModel.damage_relations.half_damage_to.map { TypeName(rawValue: $0.name) }, doubleDamageTo: apiModel.damage_relations.double_damage_to.map { TypeName(rawValue: $0.name) }, noDamageFrom: apiModel.damage_relations.no_damage_from.map { TypeName(rawValue: $0.name) }, halfDamageFrom: apiModel.damage_relations.half_damage_from.map { TypeName(rawValue: $0.name) }, doubleDamageFrom: apiModel.damage_relations.double_damage_from.map { TypeName(rawValue: $0.name) })
-        self.pastDamageRelations = apiModel.past_damage_relations.map { PastDamageRelations(generation: GenerationName(rawValue: $0.generation.name), damageRelations: DamageRelations(noDamageTo: $0.damage_relations.no_damage_to.map { TypeName(rawValue: $0.name) }, halfDamageTo: $0.damage_relations.half_damage_to.map { TypeName(rawValue: $0.name) }, doubleDamageTo: $0.damage_relations.double_damage_to.map { TypeName(rawValue: $0.name) }, noDamageFrom: $0.damage_relations.no_damage_from.map { TypeName(rawValue: $0.name) }, halfDamageFrom: $0.damage_relations.half_damage_from.map { TypeName(rawValue: $0.name) }, doubleDamageFrom: $0.damage_relations.double_damage_from.map { TypeName(rawValue: $0.name) })) }
-        self.gameIndices = apiModel.game_indices.map { GameIndex(gameIndex: $0.game_index, generation: GenerationName(rawValue: $0.generation.name)) }
-        self.generation = GenerationName(rawValue: apiModel.generation.name)
-        self.moveDamageClass = MoveDamageClassName(rawValue: apiModel.move_damage_class.name)
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        self.pokemon = apiModel.pokemon.map { TypePokemon(slot: $0.slot, pokemon: PokemonName(rawValue: $0.pokemon.name)) }
-        self.moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
+        id = apiModel.id
+        name = apiModel.name
+        damageRelations = DamageRelations(
+            noDamageTo: apiModel.damage_relations.no_damage_to.map { TypeName(rawValue: $0.name) },
+            halfDamageTo: apiModel.damage_relations.half_damage_to.map { TypeName(rawValue: $0.name) },
+            doubleDamageTo: apiModel.damage_relations.double_damage_to.map { TypeName(rawValue: $0.name) },
+            noDamageFrom: apiModel.damage_relations.no_damage_from.map { TypeName(rawValue: $0.name) },
+            halfDamageFrom: apiModel.damage_relations.half_damage_from.map { TypeName(rawValue: $0.name) },
+            doubleDamageFrom: apiModel.damage_relations.double_damage_from.map { TypeName(rawValue: $0.name) }
+        )
+        pastDamageRelations = apiModel.past_damage_relations.map { PastDamageRelations(
+            generation: GenerationName(rawValue: $0.generation.name),
+            damageRelations: DamageRelations(
+                noDamageTo: $0.damage_relations.no_damage_to.map { TypeName(rawValue: $0.name) },
+                halfDamageTo: $0.damage_relations.half_damage_to.map { TypeName(rawValue: $0.name) },
+                doubleDamageTo: $0.damage_relations.double_damage_to.map { TypeName(rawValue: $0.name) },
+                noDamageFrom: $0.damage_relations.no_damage_from.map { TypeName(rawValue: $0.name) },
+                halfDamageFrom: $0.damage_relations.half_damage_from.map { TypeName(rawValue: $0.name) },
+                doubleDamageFrom: $0.damage_relations.double_damage_from.map { TypeName(rawValue: $0.name) }
+            )
+        ) }
+        gameIndices = apiModel.game_indices.map { GameIndex(
+            gameIndex: $0.game_index,
+            generation: GenerationName(rawValue: $0.generation.name)
+        ) }
+        generation = GenerationName(rawValue: apiModel.generation.name)
+        moveDamageClass = MoveDamageClassName(rawValue: apiModel.move_damage_class.name)
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        pokemon = apiModel.pokemon.map { TypePokemon(slot: $0.slot, pokemon: PokemonName(rawValue: $0.pokemon.name)) }
+        moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
     }
 }

@@ -7,11 +7,14 @@ struct EvolutionDetailResponse: Codable {
     let trigger: NamedAPIResource
     /// The id of the gender the evolving Pokémon species must be in order to evolve into this Pokémon species.
     let gender: Int?
-    /// The item the evolving Pokémon species must be holding during the evolution trigger event to evolve into this Pokémon species.
+    /// The item the evolving Pokémon species must be holding during the evolution trigger event to evolve into this Pokémon
+    /// species.
     let held_item: NamedAPIResource?
-    /// The move that must be known by the evolving Pokémon species during the evolution trigger event in order to evolve into this Pokémon species.
+    /// The move that must be known by the evolving Pokémon species during the evolution trigger event in order to evolve into
+    /// this Pokémon species.
     let known_move: NamedAPIResource?
-    /// The evolving Pokémon species must know a move with this type during the evolution trigger event in order to evolve into this Pokémon species.
+    /// The evolving Pokémon species must know a move with this type during the evolution trigger event in order to evolve into
+    /// this Pokémon species.
     let known_move_type: NamedAPIResource?
     /// The location the evolution must be triggered at.
     let location: NamedAPIResource?
@@ -25,11 +28,14 @@ struct EvolutionDetailResponse: Codable {
     let min_affection: Int?
     /// Whether or not it must be raining in the overworld to cause evolution this Pokémon species.
     let needs_overworld_rain: Bool
-    /// The Pokémon species that must be in the player's party in order for the evolving Pokémon species to evolve into this Pokémon species.
+    /// The Pokémon species that must be in the player's party in order for the evolving Pokémon species to evolve into this
+    /// Pokémon species.
     let party_species: NamedAPIResource?
-    /// The player must have a Pokémon of this type in their party during the evolution trigger event in order for the evolving Pokémon species to evolve into this Pokémon species.
+    /// The player must have a Pokémon of this type in their party during the evolution trigger event in order for the evolving
+    /// Pokémon species to evolve into this Pokémon species.
     let party_type: NamedAPIResource?
-    /// The required relation between the Pokémon's Attack and Defense stats. 1 means Attack > Defense. 0 means Attack = Defense. -1 means Attack < Defense.
+    /// The required relation between the Pokémon's Attack and Defense stats. 1 means Attack > Defense. 0 means Attack = Defense.
+    /// -1 means Attack < Defense.
     let relative_physical_stats: Int?
     /// The required time of day. Day or night.
     let time_of_day: String
@@ -53,9 +59,11 @@ struct ChainLinkResponse: Codable {
 struct EvolutionChainResponse: Codable {
     /// The identifier for this resource.
     let id: Int
-    /// The item that a Pokémon would be holding when mating that would trigger the egg hatching a baby Pokémon rather than a basic Pokémon.
+    /// The item that a Pokémon would be holding when mating that would trigger the egg hatching a baby Pokémon rather than a
+    /// basic Pokémon.
     let baby_trigger_item: NamedAPIResource?
-    /// The base chain link object. Each link contains evolution details for a Pokémon in the chain. Each link references the next Pokémon in the natural evolution order.
+    /// The base chain link object. Each link contains evolution details for a Pokémon in the chain. Each link references the next
+    /// Pokémon in the natural evolution order.
     let chain: ChainLinkResponse
 }
 

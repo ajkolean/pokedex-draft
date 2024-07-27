@@ -1,11 +1,11 @@
 import ComposableArchitecture
+import ItemListFeature
 import Models
 import PokemonDetailFeature
 import PokemonListFeature
 import SwiftUI
 import TypeDetailFeature
 import TypeListFeature
-import ItemListFeature
 
 @Reducer
 public struct AppFeature: Reducer {

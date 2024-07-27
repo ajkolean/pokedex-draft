@@ -1,7 +1,5 @@
 import Foundation
 
-
-
 struct ContestComboDetailResponse: Codable {
     /// A list of moves to use before this move.
     let use_before: [NamedAPIResource]?

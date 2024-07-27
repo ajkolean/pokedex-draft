@@ -13,7 +13,6 @@ public struct DataStoreClient: Sendable, TestDependencyKey, PokemonDataService {
     public var saveTypeIdentifiers: @Sendable ([TypeIdentifier]) async throws -> Void
     public var savePokemonTypeDetails: @Sendable (PokemonTypeDetails) async throws -> Void
 
-
     public static let testValue = Self()
 }
 

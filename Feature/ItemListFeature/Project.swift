@@ -13,7 +13,7 @@ let project: Project = .moduleProject(
                 .ComposableArchitecture,
                 .PokemonAPIClient,
                 .PokemonAPIClientInterface,
-                .Kingfisher
+                .Kingfisher,
             ]
         ),
         .moduleTarget(
@@ -22,15 +22,15 @@ let project: Project = .moduleProject(
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
                 .ItemListFeature,
-                .ComposableArchitecture
+                .ComposableArchitecture,
             ]
         ),
         .moduleTarget(
             module: feature,
             targetType: .tests,
             dependencies: [
-                .ItemListFeature
+                .ItemListFeature,
             ]
-        )
+        ),
     ]
 )

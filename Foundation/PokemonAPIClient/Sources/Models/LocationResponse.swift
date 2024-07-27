@@ -22,7 +22,8 @@ struct LocationAreaResponse: Codable {
     let name: LocationAreaName
     /// The internal id of an API resource within game data.
     let game_index: Int
-    /// A list of methods in which Pokémon may be encountered in this area and how likely the method will occur depending on the version of the game.
+    /// A list of methods in which Pokémon may be encountered in this area and how likely the method will occur depending on the
+    /// version of the game.
     let encounter_method_rates: [EncounterMethodRateResponse]
     /// The region this location area can be found in.
     let location: NamedAPIResource

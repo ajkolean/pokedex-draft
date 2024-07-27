@@ -23,8 +23,15 @@ public struct DamageRelations: Hashable, Codable {
     public let halfDamageTo: [TypeIdentifier]
     public let noDamageFrom: [TypeIdentifier]
     public let noDamageTo: [TypeIdentifier]
-    
-    public init(doubleDamageFrom: [TypeIdentifier], doubleDamageTo: [TypeIdentifier], halfDamageFrom: [TypeIdentifier], halfDamageTo: [TypeIdentifier], noDamageFrom: [TypeIdentifier], noDamageTo: [TypeIdentifier]) {
+
+    public init(
+        doubleDamageFrom: [TypeIdentifier],
+        doubleDamageTo: [TypeIdentifier],
+        halfDamageFrom: [TypeIdentifier],
+        halfDamageTo: [TypeIdentifier],
+        noDamageFrom: [TypeIdentifier],
+        noDamageTo: [TypeIdentifier]
+    ) {
         self.doubleDamageFrom = doubleDamageFrom
         self.doubleDamageTo = doubleDamageTo
         self.halfDamageFrom = halfDamageFrom
@@ -39,7 +46,7 @@ public struct DamageRelations: Hashable, Codable {
 public struct PokemonTypeSlot: Hashable, Codable, Sendable {
     public let pokemon: PokemonIdentifier
     public let slot: Int
-    
+
     public init(pokemon: PokemonIdentifier, slot: Int) {
         self.pokemon = pokemon
         self.slot = slot

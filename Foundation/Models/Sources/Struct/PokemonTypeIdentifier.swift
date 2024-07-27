@@ -18,4 +18,3 @@ extension TypeIdentifier {
         .init(rawValue: name) ?? .unknown
     }
 }
-

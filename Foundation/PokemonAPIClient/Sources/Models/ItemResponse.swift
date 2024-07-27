@@ -97,4 +97,3 @@ struct ItemPocketResponse: Codable {
     /// The name of this resource listed in different languages.
     let names: [NameResponse]
 }
-

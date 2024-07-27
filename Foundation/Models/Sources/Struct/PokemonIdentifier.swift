@@ -25,8 +25,6 @@ extension PokemonIdentifier {
     }
 }
 
-
-
 #if DEBUG
     extension PokemonIdentifier {
         public static let mockData: [PokemonIdentifier] = [

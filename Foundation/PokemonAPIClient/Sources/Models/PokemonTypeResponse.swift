@@ -1,6 +1,5 @@
 import Foundation
 
-
 struct AbilityEffectChangeResponse: Codable {
     /// The version group in which the effect of this ability change.
     let version_group: NamedAPIResource
@@ -301,7 +300,6 @@ struct PokemonResponse: Codable {
     /// A list of details showing types this Pokémon has.
     let types: [PokemonTypeResponse]
 }
-
 
 struct EncounterDetailResponse: Codable {
     /// The lowest level the Pokémon could be encountered at.

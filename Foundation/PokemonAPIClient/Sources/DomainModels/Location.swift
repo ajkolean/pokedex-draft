@@ -8,12 +8,12 @@ public struct Location: Codable, Hashable, Identifiable {
     public let names: [Name]
     public let gameIndices: [GenerationGameIndex]
     public let areas: [LocationAreaName]
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
     }
-    
+
     public struct GenerationGameIndex: Codable, Hashable {
         public let gameIndex: Int
         public let generation: GenerationName
@@ -29,31 +29,31 @@ public struct LocationArea: Codable, Hashable, Identifiable {
     public let location: LocationName
     public let names: [Name]
     public let pokemonEncounters: [PokemonEncounter]
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
     }
-    
+
     public struct EncounterMethodRate: Codable, Hashable {
         public let encounterMethod: EncounterMethodName
         public let versionDetails: [VersionDetail]
-        
+
         public struct VersionDetail: Codable, Hashable {
             public let rate: Int
             public let version: VersionName
         }
     }
-    
+
     public struct PokemonEncounter: Codable, Hashable {
         public let pokemon: PokemonName
         public let versionDetails: [VersionDetail]
-        
+
         public struct VersionDetail: Codable, Hashable {
             public let version: VersionName
             public let maxChance: Int
             public let encounterDetails: [EncounterDetail]
-            
+
             public struct EncounterDetail: Codable, Hashable {
                 public let minLevel: Int
                 public let maxLevel: Int
@@ -71,12 +71,12 @@ public struct PalParkArea: Codable, Hashable, Identifiable {
     public let name: PalParkAreaName
     public let names: [Name]
     public let pokemonEncounters: [EncounterSpecies]
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
     }
-    
+
     public struct EncounterSpecies: Codable, Hashable {
         public let baseScore: Int
         public let rate: Int
@@ -93,7 +93,7 @@ public struct Region: Codable, Hashable, Identifiable {
     public let names: [Name]
     public let pokedexes: [PokedexName]
     public let versionGroups: [VersionGroupName]
-    
+
     public struct Name: Codable, Hashable {
         public let name: String
         public let language: LanguageName
@@ -102,16 +102,16 @@ public struct Region: Codable, Hashable, Identifiable {
 
 extension Location {
     init(apiModel: LocationResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.region = RegionName(rawValue: apiModel.region.name)
-        self.names = apiModel.names.map {
+        id = apiModel.id
+        name = apiModel.name
+        region = RegionName(rawValue: apiModel.region.name)
+        names = apiModel.names.map {
             Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
         }
-        self.gameIndices = apiModel.game_indices.map {
+        gameIndices = apiModel.game_indices.map {
             GenerationGameIndex(gameIndex: $0.game_index, generation: GenerationName(rawValue: $0.generation.name))
         }
-        self.areas = apiModel.areas.map {
+        areas = apiModel.areas.map {
             LocationAreaName(rawValue: $0.name)
         }
     }
@@ -119,10 +119,10 @@ extension Location {
 
 extension LocationArea {
     init(apiModel: LocationAreaResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.gameIndex = apiModel.game_index
-        self.encounterMethodRates = apiModel.encounter_method_rates.map {
+        id = apiModel.id
+        name = apiModel.name
+        gameIndex = apiModel.game_index
+        encounterMethodRates = apiModel.encounter_method_rates.map {
             EncounterMethodRate(
                 encounterMethod: EncounterMethodName(rawValue: $0.encounter_method.name),
                 versionDetails: $0.version_details.map {
@@ -130,11 +130,11 @@ extension LocationArea {
                 }
             )
         }
-        self.location = LocationName(rawValue: apiModel.location.name)
-        self.names = apiModel.names.map {
+        location = LocationName(rawValue: apiModel.location.name)
+        names = apiModel.names.map {
             Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
         }
-        self.pokemonEncounters = apiModel.pokemon_encounters.map {
+        pokemonEncounters = apiModel.pokemon_encounters.map {
             PokemonEncounter(
                 pokemon: PokemonName(rawValue: $0.pokemon.name),
                 versionDetails: $0.version_details.map {
@@ -161,12 +161,12 @@ extension LocationArea {
 
 extension PalParkArea {
     init(apiModel: PalParkAreaResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.names = apiModel.names.map {
+        id = apiModel.id
+        name = apiModel.name
+        names = apiModel.names.map {
             Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
         }
-        self.pokemonEncounters = apiModel.pokemon_encounters.map {
+        pokemonEncounters = apiModel.pokemon_encounters.map {
             EncounterSpecies(
                 baseScore: $0.base_score,
                 rate: $0.rate,
@@ -178,19 +178,19 @@ extension PalParkArea {
 
 extension Region {
     init(apiModel: RegionResponse) {
-        self.id = apiModel.id
-        self.name = apiModel.name
-        self.locations = apiModel.locations.map {
+        id = apiModel.id
+        name = apiModel.name
+        locations = apiModel.locations.map {
             LocationName(rawValue: $0.name)
         }
-        self.mainGeneration = GenerationName(rawValue: apiModel.main_generation.name)
-        self.names = apiModel.names.map {
+        mainGeneration = GenerationName(rawValue: apiModel.main_generation.name)
+        names = apiModel.names.map {
             Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
         }
-        self.pokedexes = apiModel.pokedexes.map {
+        pokedexes = apiModel.pokedexes.map {
             PokedexName(rawValue: $0.name)
         }
-        self.versionGroups = apiModel.version_groups.map {
+        versionGroups = apiModel.version_groups.map {
             VersionGroupName(rawValue: $0.name)
         }
     }

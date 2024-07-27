@@ -14,7 +14,8 @@ struct BerryResponse: Codable {
     let id: Int
     /// The name for this resource.
     let name: BerryName
-    /// Time it takes the tree to grow one stage, in hours. Berry trees go through four of these growth stages before they can be picked.
+    /// Time it takes the tree to grow one stage, in hours. Berry trees go through four of these growth stages before they can be
+    /// picked.
     let growth_time: Int
     /// The maximum number of these berries that can grow on one tree in Generation IV.
     let max_harvest: Int

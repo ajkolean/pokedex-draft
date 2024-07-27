@@ -25,23 +25,23 @@ public struct Move: Codable, Hashable, Identifiable {
     public let type: TypeName
     public let learnedByPokemon: [PokemonName]
     public let flavorTextEntries: [MoveFlavorText]
-    
+
     public struct ContestComboSets: Codable, Hashable {
         public let normal: ContestComboDetail
         public let `super`: ContestComboDetail
     }
-    
+
     public struct ContestComboDetail: Codable, Hashable {
         public let useBefore: [MoveName]?
         public let useAfter: [MoveName]?
     }
-    
+
     public struct MoveFlavorText: Codable, Hashable {
         public let flavorText: String
         public let language: LanguageName
         public let versionGroup: VersionGroupName
     }
-    
+
     public struct MoveMeta: Codable, Hashable {
         public let ailment: MoveAilmentName
         public let category: MoveCategoryName
@@ -56,12 +56,12 @@ public struct Move: Codable, Hashable, Identifiable {
         public let flinchChance: Int
         public let statChance: Int
     }
-    
+
     public struct MoveStatChange: Codable, Hashable {
         public let change: Int
         public let stat: StatName
     }
-    
+
     public struct PastMoveStatValues: Codable, Hashable {
         public let accuracy: Int?
         public let effectChance: Int?
@@ -135,166 +135,174 @@ public struct Description: Codable, Hashable {
 
 extension Name {
     init(apiModel: NameResponse) {
-        self.name = apiModel.name
-        self.language = LanguageName(rawValue: apiModel.language.name)
+        name = apiModel.name
+        language = LanguageName(rawValue: apiModel.language.name)
     }
 }
 
 extension Description {
     init(apiModel: DescriptionResponse) {
-        self.description = apiModel.description
-        self.language = LanguageName(rawValue: apiModel.language.name)
+        description = apiModel.description
+        language = LanguageName(rawValue: apiModel.language.name)
     }
 }
 
 // Extensions to map API response models to domain models
 extension Move {
     init(apiModel: MoveResponse) {
-        self.id = apiModel.id
-        self.name = MoveName(rawValue: apiModel.name)
-        self.accuracy = apiModel.accuracy
-        self.effectChance = apiModel.effect_chance
-        self.pp = apiModel.pp
-        self.priority = apiModel.priority
-        self.power = apiModel.power
-        self.contestCombos = apiModel.contest_combos.map { ContestComboSets(normal: ContestComboDetail(useBefore: $0.normal.use_before?.map { MoveName(rawValue: $0.name) }, useAfter: $0.normal.use_after?.map { MoveName(rawValue: $0.name) }), super: ContestComboDetail(useBefore: $0.super.use_before?.map { MoveName(rawValue: $0.name) }, useAfter: $0.super.use_after?.map { MoveName(rawValue: $0.name) })) }
-        self.contestType = apiModel.contest_type.map { ContestTypeName(rawValue: $0.name) }
-        self.contestEffect = apiModel.contest_effect?.url
-        self.damageClass = MoveDamageClassName(rawValue: apiModel.damage_class.name)
-        self.effectEntries = apiModel.effect_entries.map { Ability.VerboseEffect(apiModel: $0) }
-        self.effectChanges = apiModel.effect_changes.map { Ability.EffectChange(apiModel: $0) }
-        self.generation = GenerationName(rawValue: apiModel.generation.name)
-        self.meta = apiModel.meta.map { MoveMeta(apiModel: $0) }
-        self.names = apiModel.names.map { Name(apiModel: $0) }
-        self.pastValues = apiModel.past_values.map { PastMoveStatValues(apiModel: $0) }
-        self.statChanges = apiModel.stat_changes.map { MoveStatChange(apiModel: $0) }
-        self.superContestEffect = apiModel.super_contest_effect?.url
-        self.target = MoveTargetName(rawValue: apiModel.target.name)
-        self.type = TypeName(rawValue: apiModel.type.name)
-        self.learnedByPokemon = apiModel.learned_by_pokemon.map { PokemonName(rawValue: $0.name) }
-        self.flavorTextEntries = apiModel.flavor_text_entries.map { MoveFlavorText(apiModel: $0) }
+        id = apiModel.id
+        name = MoveName(rawValue: apiModel.name)
+        accuracy = apiModel.accuracy
+        effectChance = apiModel.effect_chance
+        pp = apiModel.pp
+        priority = apiModel.priority
+        power = apiModel.power
+        contestCombos = apiModel.contest_combos.map { ContestComboSets(
+            normal: ContestComboDetail(
+                useBefore: $0.normal.use_before?.map { MoveName(rawValue: $0.name) },
+                useAfter: $0.normal.use_after?.map { MoveName(rawValue: $0.name) }
+            ),
+            super: ContestComboDetail(
+                useBefore: $0.super.use_before?.map { MoveName(rawValue: $0.name) },
+                useAfter: $0.super.use_after?.map { MoveName(rawValue: $0.name) }
+            )
+        ) }
+        contestType = apiModel.contest_type.map { ContestTypeName(rawValue: $0.name) }
+        contestEffect = apiModel.contest_effect?.url
+        damageClass = MoveDamageClassName(rawValue: apiModel.damage_class.name)
+        effectEntries = apiModel.effect_entries.map { Ability.VerboseEffect(apiModel: $0) }
+        effectChanges = apiModel.effect_changes.map { Ability.EffectChange(apiModel: $0) }
+        generation = GenerationName(rawValue: apiModel.generation.name)
+        meta = apiModel.meta.map { MoveMeta(apiModel: $0) }
+        names = apiModel.names.map { Name(apiModel: $0) }
+        pastValues = apiModel.past_values.map { PastMoveStatValues(apiModel: $0) }
+        statChanges = apiModel.stat_changes.map { MoveStatChange(apiModel: $0) }
+        superContestEffect = apiModel.super_contest_effect?.url
+        target = MoveTargetName(rawValue: apiModel.target.name)
+        type = TypeName(rawValue: apiModel.type.name)
+        learnedByPokemon = apiModel.learned_by_pokemon.map { PokemonName(rawValue: $0.name) }
+        flavorTextEntries = apiModel.flavor_text_entries.map { MoveFlavorText(apiModel: $0) }
     }
 }
 
 extension Move.ContestComboDetail {
     init(apiModel: ContestComboDetailResponse) {
-        self.useBefore = apiModel.use_before?.map { MoveName(rawValue: $0.name) }
-        self.useAfter = apiModel.use_after?.map { MoveName(rawValue: $0.name) }
+        useBefore = apiModel.use_before?.map { MoveName(rawValue: $0.name) }
+        useAfter = apiModel.use_after?.map { MoveName(rawValue: $0.name) }
     }
 }
 
 extension Move.MoveFlavorText {
     init(apiModel: MoveFlavorTextResponse) {
-        self.flavorText = apiModel.flavor_text
-        self.language = LanguageName(rawValue: apiModel.language.name)
-        self.versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
+        flavorText = apiModel.flavor_text
+        language = LanguageName(rawValue: apiModel.language.name)
+        versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
     }
 }
 
 extension Move.MoveMeta {
     init(apiModel: MoveMetaDataResponse) {
-        self.ailment = MoveAilmentName(rawValue: apiModel.ailment.name)
-        self.category = MoveCategoryName(rawValue: apiModel.category.name)
-        self.minHits = apiModel.min_hits
-        self.maxHits = apiModel.max_hits
-        self.minTurns = apiModel.min_turns
-        self.maxTurns = apiModel.max_turns
-        self.drain = apiModel.drain
-        self.healing = apiModel.healing
-        self.critRate = apiModel.crit_rate
-        self.ailmentChance = apiModel.ailment_chance
-        self.flinchChance = apiModel.flinch_chance
-        self.statChance = apiModel.stat_chance
+        ailment = MoveAilmentName(rawValue: apiModel.ailment.name)
+        category = MoveCategoryName(rawValue: apiModel.category.name)
+        minHits = apiModel.min_hits
+        maxHits = apiModel.max_hits
+        minTurns = apiModel.min_turns
+        maxTurns = apiModel.max_turns
+        drain = apiModel.drain
+        healing = apiModel.healing
+        critRate = apiModel.crit_rate
+        ailmentChance = apiModel.ailment_chance
+        flinchChance = apiModel.flinch_chance
+        statChance = apiModel.stat_chance
     }
 }
 
 extension Move.MoveStatChange {
     init(apiModel: MoveStatChangeResponse) {
-        self.change = apiModel.change
-        self.stat = StatName(rawValue: apiModel.stat.name)
+        change = apiModel.change
+        stat = StatName(rawValue: apiModel.stat.name)
     }
 }
 
 extension Move.PastMoveStatValues {
     init(apiModel: PastMoveStatValuesResponse) {
-        self.accuracy = apiModel.accuracy
-        self.effectChance = apiModel.effect_chance
-        self.power = apiModel.power
-        self.pp = apiModel.pp
-        self.effectEntries = apiModel.effect_entries.map { Ability.VerboseEffect(apiModel: $0) }
-        self.type = TypeName(rawValue: apiModel.type.name)
-        self.versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
+        accuracy = apiModel.accuracy
+        effectChance = apiModel.effect_chance
+        power = apiModel.power
+        pp = apiModel.pp
+        effectEntries = apiModel.effect_entries.map { Ability.VerboseEffect(apiModel: $0) }
+        type = TypeName(rawValue: apiModel.type.name)
+        versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
     }
 }
 
 extension Ability.VerboseEffect {
     init(apiModel: VerboseEffectResponse) {
-        self.effect = apiModel.effect
-        self.language = LanguageName(rawValue: apiModel.language.name)
-        self.shortEffect = apiModel.short_effect
+        effect = apiModel.effect
+        language = LanguageName(rawValue: apiModel.language.name)
+        shortEffect = apiModel.short_effect
     }
 }
 
 extension Ability.EffectChange {
     init(apiModel: AbilityEffectChangeResponse) {
-        self.versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
-        self.effectEntries = apiModel.effect_entries.map { Ability.VerboseEffect(apiModel: $0) }
+        versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
+        effectEntries = apiModel.effect_entries.map { Ability.VerboseEffect(apiModel: $0) }
     }
 }
 
-
 extension MoveAilment {
     init(apiModel: MoveAilmentResponse) {
-        self.id = apiModel.id
-        self.name = MoveAilmentName(rawValue: apiModel.name)
-        self.moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        id = apiModel.id
+        name = MoveAilmentName(rawValue: apiModel.name)
+        moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
     }
 }
 
 extension MoveBattleStyle {
     init(apiModel: MoveBattleStyleResponse) {
-        self.id = apiModel.id
-        self.name = MoveBattleStyleName(rawValue: apiModel.name)
-        self.names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        id = apiModel.id
+        name = MoveBattleStyleName(rawValue: apiModel.name)
+        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
     }
 }
 
 extension MoveCategory {
     init(apiModel: MoveCategoryResponse) {
-        self.id = apiModel.id
-        self.name = MoveCategoryName(rawValue: apiModel.name)
-        self.moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
-        self.descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
+        id = apiModel.id
+        name = MoveCategoryName(rawValue: apiModel.name)
+        moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
+        descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
     }
 }
 
 extension MoveDamageClass {
     init(apiModel: MoveDamageClassResponse) {
-        self.id = apiModel.id
-        self.name = MoveDamageClassName(rawValue: apiModel.name)
-        self.descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
-        self.moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
-        self.names = apiModel.names.map { Name(apiModel: $0) }
+        id = apiModel.id
+        name = MoveDamageClassName(rawValue: apiModel.name)
+        descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
+        moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
+        names = apiModel.names.map { Name(apiModel: $0) }
     }
 }
 
 extension MoveLearnMethod {
     init(apiModel: MoveLearnMethodResponse) {
-        self.id = apiModel.id
-        self.name = MoveLearnMethodName(rawValue: apiModel.name)
-        self.descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
-        self.names = apiModel.names.map { Name(apiModel: $0) }
-        self.versionGroups = apiModel.version_groups.map { VersionGroupName(rawValue: $0.name) }
+        id = apiModel.id
+        name = MoveLearnMethodName(rawValue: apiModel.name)
+        descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
+        names = apiModel.names.map { Name(apiModel: $0) }
+        versionGroups = apiModel.version_groups.map { VersionGroupName(rawValue: $0.name) }
     }
 }
 
 extension MoveTarget {
     init(apiModel: MoveTargetResponse) {
-        self.id = apiModel.id
-        self.name = MoveTargetName(rawValue: apiModel.name)
-        self.descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
-        self.moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
-        self.names = apiModel.names.map { Name(apiModel: $0) }
+        id = apiModel.id
+        name = MoveTargetName(rawValue: apiModel.name)
+        descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
+        moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
+        names = apiModel.names.map { Name(apiModel: $0) }
     }
 }

@@ -54,11 +54,11 @@ extension PokemonRepo: DependencyKey {
                     }
                     return details
                 }
-            }, 
+            },
             savePokemonIdentifiers: { pokemon in
                 try await dataStoreClient.savePokemonIdentifiers(pokemon)
             },
-            
+
             savePokemon: { shorts in
                 try await dataStoreClient.savePokemon(shorts)
             },

@@ -10,9 +10,9 @@ public struct Machine: Codable, Hashable, Identifiable {
 
 extension Machine {
     init(apiModel: MachineResponse) {
-        self.id = apiModel.id
-        self.item = ItemName(rawValue: apiModel.item.name)
-        self.move = MoveName(rawValue: apiModel.move.name)
-        self.versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
+        id = apiModel.id
+        item = ItemName(rawValue: apiModel.item.name)
+        move = MoveName(rawValue: apiModel.move.name)
+        versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
     }
 }

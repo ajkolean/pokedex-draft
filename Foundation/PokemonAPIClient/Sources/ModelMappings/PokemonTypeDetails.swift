@@ -13,7 +13,7 @@ extension Models.PokemonTypeDetails {
 }
 
 extension Models.DamageRelations {
-     init(_ response: TypeRelationsResponse) {
+    init(_ response: TypeRelationsResponse) {
         self.init(
             doubleDamageFrom: .init(response.double_damage_from),
             doubleDamageTo: .init(response.double_damage_to),
@@ -26,13 +26,13 @@ extension Models.DamageRelations {
 }
 
 extension Models.PokemonTypeSlot {
-     init(_ response: TypePokemonResponse) {
+    init(_ response: TypePokemonResponse) {
         self.init(pokemon: PokemonIdentifier(response.pokemon), slot: response.slot)
     }
 }
 
 extension [Models.PokemonTypeSlot] {
-     init(_ resources: [TypePokemonResponse]) {
+    init(_ resources: [TypePokemonResponse]) {
         self = resources.map { PokemonTypeSlot($0) }
     }
 }

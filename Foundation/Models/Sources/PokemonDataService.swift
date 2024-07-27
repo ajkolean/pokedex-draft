@@ -1,5 +1,5 @@
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 public protocol PokemonFetching: Sendable {
     var fetchPokemonIdentifiers: @Sendable () async throws -> [PokemonIdentifier] { get }
