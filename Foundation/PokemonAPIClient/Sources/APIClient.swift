@@ -716,7 +716,7 @@ extension APIClient: DependencyKey {
                 limit: limit,
                 offset: offset
             )
-            return response.results.map { 
+            return response.results.map {
                 PokemonListIdentifier(id: $0.url.listID(), name: PokemonName(rawValue: $0.name))
             }
         },
@@ -860,8 +860,7 @@ extension URL {
         guard let id = components.last else {
             fatalError("Failed to extract id: \(components.joined(separator: "/"))")
         }
-        
+
         return id
     }
 }
-

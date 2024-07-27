@@ -1,11 +1,8 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonCardView.swift
 import ComposableArchitecture
 import Kingfisher
-import Models
 import PokemonGraphClientInterface
 import SwiftUI
-
-public typealias Pokemon = PokemonGraphClientInterface.Pokemon
 
 public struct PokemonCardView: View {
     public var pokemon: Pokemon
@@ -13,9 +10,9 @@ public struct PokemonCardView: View {
     public init(pokemon: Pokemon) {
         self.pokemon = pokemon
     }
-    
-    var type: Models.PokemonType {
-        Models.PokemonType(rawValue: pokemon.types.first!.name) ?? .unknown
+
+    var type: PokemonType {
+        pokemon.types.first?.type ?? .unknown
     }
 
     public var body: some View {
@@ -36,7 +33,7 @@ public struct PokemonCardView: View {
                 }
 
                 HStack {
-                    Text(pokemon.types.first?.name.capitalized ?? "Grass")
+                    Text(type.rawValue.capitalized)
                         .font(.subheadline).bold()
                         .foregroundColor(.white)
                         .padding(.horizontal, 16)
@@ -63,7 +60,7 @@ public struct PokemonCardView: View {
             type.color()
         )
         .cornerRadius(12)
-        .shadow(color: type.color() ?? .gray, radius: 4, x: 1.0, y: 1.0)
+        .shadow(color: type.color(), radius: 4, x: 1.0, y: 1.0)
     }
 
     var formattedId: String {

@@ -1,6 +1,4 @@
 import XCTest
 @testable import PokemonGraphClient
 
-final class PokemonGraphClientTests: XCTestCase {
-
-}
+final class PokemonGraphClientTests: XCTestCase {}

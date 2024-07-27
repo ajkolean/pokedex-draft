@@ -288,4 +288,3 @@ public struct LanguageListIdentifier: Codable, Identifiable, Hashable {
     public var id: String
     public var name: LanguageName
 }
-
