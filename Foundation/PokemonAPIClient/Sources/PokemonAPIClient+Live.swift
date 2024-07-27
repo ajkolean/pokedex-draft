@@ -17,6 +17,7 @@ extension PokemonAPIClient: DependencyKey {
             },
             fetchPokemonDetails: { name in
                 let url = URL(string: "\(baseURL)pokemon/\(name)")!
+                let a = try await APIClient.liveValue.fetchPokemon(PokemonName(rawValue: name))
                 return try await fetchAndDecode(from: url, as: Models.PokemonDetails.self)
             },
             fetchPokemonSpecies: { url in

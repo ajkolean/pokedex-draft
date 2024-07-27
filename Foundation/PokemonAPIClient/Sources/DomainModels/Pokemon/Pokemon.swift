@@ -624,7 +624,7 @@ extension Stat {
 }
 
 // Domain model for Type
-public struct Type: Codable, Hashable, Identifiable {
+public struct PokemonType: Codable, Hashable, Identifiable {
     public let id: Int
     public let name: TypeName
     public let damageRelations: DamageRelations
@@ -666,7 +666,7 @@ public struct Type: Codable, Hashable, Identifiable {
     }
 }
 
-extension Type {
+extension PokemonType {
     init(apiModel: TypeResponse) {
         self.id = apiModel.id
         self.name = apiModel.name
