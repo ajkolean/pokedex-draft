@@ -3,7 +3,7 @@ import ComposableArchitecture
 
 // Define the APIClient struct
 @DependencyClient
-struct APIClient {
+public struct APIClient {
     public var fetchBerry: @Sendable (_ name: BerryName) async throws -> Berry
     public var fetchBerryList: @Sendable (_ limit: Int, _ offset: Int) async throws -> [BerryName]
     public var fetchBerryFirmness: @Sendable (_ name: BerryFirmnessName) async throws -> BerryFirmness
@@ -103,8 +103,8 @@ struct APIClient {
 
 
 // Define live instance of APIClient
-extension APIClient {
-    static let liveValue = Self(
+extension APIClient: DependencyKey {
+    public static let liveValue = Self(
         fetchBerry: { name in
             let response = try await NetworkManager.shared.fetch(BerryResponse.self, endpoint: .berry, identifier: name)
             return Berry(apiModel: response)
@@ -486,4 +486,15 @@ extension APIClient {
             return response.results.map { LanguageName(rawValue: $0.name) }
         }
     )
+}
+
+extension APIClient: TestDependencyKey {
+    public static let testValue = Self()
+}
+
+extension DependencyValues {
+    public var apiClient: APIClient {
+        get { self[APIClient.self] }
+        set { self[APIClient.self] = newValue }
+    }
 }
