@@ -1,0 +1,29 @@
+{
+  "schemaNamespace" : "GraphClient",
+  "input" : {
+    "operationSearchPaths" : [
+      "**/*.graphql"
+    ],
+    "schemaSearchPaths" : [
+      "**/*schema.json"
+    ]
+  },
+  "output" : {
+    "testMocks" : {
+      "none" : {
+      }
+    },
+    "schemaTypes" : {
+      "path" : "./Interface",
+      "moduleType" : {
+        "embeddedInTarget" : {
+          "name" : "PokemonGraphClient"
+        }
+      }
+    },
+    "operations" : {
+      "inSchemaModule" : {
+      }
+    }
+  }
+}

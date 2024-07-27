@@ -1,6 +1,5 @@
 import ComposableArchitecture
 import Foundation
-import PokemonRepoInterface
 
 // Define the APIClient struct
 @DependencyClient

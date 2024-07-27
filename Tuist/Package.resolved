@@ -1,6 +1,15 @@
 {
-  "originHash" : "4fba2cafa866d4ec10c40cf623cc329191fc1a645977bfdcb94d47e63cd47635",
+  "originHash" : "ea656a3835a443759d0d3005f293474ee1e497ee7ac7d4dad62e9d9dd6228e69",
   "pins" : [
+    {
+      "identity" : "apollo-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apollographql/apollo-ios.git",
+      "state" : {
+        "revision" : "e218b565661b12c3a1e5c0964eac805d44da7c76",
+        "version" : "1.14.0"
+      }
+    },
     {
       "identity" : "combine-schedulers",
       "kind" : "remoteSourceControl",
@@ -17,6 +26,15 @@
       "state" : {
         "revision" : "2ef543ee21d63734e1c004ad6c870255e8716c50",
         "version" : "7.12.0"
+      }
+    },
+    {
+      "identity" : "sqlite.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stephencelis/SQLite.swift.git",
+      "state" : {
+        "revision" : "a95fc6df17d108bd99210db5e8a9bac90fe984b8",
+        "version" : "0.15.3"
       }
     },
     {
