@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import Foundation
+import PokemonRepoInterface
 
 // Define the APIClient struct
 @DependencyClient
@@ -85,7 +86,7 @@ public struct APIClient {
     public var fetchPokeathlonStat: @Sendable (_ name: PokeathlonStatName) async throws -> PokeathlonStat
     public var fetchPokeathlonStatList: @Sendable (_ limit: Int, _ offset: Int) async throws -> [PokeathlonStatName]
     public var fetchPokemon: @Sendable (_ name: PokemonName) async throws -> Pokemon
-    public var fetchPokemonList: @Sendable (_ limit: Int, _ offset: Int) async throws -> [PokemonName]
+    public var fetchPokemonList: @Sendable (_ limit: Int, _ offset: Int) async throws -> [PokemonListIdentifier]
     public var fetchPokemonColor: @Sendable (_ name: PokemonColorName) async throws -> PokemonColor
     public var fetchPokemonColorList: @Sendable (_ limit: Int, _ offset: Int) async throws -> [PokemonColorName]
     public var fetchPokemonForm: @Sendable (_ name: PokemonFormName) async throws -> PokemonForm
@@ -716,7 +717,9 @@ extension APIClient: DependencyKey {
                 limit: limit,
                 offset: offset
             )
-            return response.results.map { PokemonName(rawValue: $0.name) }
+            return response.results.map { 
+                PokemonListIdentifier(id: $0.url.listID(), name: PokemonName(rawValue: $0.name))
+            }
         },
         fetchPokemonColor: { name in
             let response = try await NetworkManager.shared.fetch(
@@ -851,3 +854,15 @@ extension DependencyValues {
         set { self[APIClient.self] = newValue }
     }
 }
+
+extension URL {
+    public func listID() -> String {
+        let components = pathComponents
+        guard let id = components.last else {
+            fatalError("Failed to extract id: \(components.joined(separator: "/"))")
+        }
+        
+        return id
+    }
+}
+
