@@ -14,7 +14,7 @@ extension Location {
         let areas = apiModel.areas.map {
             LocationAreaName(rawValue: $0.name)
         }
-        
+
         self.init(id: id, name: name, region: region, names: names, gameIndices: gameIndices, areas: areas)
     }
 }
@@ -58,8 +58,16 @@ extension LocationArea {
                 }
             )
         }
-        
-        self.init(id: id, name: name, gameIndex: gameIndex, encounterMethodRates: encounterMethodRates, location: location, names: names, pokemonEncounters: pokemonEncounters)
+
+        self.init(
+            id: id,
+            name: name,
+            gameIndex: gameIndex,
+            encounterMethodRates: encounterMethodRates,
+            location: location,
+            names: names,
+            pokemonEncounters: pokemonEncounters
+        )
     }
 }
 
@@ -77,7 +85,7 @@ extension PalParkArea {
                 pokemonSpecies: PokemonSpeciesName(rawValue: $0.pokemon_species.name)
             )
         }
-        
+
         self.init(id: id, name: name, names: names, pokemonEncounters: pokemonEncounters)
     }
 }
@@ -99,7 +107,15 @@ extension Region {
         let versionGroups = apiModel.version_groups.map {
             VersionGroupName(rawValue: $0.name)
         }
-        
-        self.init(id: id, name: name, locations: locations, mainGeneration: mainGeneration, names: names, pokedexes: pokedexes, versionGroups: versionGroups)
+
+        self.init(
+            id: id,
+            name: name,
+            locations: locations,
+            mainGeneration: mainGeneration,
+            names: names,
+            pokedexes: pokedexes,
+            versionGroups: versionGroups
+        )
     }
 }

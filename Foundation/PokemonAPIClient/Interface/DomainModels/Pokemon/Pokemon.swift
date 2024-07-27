@@ -13,27 +13,27 @@ public struct Ability: Codable, Hashable, Identifiable {
     public let effectChanges: [EffectChange]
     public let flavorTextEntries: [FlavorText]
     public let pokemon: [AbilityPokemon]
-    
+
     @MemberwiseInit(.public)
     public struct VerboseEffect: Codable, Hashable {
         public let effect: String
         public let shortEffect: String
         public let language: LanguageName
     }
-    
+
     @MemberwiseInit(.public)
     public struct EffectChange: Codable, Hashable {
         public let versionGroup: VersionGroupName
         public let effectEntries: [VerboseEffect]
     }
-    
+
     @MemberwiseInit(.public)
     public struct FlavorText: Codable, Hashable {
         public let flavorText: String
         public let language: LanguageName
         public let versionGroup: VersionGroupName
     }
-    
+
     @MemberwiseInit(.public)
     public struct AbilityPokemon: Codable, Hashable {
         public let isHidden: Bool
@@ -68,7 +68,7 @@ public struct Gender: Codable, Hashable, Identifiable {
     public let name: GenderName
     public let pokemonSpeciesDetails: [PokemonSpeciesGender]
     public let requiredForEvolution: [PokemonSpeciesName]
-    
+
     @MemberwiseInit(.public)
     public struct PokemonSpeciesGender: Codable, Hashable {
         public let rate: Int
@@ -85,7 +85,7 @@ public struct GrowthRate: Codable, Hashable, Identifiable {
     public let descriptions: [Description]
     public let levels: [ExperienceLevel]
     public let pokemonSpecies: [PokemonSpeciesName]
-    
+
     @MemberwiseInit(.public)
     public struct ExperienceLevel: Codable, Hashable {
         public let level: Int
@@ -105,13 +105,13 @@ public struct Nature: Codable, Hashable, Identifiable {
     public let pokeathlonStatChanges: [StatChange]
     public let moveBattleStylePreferences: [MoveBattleStylePreference]
     public let names: [Name]
-    
+
     @MemberwiseInit(.public)
     public struct StatChange: Codable, Hashable {
         public let maxChange: Int
         public let pokeathlonStat: PokeathlonStatName
     }
-    
+
     @MemberwiseInit(.public)
     public struct MoveBattleStylePreference: Codable, Hashable {
         public let lowHPPreference: Int
@@ -127,12 +127,12 @@ public struct PokeathlonStat: Codable, Hashable, Identifiable {
     public let name: PokeathlonStatName
     public let names: [Name]
     public let affectingNatures: AffectingNatures
-    
+
     @MemberwiseInit(.public)
     public struct AffectingNatures: Codable, Hashable {
         public let increase: [NatureStatChange]
         public let decrease: [NatureStatChange]
-        
+
         @MemberwiseInit(.public)
         public struct NatureStatChange: Codable, Hashable {
             public let maxChange: Int
@@ -163,37 +163,37 @@ public struct Pokemon: Codable, Hashable, Identifiable {
     public let species: PokemonSpeciesName
     public let stats: [Stat]
     public let types: [TypeSlot]
-    
+
     @MemberwiseInit(.public)
     public struct Ability: Codable, Hashable {
         public let isHidden: Bool
         public let slot: Int
         public let ability: AbilityName
     }
-    
+
     @MemberwiseInit(.public)
     public struct GameIndex: Codable, Hashable {
         public let gameIndex: Int
         public let version: VersionName
     }
-    
+
     @MemberwiseInit(.public)
     public struct HeldItem: Codable, Hashable {
         public let item: ItemName
         public let versionDetails: [VersionDetail]
-        
+
         @MemberwiseInit(.public)
         public struct VersionDetail: Codable, Hashable {
             public let version: VersionName
             public let rarity: Int
         }
     }
-    
+
     @MemberwiseInit(.public)
     public struct Move: Codable, Hashable {
         public let move: MoveName
         public let versionGroupDetails: [VersionGroupDetail]
-        
+
         @MemberwiseInit(.public)
         public struct VersionGroupDetail: Codable, Hashable {
             public let moveLearnMethod: MoveLearnMethodName
@@ -201,14 +201,13 @@ public struct Pokemon: Codable, Hashable, Identifiable {
             public let levelLearnedAt: Int
         }
     }
-    
+
     @MemberwiseInit(.public)
     public struct PastType: Codable, Hashable {
         public let generation: GenerationName
         public let types: [TypeSlot]
     }
-    
-    
+
     @MemberwiseInit(.public)
     public struct Sprites: Codable, Hashable {
         public let backDefault: String?
@@ -220,20 +219,20 @@ public struct Pokemon: Codable, Hashable, Identifiable {
         public let frontShiny: String?
         public let frontShinyFemale: String?
     }
-    
+
     @MemberwiseInit(.public)
     public struct Cries: Codable, Hashable {
         public let latest: String
         public let legacy: String
     }
-    
+
     @MemberwiseInit(.public)
     public struct Stat: Codable, Hashable {
         public let baseStat: Int
         public let effort: Int
         public let stat: StatName
     }
-    
+
     @MemberwiseInit(.public)
     public struct TypeSlot: Codable, Hashable {
         public let slot: Int
@@ -267,14 +266,12 @@ public struct PokemonForm: Codable, Hashable, Identifiable {
     public let versionGroup: VersionGroupName
     public let names: [Name]
     public let formNames: [Name]
-    
+
     @MemberwiseInit(.public)
     public struct TypeSlot: Codable, Hashable {
         public let slot: Int
         public let type: TypeName
     }
-    
-
 }
 
 // Domain model for PokemonHabitat
@@ -294,7 +291,7 @@ public struct PokemonShape: Codable, Hashable, Identifiable {
     public let awesomeNames: [AwesomeName]
     public let names: [Name]
     public let pokemonSpecies: [PokemonSpeciesName]
-    
+
     @MemberwiseInit(.public)
     public struct AwesomeName: Codable, Hashable {
         public let awesomeName: String
@@ -332,33 +329,33 @@ public struct PokemonSpecies: Codable, Hashable, Identifiable {
     public let formDescriptions: [Description]
     public let genera: [Genus]
     public let varieties: [Variety]
-    
+
     @MemberwiseInit(.public)
     public struct PokedexNumber: Codable, Hashable {
         public let entryNumber: Int
         public let pokedex: PokedexName
     }
-    
+
     @MemberwiseInit(.public)
     public struct PalParkEncounter: Codable, Hashable {
         public let baseScore: Int
         public let rate: Int
         public let area: PalParkAreaName
     }
-    
+
     @MemberwiseInit(.public)
     public struct FlavorText: Codable, Hashable {
         public let flavorText: String
         public let language: LanguageName
         public let version: VersionName
     }
-    
+
     @MemberwiseInit(.public)
     public struct Genus: Codable, Hashable {
         public let genus: String
         public let language: LanguageName
     }
-    
+
     @MemberwiseInit(.public)
     public struct Variety: Codable, Hashable {
         public let isDefault: Bool
@@ -378,19 +375,19 @@ public struct Stat: Codable, Hashable, Identifiable {
     public let characteristics: [URL]
     public let moveDamageClass: MoveDamageClassName
     public let names: [Name]
-    
+
     @MemberwiseInit(.public)
     public struct AffectingMoves: Codable, Hashable {
         public let increase: [MoveStatChange]
         public let decrease: [MoveStatChange]
-        
+
         @MemberwiseInit(.public)
         public struct MoveStatChange: Codable, Hashable {
             public let change: Int
             public let move: MoveName
         }
     }
-    
+
     @MemberwiseInit(.public)
     public struct AffectingNatures: Codable, Hashable {
         public let increase: [NatureName]
@@ -411,7 +408,7 @@ public struct PokemonType: Codable, Hashable, Identifiable {
     public let names: [Name]
     public let pokemon: [TypePokemon]
     public let moves: [MoveName]
-    
+
     @MemberwiseInit(.public)
     public struct DamageRelations: Codable, Hashable {
         public let noDamageTo: [TypeName]
@@ -421,19 +418,19 @@ public struct PokemonType: Codable, Hashable, Identifiable {
         public let halfDamageFrom: [TypeName]
         public let doubleDamageFrom: [TypeName]
     }
-    
+
     @MemberwiseInit(.public)
     public struct PastDamageRelations: Codable, Hashable {
         public let generation: GenerationName
         public let damageRelations: DamageRelations
     }
-    
+
     @MemberwiseInit(.public)
     public struct GameIndex: Codable, Hashable {
         public let gameIndex: Int
         public let generation: GenerationName
     }
-    
+
     @MemberwiseInit(.public)
     public struct TypePokemon: Codable, Hashable {
         public let slot: Int

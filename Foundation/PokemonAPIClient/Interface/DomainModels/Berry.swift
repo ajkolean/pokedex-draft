@@ -44,5 +44,4 @@ public struct BerryFlavor: Codable, Hashable, Identifiable {
         public let potency: Int
         public let berry: BerryName
     }
-
 }

@@ -18,13 +18,13 @@ public struct ContestEffect: Codable, Hashable, Identifiable {
     public let jam: Int
     public let effectEntries: [Effect]
     public let flavorTextEntries: [FlavorText]
-    
+
     @MemberwiseInit(.public)
     public struct Effect: Codable, Hashable {
         public let effect: String
         public let language: LanguageName
     }
-    
+
     @MemberwiseInit(.public)
     public struct FlavorText: Codable, Hashable {
         public let flavorText: String
@@ -38,7 +38,7 @@ public struct SuperContestEffect: Codable, Hashable, Identifiable {
     public let id: SuperContestEffectID
     public let appeal: Int
     public let flavorTextEntries: [FlavorText]
-    
+
     @MemberwiseInit(.public)
     public struct FlavorText: Codable, Hashable {
         public let flavorText: String
@@ -79,14 +79,14 @@ public struct EvolutionChain: Codable, Hashable, Identifiable {
     public let id: Int
     public let babyTriggerItem: ItemName?
     public let chain: ChainLink
-    
+
     @MemberwiseInit(.public)
     public struct ChainLink: Codable, Hashable {
         public let isBaby: Bool
         public let species: PokemonSpeciesName
         public let evolutionDetails: [EvolutionDetail]?
         public let evolvesTo: [ChainLink]
-        
+
         @MemberwiseInit(.public)
         public struct EvolutionDetail: Codable, Hashable {
             public let item: ItemName?

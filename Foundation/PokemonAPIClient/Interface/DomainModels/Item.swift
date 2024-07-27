@@ -18,37 +18,31 @@ public struct Item: Codable, Hashable, Identifiable {
     public let sprites: Sprites
     public let heldByPokemon: [HeldPokemon]
     public let babyTriggerFor: URL?
-    
+
     @MemberwiseInit(.public)
     public struct VerboseEffect: Codable, Hashable {
         public let effect: String
         public let shortEffect: String
         public let language: LanguageName
     }
-    
+
     @MemberwiseInit(.public)
     public struct FlavorText: Codable, Hashable {
         public let text: String
         public let versionGroup: VersionGroupName
         public let language: LanguageName
     }
-    
-    @MemberwiseInit(.public)
-    public struct GenerationGameIndex: Codable, Hashable {
-        public let gameIndex: Int
-        public let generation: GenerationName
-    }
-    
+
     @MemberwiseInit(.public)
     public struct Sprites: Codable, Hashable {
         public let `default`: String
     }
-    
+
     @MemberwiseInit(.public)
     public struct HeldPokemon: Codable, Hashable {
         public let pokemon: PokemonName
         public let versionDetails: [VersionDetail]
-        
+
         @MemberwiseInit(.public)
         public struct VersionDetail: Codable, Hashable {
             public let rarity: Int
@@ -84,7 +78,7 @@ public struct ItemFlingEffect: Codable, Hashable, Identifiable {
     public let name: ItemFlingEffectName
     public let effectEntries: [Effect]
     public let items: [ItemName]
-    
+
     @MemberwiseInit(.public)
     public struct Effect: Codable, Hashable {
         public let effect: String

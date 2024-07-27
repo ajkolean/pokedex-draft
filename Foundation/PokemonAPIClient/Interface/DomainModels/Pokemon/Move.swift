@@ -27,26 +27,26 @@ public struct Move: Codable, Hashable, Identifiable {
     public let type: TypeName
     public let learnedByPokemon: [PokemonName]
     public let flavorTextEntries: [MoveFlavorText]
-    
+
     @MemberwiseInit(.public)
     public struct ContestComboSets: Codable, Hashable {
         public let normal: ContestComboDetail
         public let `super`: ContestComboDetail
     }
-    
+
     @MemberwiseInit(.public)
     public struct ContestComboDetail: Codable, Hashable {
         public let useBefore: [MoveName]?
         public let useAfter: [MoveName]?
     }
-    
+
     @MemberwiseInit(.public)
     public struct MoveFlavorText: Codable, Hashable {
         public let flavorText: String
         public let language: LanguageName
         public let versionGroup: VersionGroupName
     }
-    
+
     @MemberwiseInit(.public)
     public struct MoveMeta: Codable, Hashable {
         public let ailment: MoveAilmentName
@@ -62,13 +62,13 @@ public struct Move: Codable, Hashable, Identifiable {
         public let flinchChance: Int
         public let statChance: Int
     }
-    
+
     @MemberwiseInit(.public)
     public struct MoveStatChange: Codable, Hashable {
         public let change: Int
         public let stat: StatName
     }
-    
+
     @MemberwiseInit(.public)
     public struct PastMoveStatValues: Codable, Hashable {
         public let accuracy: Int?

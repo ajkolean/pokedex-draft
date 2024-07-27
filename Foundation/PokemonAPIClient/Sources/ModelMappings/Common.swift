@@ -17,32 +17,35 @@ extension Description {
     }
 }
 
-
 // Helper extension to map NameResponse to Name
-extension Array where Element == NameResponse {
+extension [NameResponse] {
     func toNames() -> [Name] {
-        return self.map { Name(apiModel: $0) }
+        return map { Name(apiModel: $0) }
     }
 }
 
 // Helper extension to map DescriptionResponse to Description
-extension Array where Element == DescriptionResponse {
+extension [DescriptionResponse] {
     func toDescriptions() -> [Description] {
-        return self.map { Description(apiModel: $0) }
+        return map { Description(apiModel: $0) }
     }
 }
 
 // Helper extension to map VerboseEffectResponse to Ability.VerboseEffect
-extension Array where Element == VerboseEffectResponse {
+extension [VerboseEffectResponse] {
     func toVerboseEffects() -> [Ability.VerboseEffect] {
-        return self.map { Ability.VerboseEffect(effect: $0.effect, shortEffect: $0.short_effect, language: LanguageName(rawValue: $0.language.name)) }
+        return map { Ability.VerboseEffect(
+            effect: $0.effect,
+            shortEffect: $0.short_effect,
+            language: LanguageName(rawValue: $0.language.name)
+        ) }
     }
 }
 
 // Helper extension to map AbilityEffectChangeResponse to Ability.EffectChange
-extension Array where Element == AbilityEffectChangeResponse {
+extension [AbilityEffectChangeResponse] {
     func toEffectChanges() -> [Ability.EffectChange] {
-        return self.map { Ability.EffectChange(
+        return map { Ability.EffectChange(
             versionGroup: VersionGroupName(rawValue: $0.version_group.name),
             effectEntries: $0.effect_entries.toVerboseEffects()
         ) }
@@ -50,16 +53,21 @@ extension Array where Element == AbilityEffectChangeResponse {
 }
 
 // Helper extension to map AbilityFlavorTextResponse to Ability.FlavorText
-extension Array where Element == AbilityFlavorTextResponse {
+extension [AbilityFlavorTextResponse] {
     func toFlavorTextEntries() -> [Ability.FlavorText] {
-        return self.map { Ability.FlavorText(flavorText: $0.flavor_text, language: LanguageName(rawValue: $0.language.name), versionGroup: VersionGroupName(rawValue: $0.version_group.name)) }
+        return map { Ability.FlavorText(
+            flavorText: $0.flavor_text,
+            language: LanguageName(rawValue: $0.language.name),
+            versionGroup: VersionGroupName(rawValue: $0.version_group.name)
+        ) }
     }
 }
 
 // Helper extension to map AbilityPokemonResponse to Ability.AbilityPokemon
-extension Array where Element == AbilityPokemonResponse {
+extension [AbilityPokemonResponse] {
     func toAbilityPokemon() -> [Ability.AbilityPokemon] {
-        return self.map { Ability.AbilityPokemon(isHidden: $0.is_hidden, slot: $0.slot, pokemon: PokemonName(rawValue: $0.pokemon.name)) }
+        return map {
+            Ability.AbilityPokemon(isHidden: $0.is_hidden, slot: $0.slot, pokemon: PokemonName(rawValue: $0.pokemon.name))
+        }
     }
 }
-

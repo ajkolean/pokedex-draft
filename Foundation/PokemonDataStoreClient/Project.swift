@@ -12,7 +12,7 @@ let project: Project = .moduleProject(
             dependencies: [
                 .PokemonDataStoreClientInterface,
                 .ComposableArchitecture,
-                .Models
+                .Models,
             ]
         ),
         .moduleTarget(

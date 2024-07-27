@@ -45,7 +45,7 @@ extension Item {
             )
         }
         let babyTriggerFor = apiModel.baby_trigger_for?.url
-        
+
         self.init(
             id: id, name: name, cost: cost, flingPower: flingPower,
             flingEffect: flingEffect, attributes: attributes, category: category,
@@ -67,7 +67,7 @@ extension ItemAttribute {
         let descriptions = apiModel.descriptions.map {
             Description(description: $0.description, language: LanguageName(rawValue: $0.language.name))
         }
-        
+
         self.init(id: id, name: name, items: items, names: names, descriptions: descriptions)
     }
 }
@@ -81,7 +81,7 @@ extension ItemCategory {
             Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
         }
         let pocket = ItemPocketName(rawValue: apiModel.pocket.name)
-        
+
         self.init(id: id, name: name, items: items, names: names, pocket: pocket)
     }
 }
@@ -94,7 +94,7 @@ extension ItemFlingEffect {
             Effect(effect: $0.effect, language: LanguageName(rawValue: $0.language.name))
         }
         let items = apiModel.items.map { ItemName(rawValue: $0.name) }
-        
+
         self.init(id: id, name: name, effectEntries: effectEntries, items: items)
     }
 }
@@ -107,7 +107,7 @@ extension ItemPocket {
         let names = apiModel.names.map {
             Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
         }
-        
+
         self.init(id: id, name: name, categories: categories, names: names)
     }
 }

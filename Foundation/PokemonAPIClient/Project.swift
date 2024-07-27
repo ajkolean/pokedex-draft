@@ -22,7 +22,7 @@ let project: Project = .moduleProject(
             dependencies: [
                 .Models,
                 .ComposableArchitecture,
-                .external(name: "MemberwiseInit")
+                .external(name: "MemberwiseInit"),
             ]
         ),
         .moduleTarget(

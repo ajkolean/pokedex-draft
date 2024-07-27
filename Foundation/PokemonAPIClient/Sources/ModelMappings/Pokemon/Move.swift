@@ -13,7 +13,7 @@ extension Move {
         let contestCombos = apiModel.contest_combos.map { ContestComboSets(
             normal: ContestComboDetail(apiModel: $0.normal),
             super: ContestComboDetail(apiModel: $0.super)
-        )}
+        ) }
         let contestType = apiModel.contest_type.map { ContestTypeName(rawValue: $0.name) }
         let contestEffect = apiModel.contest_effect?.url
         let damageClass = MoveDamageClassName(rawValue: apiModel.damage_class.name)
@@ -29,8 +29,32 @@ extension Move {
         let type = TypeName(rawValue: apiModel.type.name)
         let learnedByPokemon = apiModel.learned_by_pokemon.map { PokemonName(rawValue: $0.name) }
         let flavorTextEntries = apiModel.flavor_text_entries.map { MoveFlavorText(apiModel: $0) }
-        
-        self.init(id: id, name: name, accuracy: accuracy, effectChance: effectChance, pp: pp, priority: priority, power: power, contestCombos: contestCombos, contestType: contestType, contestEffect: contestEffect, damageClass: damageClass, effectEntries: effectEntries, effectChanges: effectChanges, generation: generation, meta: meta, names: names, pastValues: pastValues, statChanges: statChanges, superContestEffect: superContestEffect, target: target, type: type, learnedByPokemon: learnedByPokemon, flavorTextEntries: flavorTextEntries)
+
+        self.init(
+            id: id,
+            name: name,
+            accuracy: accuracy,
+            effectChance: effectChance,
+            pp: pp,
+            priority: priority,
+            power: power,
+            contestCombos: contestCombos,
+            contestType: contestType,
+            contestEffect: contestEffect,
+            damageClass: damageClass,
+            effectEntries: effectEntries,
+            effectChanges: effectChanges,
+            generation: generation,
+            meta: meta,
+            names: names,
+            pastValues: pastValues,
+            statChanges: statChanges,
+            superContestEffect: superContestEffect,
+            target: target,
+            type: type,
+            learnedByPokemon: learnedByPokemon,
+            flavorTextEntries: flavorTextEntries
+        )
     }
 }
 
@@ -38,7 +62,7 @@ extension Move.ContestComboDetail {
     init(apiModel: ContestComboDetailResponse) {
         let useBefore = apiModel.use_before?.map { MoveName(rawValue: $0.name) }
         let useAfter = apiModel.use_after?.map { MoveName(rawValue: $0.name) }
-        
+
         self.init(useBefore: useBefore, useAfter: useAfter)
     }
 }
@@ -48,7 +72,7 @@ extension Move.MoveFlavorText {
         let flavorText = apiModel.flavor_text
         let language = LanguageName(rawValue: apiModel.language.name)
         let versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
-        
+
         self.init(flavorText: flavorText, language: language, versionGroup: versionGroup)
     }
 }
@@ -67,8 +91,21 @@ extension Move.MoveMeta {
         let ailmentChance = apiModel.ailment_chance
         let flinchChance = apiModel.flinch_chance
         let statChance = apiModel.stat_chance
-        
-        self.init(ailment: ailment, category: category, minHits: minHits, maxHits: maxHits, minTurns: minTurns, maxTurns: maxTurns, drain: drain, healing: healing, critRate: critRate, ailmentChance: ailmentChance, flinchChance: flinchChance, statChance: statChance)
+
+        self.init(
+            ailment: ailment,
+            category: category,
+            minHits: minHits,
+            maxHits: maxHits,
+            minTurns: minTurns,
+            maxTurns: maxTurns,
+            drain: drain,
+            healing: healing,
+            critRate: critRate,
+            ailmentChance: ailmentChance,
+            flinchChance: flinchChance,
+            statChance: statChance
+        )
     }
 }
 
@@ -76,7 +113,7 @@ extension Move.MoveStatChange {
     init(apiModel: MoveStatChangeResponse) {
         let change = apiModel.change
         let stat = StatName(rawValue: apiModel.stat.name)
-        
+
         self.init(change: change, stat: stat)
     }
 }
@@ -90,8 +127,16 @@ extension Move.PastMoveStatValues {
         let effectEntries = apiModel.effect_entries.map { Ability.VerboseEffect(apiModel: $0) }
         let type = TypeName(rawValue: apiModel.type.name)
         let versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
-        
-        self.init(accuracy: accuracy, effectChance: effectChance, power: power, pp: pp, effectEntries: effectEntries, type: type, versionGroup: versionGroup)
+
+        self.init(
+            accuracy: accuracy,
+            effectChance: effectChance,
+            power: power,
+            pp: pp,
+            effectEntries: effectEntries,
+            type: type,
+            versionGroup: versionGroup
+        )
     }
 }
 
@@ -100,7 +145,7 @@ extension Ability.VerboseEffect {
         let effect = apiModel.effect
         let language = LanguageName(rawValue: apiModel.language.name)
         let shortEffect = apiModel.short_effect
-        
+
         self.init(effect: effect, shortEffect: shortEffect, language: language)
     }
 }
@@ -109,7 +154,7 @@ extension Ability.EffectChange {
     init(apiModel: AbilityEffectChangeResponse) {
         let versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
         let effectEntries = apiModel.effect_entries.map { Ability.VerboseEffect(apiModel: $0) }
-        
+
         self.init(versionGroup: versionGroup, effectEntries: effectEntries)
     }
 }
@@ -120,7 +165,7 @@ extension MoveAilment {
         let name = MoveAilmentName(rawValue: apiModel.name)
         let moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
         let names = apiModel.names.map { Name(apiModel: $0) }
-        
+
         self.init(id: id, name: name, moves: moves, names: names)
     }
 }
@@ -130,7 +175,7 @@ extension MoveBattleStyle {
         let id = apiModel.id
         let name = MoveBattleStyleName(rawValue: apiModel.name)
         let names = apiModel.names.map { Name(apiModel: $0) }
-        
+
         self.init(id: id, name: name, names: names)
     }
 }
@@ -141,7 +186,7 @@ extension MoveCategory {
         let name = MoveCategoryName(rawValue: apiModel.name)
         let moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
         let descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
-        
+
         self.init(id: id, name: name, moves: moves, descriptions: descriptions)
     }
 }
@@ -153,7 +198,7 @@ extension MoveDamageClass {
         let descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
         let moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
         let names = apiModel.names.map { Name(apiModel: $0) }
-        
+
         self.init(id: id, name: name, descriptions: descriptions, moves: moves, names: names)
     }
 }
@@ -165,7 +210,7 @@ extension MoveLearnMethod {
         let descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
         let names = apiModel.names.map { Name(apiModel: $0) }
         let versionGroups = apiModel.version_groups.map { VersionGroupName(rawValue: $0.name) }
-        
+
         self.init(id: id, name: name, descriptions: descriptions, names: names, versionGroups: versionGroups)
     }
 }
@@ -177,7 +222,7 @@ extension MoveTarget {
         let descriptions = apiModel.descriptions.map { Description(apiModel: $0) }
         let moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
         let names = apiModel.names.map { Name(apiModel: $0) }
-        
+
         self.init(id: id, name: name, descriptions: descriptions, moves: moves, names: names)
     }
 }

@@ -1,7 +1,6 @@
 import Foundation
 import PokemonAPIClientInterface
 
-
 extension Ability {
     init(apiModel: AbilityResponse) {
         let id = apiModel.id
@@ -13,8 +12,7 @@ extension Ability {
         let effectChanges = apiModel.effect_changes.toEffectChanges()
         let flavorTextEntries = apiModel.flavor_text_entries.toFlavorTextEntries()
         let pokemon = apiModel.pokemon.toAbilityPokemon()
-        
-        
+
         self.init(
             id: id,
             name: name,
@@ -36,8 +34,7 @@ extension Characteristic {
         let possibleValues = apiModel.possible_values
         let highestStat = StatName(rawValue: apiModel.highest_stat.name)
         let descriptions = apiModel.descriptions.toDescriptions()
-        
-        
+
         self.init(
             id: id,
             geneModulo: geneModulo,
@@ -54,7 +51,7 @@ extension EggGroup {
         let name = apiModel.name
         let names = apiModel.names.toNames()
         let pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
-        
+
         self.init(
             id: id,
             name: name,
@@ -68,9 +65,12 @@ extension Gender {
     init(apiModel: GenderResponse) {
         let id = apiModel.id
         let name = apiModel.name
-        let pokemonSpeciesDetails = apiModel.pokemon_species_details.map { Gender.PokemonSpeciesGender(rate: $0.rate, pokemonSpecies: PokemonSpeciesName(rawValue: $0.pokemon_species.name)) }
+        let pokemonSpeciesDetails = apiModel.pokemon_species_details.map { Gender.PokemonSpeciesGender(
+            rate: $0.rate,
+            pokemonSpecies: PokemonSpeciesName(rawValue: $0.pokemon_species.name)
+        ) }
         let requiredForEvolution = apiModel.required_for_evolution.map { PokemonSpeciesName(rawValue: $0.name) }
-        
+
         self.init(
             id: id,
             name: name,
@@ -88,7 +88,7 @@ extension GrowthRate {
         let descriptions = apiModel.descriptions.toDescriptions()
         let levels = apiModel.levels.map { GrowthRate.ExperienceLevel(level: $0.level, experience: $0.experience) }
         let pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
-        
+
         self.init(
             id: id,
             name: name,
@@ -108,10 +108,17 @@ extension Nature {
         let increasedStat = StatName(rawValue: apiModel.increased_stat.name)
         let hatesFlavor = BerryFlavorName(rawValue: apiModel.hates_flavor.name)
         let likesFlavor = BerryFlavorName(rawValue: apiModel.likes_flavor.name)
-        let pokeathlonStatChanges = apiModel.pokeathlon_stat_changes.map { Nature.StatChange(maxChange: $0.max_change, pokeathlonStat: PokeathlonStatName(rawValue: $0.pokeathlon_stat.name)) }
-        let moveBattleStylePreferences = apiModel.move_battle_style_preferences.map { Nature.MoveBattleStylePreference(lowHPPreference: $0.low_hp_preference, highHPPreference: $0.high_hp_preference, moveBattleStyle: MoveBattleStyleName(rawValue: $0.move_battle_style.name)) }
+        let pokeathlonStatChanges = apiModel.pokeathlon_stat_changes.map { Nature.StatChange(
+            maxChange: $0.max_change,
+            pokeathlonStat: PokeathlonStatName(rawValue: $0.pokeathlon_stat.name)
+        ) }
+        let moveBattleStylePreferences = apiModel.move_battle_style_preferences.map { Nature.MoveBattleStylePreference(
+            lowHPPreference: $0.low_hp_preference,
+            highHPPreference: $0.high_hp_preference,
+            moveBattleStyle: MoveBattleStyleName(rawValue: $0.move_battle_style.name)
+        ) }
         let names = apiModel.names.toNames()
-        
+
         self.init(
             id: id,
             name: name,
@@ -132,10 +139,16 @@ extension PokeathlonStat {
         let name = apiModel.name
         let names = apiModel.names.toNames()
         let affectingNatures = PokeathlonStat.AffectingNatures(
-            increase: apiModel.affecting_natures.increase.map { PokeathlonStat.AffectingNatures.NatureStatChange(maxChange: $0.max_change, nature: NatureName(rawValue: $0.nature.name)) },
-            decrease: apiModel.affecting_natures.decrease.map { PokeathlonStat.AffectingNatures.NatureStatChange(maxChange: $0.max_change, nature: NatureName(rawValue: $0.nature.name)) }
+            increase: apiModel.affecting_natures.increase.map { PokeathlonStat.AffectingNatures.NatureStatChange(
+                maxChange: $0.max_change,
+                nature: NatureName(rawValue: $0.nature.name)
+            ) },
+            decrease: apiModel.affecting_natures.decrease.map { PokeathlonStat.AffectingNatures.NatureStatChange(
+                maxChange: $0.max_change,
+                nature: NatureName(rawValue: $0.nature.name)
+            ) }
         )
-        
+
         self.init(
             id: id,
             name: name,
@@ -154,13 +167,36 @@ extension Pokemon {
         let isDefault = apiModel.is_default
         let order = apiModel.order
         let weight = apiModel.weight
-        let abilities = apiModel.abilities.map { Pokemon.Ability(isHidden: $0.is_hidden, slot: $0.slot, ability: AbilityName(rawValue: $0.ability.name)) }
+        let abilities = apiModel.abilities.map { Pokemon.Ability(
+            isHidden: $0.is_hidden,
+            slot: $0.slot,
+            ability: AbilityName(rawValue: $0.ability.name)
+        ) }
         let forms = apiModel.forms.map { PokemonFormName(rawValue: $0.name) }
-        let gameIndices = apiModel.game_indices.map { Pokemon.GameIndex(gameIndex: $0.game_index, version: VersionName(rawValue: $0.version.name)) }
-        let heldItems = apiModel.held_items.map { Pokemon.HeldItem(item: ItemName(rawValue: $0.item.name), versionDetails: $0.version_details.map { Pokemon.HeldItem.VersionDetail(version: VersionName(rawValue: $0.version.name), rarity: $0.rarity) }) }
+        let gameIndices = apiModel.game_indices.map { Pokemon.GameIndex(
+            gameIndex: $0.game_index,
+            version: VersionName(rawValue: $0.version.name)
+        ) }
+        let heldItems = apiModel.held_items.map { Pokemon.HeldItem(
+            item: ItemName(rawValue: $0.item.name),
+            versionDetails: $0.version_details.map { Pokemon.HeldItem.VersionDetail(
+                version: VersionName(rawValue: $0.version.name),
+                rarity: $0.rarity
+            ) }
+        ) }
         let locationAreaEncounters = apiModel.location_area_encounters
-        let moves = apiModel.moves.map { Pokemon.Move(move: MoveName(rawValue: $0.move.name), versionGroupDetails: $0.version_group_details.map { Pokemon.Move.VersionGroupDetail(moveLearnMethod: MoveLearnMethodName(rawValue: $0.move_learn_method.name), versionGroup: VersionGroupName(rawValue: $0.version_group.name), levelLearnedAt: $0.level_learned_at) }) }
-        let pastTypes = apiModel.past_types.map { Pokemon.PastType(generation: GenerationName(rawValue: $0.generation.name), types: $0.types.map { Pokemon.TypeSlot(slot: $0.slot, type: TypeName(rawValue: $0.type.name)) }) }
+        let moves = apiModel.moves.map { Pokemon.Move(
+            move: MoveName(rawValue: $0.move.name),
+            versionGroupDetails: $0.version_group_details.map { Pokemon.Move.VersionGroupDetail(
+                moveLearnMethod: MoveLearnMethodName(rawValue: $0.move_learn_method.name),
+                versionGroup: VersionGroupName(rawValue: $0.version_group.name),
+                levelLearnedAt: $0.level_learned_at
+            ) }
+        ) }
+        let pastTypes = apiModel.past_types.map { Pokemon.PastType(
+            generation: GenerationName(rawValue: $0.generation.name),
+            types: $0.types.map { Pokemon.TypeSlot(slot: $0.slot, type: TypeName(rawValue: $0.type.name)) }
+        ) }
         let sprites = Pokemon.Sprites(
             backDefault: apiModel.sprites.back_default,
             backFemale: apiModel.sprites.back_female,
@@ -173,9 +209,13 @@ extension Pokemon {
         )
         let cries = Pokemon.Cries(latest: apiModel.cries.latest, legacy: apiModel.cries.legacy)
         let species = PokemonSpeciesName(rawValue: apiModel.species.name)
-        let stats = apiModel.stats.map { Pokemon.Stat(baseStat: $0.base_stat, effort: $0.effort, stat: StatName(rawValue: $0.stat.name)) }
+        let stats = apiModel.stats.map { Pokemon.Stat(
+            baseStat: $0.base_stat,
+            effort: $0.effort,
+            stat: StatName(rawValue: $0.stat.name)
+        ) }
         let types = apiModel.types.map { Pokemon.TypeSlot(slot: $0.slot, type: TypeName(rawValue: $0.type.name)) }
-        
+
         self.init(
             id: id,
             name: name,
@@ -206,7 +246,7 @@ extension PokemonColor {
         let name = apiModel.name
         let names = apiModel.names.toNames()
         let pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
-        
+
         self.init(
             id: id,
             name: name,
@@ -241,7 +281,7 @@ extension PokemonForm {
         let versionGroup = VersionGroupName(rawValue: apiModel.version_group.name)
         let names = apiModel.names.toNames()
         let formNames = apiModel.form_names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        
+
         self.init(
             id: id,
             name: name,
@@ -267,7 +307,7 @@ extension PokemonHabitat {
         let name = apiModel.name
         let names = apiModel.names.toNames()
         let pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
-        
+
         self.init(
             id: id,
             name: name,
@@ -281,10 +321,13 @@ extension PokemonShape {
     init(apiModel: PokemonShapeResponse) {
         let id = apiModel.id
         let name = apiModel.name
-        let awesomeNames = apiModel.awesome_names.map { PokemonShape.AwesomeName(awesomeName: $0.awesome_name, language: LanguageName(rawValue: $0.language.name)) }
+        let awesomeNames = apiModel.awesome_names.map { PokemonShape.AwesomeName(
+            awesomeName: $0.awesome_name,
+            language: LanguageName(rawValue: $0.language.name)
+        ) }
         let names = apiModel.names.toNames()
         let pokemonSpecies = apiModel.pokemon_species.map { PokemonSpeciesName(rawValue: $0.name) }
-        
+
         self.init(
             id: id,
             name: name,
@@ -310,7 +353,10 @@ extension PokemonSpecies {
         let hasGenderDifferences = apiModel.has_gender_differences
         let formsSwitchable = apiModel.forms_switchable
         let growthRate = GrowthRateName(rawValue: apiModel.growth_rate.name)
-        let pokedexNumbers = apiModel.pokedex_numbers.map { PokemonSpecies.PokedexNumber(entryNumber: $0.entry_number, pokedex: PokedexName(rawValue: $0.pokedex.name)) }
+        let pokedexNumbers = apiModel.pokedex_numbers.map { PokemonSpecies.PokedexNumber(
+            entryNumber: $0.entry_number,
+            pokedex: PokedexName(rawValue: $0.pokedex.name)
+        ) }
         let eggGroups = apiModel.egg_groups.map { EggGroupName(rawValue: $0.name) }
         let color = PokemonColorName(rawValue: apiModel.color.name)
         let shape = PokemonShapeName(rawValue: apiModel.shape.name)
@@ -319,12 +365,26 @@ extension PokemonSpecies {
         let habitat = apiModel.habitat.map { PokemonHabitatName(rawValue: $0.name) }
         let generation = GenerationName(rawValue: apiModel.generation.name)
         let names = apiModel.names.toNames()
-        let palParkEncounters = apiModel.pal_park_encounters.map { PokemonSpecies.PalParkEncounter(baseScore: $0.base_score, rate: $0.rate, area: PalParkAreaName(rawValue: $0.area.name)) }
-        let flavorTextEntries = apiModel.flavor_text_entries.map { PokemonSpecies.FlavorText(flavorText: $0.flavor_text, language: LanguageName(rawValue: $0.language.name), version: VersionName(rawValue: $0.version.name)) }
+        let palParkEncounters = apiModel.pal_park_encounters.map { PokemonSpecies.PalParkEncounter(
+            baseScore: $0.base_score,
+            rate: $0.rate,
+            area: PalParkAreaName(rawValue: $0.area.name)
+        ) }
+        let flavorTextEntries = apiModel.flavor_text_entries.map { PokemonSpecies.FlavorText(
+            flavorText: $0.flavor_text,
+            language: LanguageName(rawValue: $0.language.name),
+            version: VersionName(rawValue: $0.version.name)
+        ) }
         let formDescriptions = apiModel.form_descriptions.toDescriptions()
-        let genera = apiModel.genera.map { PokemonSpecies.Genus(genus: $0.genus, language: LanguageName(rawValue: $0.language.name)) }
-        let varieties = apiModel.varieties.map { PokemonSpecies.Variety(isDefault: $0.is_default, pokemon: PokemonName(rawValue: $0.pokemon.name)) }
-        
+        let genera = apiModel.genera.map { PokemonSpecies.Genus(
+            genus: $0.genus,
+            language: LanguageName(rawValue: $0.language.name)
+        ) }
+        let varieties = apiModel.varieties.map { PokemonSpecies.Variety(
+            isDefault: $0.is_default,
+            pokemon: PokemonName(rawValue: $0.pokemon.name)
+        ) }
+
         self.init(
             id: id,
             name: name,
@@ -364,8 +424,14 @@ extension Stat {
         let gameIndex = apiModel.game_index
         let isBattleOnly = apiModel.is_battle_only
         let affectingMoves = Stat.AffectingMoves(
-            increase: apiModel.affecting_moves.increase.map { Stat.AffectingMoves.MoveStatChange(change: $0.change, move: MoveName(rawValue: $0.move.name)) },
-            decrease: apiModel.affecting_moves.decrease.map { Stat.AffectingMoves.MoveStatChange(change: $0.change, move: MoveName(rawValue: $0.move.name)) }
+            increase: apiModel.affecting_moves.increase.map { Stat.AffectingMoves.MoveStatChange(
+                change: $0.change,
+                move: MoveName(rawValue: $0.move.name)
+            ) },
+            decrease: apiModel.affecting_moves.decrease.map { Stat.AffectingMoves.MoveStatChange(
+                change: $0.change,
+                move: MoveName(rawValue: $0.move.name)
+            ) }
         )
         let affectingNatures = Stat.AffectingNatures(
             increase: apiModel.affecting_natures.increase.map { NatureName(rawValue: $0.name) },
@@ -374,7 +440,7 @@ extension Stat {
         let characteristics = apiModel.characteristics.map(\.url)
         let moveDamageClass = MoveDamageClassName(rawValue: apiModel.move_damage_class.name)
         let names = apiModel.names.toNames()
-        
+
         self.init(
             id: id,
             name: name,
@@ -412,13 +478,19 @@ extension PokemonType {
                 doubleDamageFrom: $0.damage_relations.double_damage_from.map { TypeName(rawValue: $0.name) }
             )
         ) }
-        let gameIndices = apiModel.game_indices.map { PokemonType.GameIndex(gameIndex: $0.game_index, generation: GenerationName(rawValue: $0.generation.name)) }
+        let gameIndices = apiModel.game_indices.map { PokemonType.GameIndex(
+            gameIndex: $0.game_index,
+            generation: GenerationName(rawValue: $0.generation.name)
+        ) }
         let generation = GenerationName(rawValue: apiModel.generation.name)
         let moveDamageClass = MoveDamageClassName(rawValue: apiModel.move_damage_class.name)
         let names = apiModel.names.toNames()
-        let pokemon = apiModel.pokemon.map { PokemonType.TypePokemon(slot: $0.slot, pokemon: PokemonName(rawValue: $0.pokemon.name)) }
+        let pokemon = apiModel.pokemon.map { PokemonType.TypePokemon(
+            slot: $0.slot,
+            pokemon: PokemonName(rawValue: $0.pokemon.name)
+        ) }
         let moves = apiModel.moves.map { MoveName(rawValue: $0.name) }
-        
+
         self.init(
             id: id,
             name: name,
