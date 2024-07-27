@@ -1,192 +1,113 @@
 import Foundation
 
-// Domain model for Item
-public struct Item: Codable, Hashable, Identifiable {
-    public let id: Int
-    public let name: ItemName
-    public let cost: Int
-    public let flingPower: Int?
-    public let flingEffect: String?
-    public let attributes: [String]
-    public let category: String
-    public let effectEntries: [VerboseEffect]
-    public let flavorTextEntries: [FlavorText]
-    public let gameIndices: [GenerationGameIndex]
-    public let names: [Name]
-    public let sprites: Sprites
-    public let heldByPokemon: [HeldPokemon]
-    public let babyTriggerFor: URL?
-
-    public struct VerboseEffect: Codable, Hashable {
-        public let effect: String
-        public let shortEffect: String
-        public let language: LanguageName
-    }
-
-    public struct FlavorText: Codable, Hashable {
-        public let text: String
-        public let versionGroup: VersionGroupName
-        public let language: LanguageName
-    }
-
-    public struct GenerationGameIndex: Codable, Hashable {
-        public let gameIndex: Int
-        public let generation: GenerationName
-    }
-
-    public struct Name: Codable, Hashable {
-        public let name: String
-        public let language: LanguageName
-    }
-
-    public struct Sprites: Codable, Hashable {
-        public let `default`: String
-    }
-
-    public struct HeldPokemon: Codable, Hashable {
-        public let pokemon: PokemonName
-        public let versionDetails: [VersionDetail]
-
-        public struct VersionDetail: Codable, Hashable {
-            public let rarity: Int
-            public let version: VersionName
-        }
-    }
-}
-
-// Domain model for ItemAttribute
-public struct ItemAttribute: Codable, Hashable, Identifiable {
-    public let id: Int
-    public let name: ItemAttributeName
-    public let items: [ItemName]
-    public let names: [Name]
-    public let descriptions: [Description]
-
-    public struct Name: Codable, Hashable {
-        public let name: String
-        public let language: LanguageName
-    }
-
-    public struct Description: Codable, Hashable {
-        public let description: String
-        public let language: LanguageName
-    }
-}
-
-// Domain model for ItemCategory
-public struct ItemCategory: Codable, Hashable, Identifiable {
-    public let id: Int
-    public let name: ItemCategoryName
-    public let items: [ItemName]
-    public let names: [Name]
-    public let pocket: ItemPocketName
-
-    public struct Name: Codable, Hashable {
-        public let name: String
-        public let language: LanguageName
-    }
-}
-
-// Domain model for ItemFlingEffect
-public struct ItemFlingEffect: Codable, Hashable, Identifiable {
-    public let id: Int
-    public let name: ItemFlingEffectName
-    public let effectEntries: [Effect]
-    public let items: [ItemName]
-
-    public struct Effect: Codable, Hashable {
-        public let effect: String
-        public let language: LanguageName
-    }
-}
-
-// Domain model for ItemPocket
-public struct ItemPocket: Codable, Hashable, Identifiable {
-    public let id: Int
-    public let name: ItemPocketName
-    public let categories: [ItemCategoryName]
-    public let names: [Name]
-
-    public struct Name: Codable, Hashable {
-        public let name: String
-        public let language: LanguageName
-    }
-}
-
 extension Item {
     init(apiModel: ItemResponse) {
-        id = apiModel.id
-        name = apiModel.name
-        cost = apiModel.cost
-        flingPower = apiModel.fling_power
-        flingEffect = apiModel.fling_effect?.name
-        attributes = apiModel.attributes.map(\.name)
-        category = apiModel.category.name
-        effectEntries = apiModel.effect_entries.map { VerboseEffect(
-            effect: $0.effect,
-            shortEffect: $0.short_effect,
-            language: LanguageName(rawValue: $0.language.name)
-        ) }
-        flavorTextEntries = apiModel.flavor_text_entries.map { FlavorText(
-            text: $0.text,
-            versionGroup: VersionGroupName(rawValue: $0.version_group.name),
-            language: LanguageName(rawValue: $0.language.name)
-        ) }
-        gameIndices = apiModel.game_indices.map { GenerationGameIndex(
-            gameIndex: $0.game_index,
-            generation: GenerationName(rawValue: $0.generation.name)
-        ) }
-        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        sprites = Sprites(default: apiModel.sprites.default)
-        heldByPokemon = apiModel.held_by_pokemon.map { HeldPokemon(
-            pokemon: PokemonName(rawValue: $0.pokemon.name),
-            versionDetails: $0.version_details.map { HeldPokemon.VersionDetail(
-                rarity: $0.rarity,
-                version: VersionName(rawValue: $0.version.name)
-            ) }
-        ) }
-        babyTriggerFor = apiModel.baby_trigger_for?.url
+        let id = apiModel.id
+        let name = apiModel.name
+        let cost = apiModel.cost
+        let flingPower = apiModel.fling_power
+        let flingEffect = apiModel.fling_effect?.name
+        let attributes = apiModel.attributes.map(\.name)
+        let category = apiModel.category.name
+        let effectEntries = apiModel.effect_entries.map {
+            VerboseEffect(
+                effect: $0.effect,
+                shortEffect: $0.short_effect,
+                language: LanguageName(rawValue: $0.language.name)
+            )
+        }
+        let flavorTextEntries = apiModel.flavor_text_entries.map {
+            FlavorText(
+                text: $0.text,
+                versionGroup: VersionGroupName(rawValue: $0.version_group.name),
+                language: LanguageName(rawValue: $0.language.name)
+            )
+        }
+        let gameIndices = apiModel.game_indices.map {
+            GenerationGameIndex(
+                gameIndex: $0.game_index,
+                generation: GenerationName(rawValue: $0.generation.name)
+            )
+        }
+        let names = apiModel.names.map {
+            Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
+        }
+        let sprites = Sprites(default: apiModel.sprites.default)
+        let heldByPokemon = apiModel.held_by_pokemon.map {
+            HeldPokemon(
+                pokemon: PokemonName(rawValue: $0.pokemon.name),
+                versionDetails: $0.version_details.map {
+                    HeldPokemon.VersionDetail(
+                        rarity: $0.rarity,
+                        version: VersionName(rawValue: $0.version.name)
+                    )
+                }
+            )
+        }
+        let babyTriggerFor = apiModel.baby_trigger_for?.url
+        
+        self.init(
+            id: id, name: name, cost: cost, flingPower: flingPower,
+            flingEffect: flingEffect, attributes: attributes, category: category,
+            effectEntries: effectEntries, flavorTextEntries: flavorTextEntries,
+            gameIndices: gameIndices, names: names, sprites: sprites,
+            heldByPokemon: heldByPokemon, babyTriggerFor: babyTriggerFor
+        )
     }
 }
 
 extension ItemAttribute {
     init(apiModel: ItemAttributeResponse) {
-        id = apiModel.id
-        name = apiModel.name
-        items = apiModel.items.map { ItemName(rawValue: $0.name) }
-        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        descriptions = apiModel.descriptions.map { Description(
-            description: $0.description,
-            language: LanguageName(rawValue: $0.language.name)
-        ) }
+        let id = apiModel.id
+        let name = apiModel.name
+        let items = apiModel.items.map { ItemName(rawValue: $0.name) }
+        let names = apiModel.names.map {
+            Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
+        }
+        let descriptions = apiModel.descriptions.map {
+            Description(description: $0.description, language: LanguageName(rawValue: $0.language.name))
+        }
+        
+        self.init(id: id, name: name, items: items, names: names, descriptions: descriptions)
     }
 }
 
 extension ItemCategory {
     init(apiModel: ItemCategoryResponse) {
-        id = apiModel.id
-        name = apiModel.name
-        items = apiModel.items.map { ItemName(rawValue: $0.name) }
-        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
-        pocket = ItemPocketName(rawValue: apiModel.pocket.name)
+        let id = apiModel.id
+        let name = apiModel.name
+        let items = apiModel.items.map { ItemName(rawValue: $0.name) }
+        let names = apiModel.names.map {
+            Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
+        }
+        let pocket = ItemPocketName(rawValue: apiModel.pocket.name)
+        
+        self.init(id: id, name: name, items: items, names: names, pocket: pocket)
     }
 }
 
 extension ItemFlingEffect {
     init(apiModel: ItemFlingEffectResponse) {
-        id = apiModel.id
-        name = apiModel.name
-        effectEntries = apiModel.effect_entries
-            .map { Effect(effect: $0.effect, language: LanguageName(rawValue: $0.language.name)) }
-        items = apiModel.items.map { ItemName(rawValue: $0.name) }
+        let id = apiModel.id
+        let name = apiModel.name
+        let effectEntries = apiModel.effect_entries.map {
+            Effect(effect: $0.effect, language: LanguageName(rawValue: $0.language.name))
+        }
+        let items = apiModel.items.map { ItemName(rawValue: $0.name) }
+        
+        self.init(id: id, name: name, effectEntries: effectEntries, items: items)
     }
 }
 
 extension ItemPocket {
     init(apiModel: ItemPocketResponse) {
-        id = apiModel.id
-        name = apiModel.name
-        categories = apiModel.categories.map { ItemCategoryName(rawValue: $0.name) }
-        names = apiModel.names.map { Name(name: $0.name, language: LanguageName(rawValue: $0.language.name)) }
+        let id = apiModel.id
+        let name = apiModel.name
+        let categories = apiModel.categories.map { ItemCategoryName(rawValue: $0.name) }
+        let names = apiModel.names.map {
+            Name(name: $0.name, language: LanguageName(rawValue: $0.language.name))
+        }
+        
+        self.init(id: id, name: name, categories: categories, names: names)
     }
 }

@@ -5,12 +5,12 @@ import Models
 
 @DependencyClient
 public struct PokemonAPIClient: PokemonFetching {
-    public var fetchPokemonIdentifiers: @Sendable () async throws -> [PokemonIdentifier]
-    public var fetchPokemonDetails: @Sendable (PokemonName) async throws -> PokemonDetails
-    public var fetchPokemonSpecies: @Sendable (URL) async throws -> PokemonSpecies
-    public var fetchPokemon: @Sendable (PokemonName) async throws -> Pokemon?
-    public var fetchPokemonTypeIdentifiers: @Sendable () async throws -> [TypeIdentifier]
-    public var fetchPokemonTypeDetails: @Sendable (String) async throws -> PokemonTypeDetails?
+    public var fetchPokemonIdentifiers: @Sendable () async throws -> [Models.PokemonIdentifier]
+    public var fetchPokemonDetails: @Sendable (Models.PokemonName) async throws -> Models.PokemonDetails
+    public var fetchPokemonSpecies: @Sendable (URL) async throws -> Models.PokemonSpecies
+    public var fetchPokemon: @Sendable (Models.PokemonName) async throws -> Models.Pokemon?
+    public var fetchPokemonTypeIdentifiers: @Sendable () async throws -> [Models.TypeIdentifier]
+    public var fetchPokemonTypeDetails: @Sendable (String) async throws -> Models.PokemonTypeDetails?
 }
 
 extension PokemonAPIClient: TestDependencyKey {
