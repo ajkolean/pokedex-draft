@@ -1,12 +1,11 @@
-import Models
+import PokemonGraphClientInterface
 import SwiftUI
 
 struct DamageRelationsStackView: View {
-    let typeIdentifier: TypeIdentifier
-    let typeDetails: PokemonTypeDetails
+    let pokemonType: PokemonType
 
     var color: Color {
-        typeIdentifier.type.color()
+        pokemonType.type.color()
     }
 
     var body: some View {
@@ -19,7 +18,7 @@ struct DamageRelationsStackView: View {
 
     var offensivePropertiesView: some View {
         VStack(alignment: .center, spacing: 20) {
-            Text("Offensive properties of \(typeDetails.name.capitalized)-type moves")
+            Text("Offensive properties of \(pokemonType.type.rawValue.capitalized)-type moves")
                 .font(.headline)
                 .multilineTextAlignment(.center)
                 .bold()
@@ -30,9 +29,9 @@ struct DamageRelationsStackView: View {
                 .shadow(color: color, radius: 4, x: 1.0, y: 1.0)
 
             HStack(alignment: .top, spacing: 8) {
-                DamageRelationView(title: "Super effective (×2)", types: typeDetails.damageRelations.doubleDamageTo)
-                DamageRelationView(title: "Not very effective (×½)", types: typeDetails.damageRelations.halfDamageTo)
-                DamageRelationView(title: "No effect (×0)", types: typeDetails.damageRelations.noDamageTo)
+                DamageRelationView(title: "Super effective (×2)", types: pokemonType.doubleDamageTo)
+                DamageRelationView(title: "Not very effective (×½)", types: pokemonType.halfDamageTo)
+                DamageRelationView(title: "No effect (×0)", types: pokemonType.noDamageTo)
             }
             .padding()
             .background(Color.gray.opacity(0.2))
@@ -44,7 +43,7 @@ struct DamageRelationsStackView: View {
 
     var defensiveProperties: some View {
         VStack(alignment: .center, spacing: 20) {
-            Text("Defensive properties of \(typeDetails.name.capitalized)-type Pokémon")
+            Text("Defensive properties of \(pokemonType.type.rawValue.capitalized)-type Pokémon")
                 .font(.headline)
                 .multilineTextAlignment(.center)
                 .bold()
@@ -55,9 +54,9 @@ struct DamageRelationsStackView: View {
                 .shadow(color: color, radius: 4, x: 1.0, y: 1.0)
 
             HStack(alignment: .top, spacing: 8) {
-                DamageRelationView(title: "Weak to (×2)", types: typeDetails.damageRelations.doubleDamageFrom)
-                DamageRelationView(title: "Resists (×½)", types: typeDetails.damageRelations.halfDamageFrom)
-                DamageRelationView(title: "Immune to (×0)", types: typeDetails.damageRelations.noDamageFrom)
+                DamageRelationView(title: "Weak to (×2)", types: pokemonType.doubleDamageFrom)
+                DamageRelationView(title: "Resists (×½)", types: pokemonType.halfDamageFrom)
+                DamageRelationView(title: "Immune to (×0)", types: pokemonType.noDamageFrom)
             }
             .padding()
             .background(Color.gray.opacity(0.2))
@@ -70,7 +69,7 @@ struct DamageRelationsStackView: View {
 
 struct DamageRelationView: View {
     var title: String
-    var types: [TypeIdentifier]
+    var types: [PokemonTypeEnum]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -84,7 +83,7 @@ struct DamageRelationView: View {
             .frame(maxWidth: 80)
 
             ForEach(types, id: \.self) { type in
-                TypeCapsuleView(identifier: type)
+                TypeCapsuleView(type: type)
             }
             Spacer()
         }
@@ -92,15 +91,15 @@ struct DamageRelationView: View {
 }
 
 struct TypeCapsuleView: View {
-    var identifier: TypeIdentifier
+    var type: PokemonTypeEnum
 
     var color: Color {
-        identifier.type.color()
+        type.color()
     }
 
     var body: some View {
         HStack(spacing: 0) {
-            identifier.type.icon
+            type.icon
                 .resizable()
                 .renderingMode(.template)
                 .aspectRatio(contentMode: .fit)
@@ -111,7 +110,7 @@ struct TypeCapsuleView: View {
                 .background(color)
                 .shadow(color: color.opacity(0.6), radius: 4, x: 0, y: 2)
 
-            Text(identifier.name)
+            Text(type.rawValue)
                 .bold()
                 .foregroundColor(.white)
                 .padding(.horizontal, 6)

@@ -23,6 +23,25 @@ public struct PokemonType: Hashable, Codable, Identifiable, Sendable {
         public let damageFactor: Int
         public let targetType: PokemonTypeEnum
     }
+    
+    public var doubleDamageTo: [PokemonTypeEnum] {
+        attackDamageRelations.filter { $0.damageFactor == 200 }.map { $0.targetType }
+    }
+    public var halfDamageTo: [PokemonTypeEnum] {
+        attackDamageRelations.filter { $0.damageFactor == 50 }.map { $0.targetType }
+    }
+    public var noDamageTo: [PokemonTypeEnum] {
+        attackDamageRelations.filter { $0.damageFactor == 0 }.map { $0.targetType }
+    }
+    public var doubleDamageFrom: [PokemonTypeEnum] {
+        defenseDamageRelations.filter { $0.damageFactor == 200 }.map { $0.targetType }
+    }
+    public var halfDamageFrom: [PokemonTypeEnum] {
+        defenseDamageRelations.filter { $0.damageFactor == 50 }.map { $0.targetType }
+    }
+    public var noDamageFrom: [PokemonTypeEnum] {
+        defenseDamageRelations.filter { $0.damageFactor == 0 }.map { $0.targetType }
+    }
 }
 
 public struct PokemonByTypeSlot: Hashable, Codable, Sendable {

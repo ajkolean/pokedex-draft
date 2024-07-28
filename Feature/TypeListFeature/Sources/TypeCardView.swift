@@ -1,11 +1,10 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonCardView.swift
 import ComposableArchitecture
-import Kingfisher
-import Models
+import PokemonGraphClientInterface
 import SwiftUI
 
 struct TypeCardView: View {
-    let identifier: TypeIdentifier
+    let pokemonType: PokemonType
 
     var body: some View {
         ZStack {
@@ -14,7 +13,7 @@ struct TypeCardView: View {
                 HStack {
                     Spacer()
 
-                    identifier
+                    pokemonType
                         .type
                         .icon
                         .resizable()
@@ -28,7 +27,7 @@ struct TypeCardView: View {
                 }
             }
             HStack {
-                Text(identifier.name.capitalized)
+                Text(pokemonType.type.rawValue.capitalized)
                     .font(.title3)
                     .bold()
                     .foregroundColor(.white)
@@ -38,8 +37,8 @@ struct TypeCardView: View {
                 Spacer()
             }
         }
-        .background(identifier.type.color())
+        .background(pokemonType.type.color())
         .cornerRadius(12)
-        .shadow(color: identifier.type.color(), radius: 4, x: 1.0, y: 1.0)
+        .shadow(color: pokemonType.type.color(), radius: 4, x: 1.0, y: 1.0)
     }
 }

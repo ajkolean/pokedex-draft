@@ -1,48 +1,46 @@
 // Feature/TypeListFeature/Sources/TypeListFeature/TypeListFeature.swift
 import ComposableArchitecture
-import Models
-import PokemonRepo
-import PokemonRepoInterface
+import PokemonGraphClientInterface
 import SwiftUI
 
 @Reducer
 public struct TypeListFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
-        public var typeIdentifiers: IdentifiedArrayOf<TypeIdentifier> = []
+        public var pokemonTypes: IdentifiedArrayOf<PokemonType> = []
 
         public init() {}
     }
 
-    public enum Action: Equatable {
-        case fetchTypeIdentifiers
-        case setTypeList(Result<[TypeIdentifier], EquatableError>)
-        case typeDetailTapped(TypeIdentifier)
+    public enum Action: Equatable, Sendable {
+        case fetchPokemonTypes
+        case setPokemonTypes(Result<[PokemonType], EquatableError>)
+        case pokemonTypeTapped(PokemonType)
     }
 
-    @Dependency(\.pokemonRepo) var pokemonRepo
+    @Dependency(\.pokemonAPIClient) var pokemonAPIClient
 
     public init() {}
 
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .fetchTypeIdentifiers:
+            case .fetchPokemonTypes:
                 return .run { send in
                     do {
-                        let types = try await pokemonRepo.fetchPokemonTypeIdentifiers()
-                        await send(.setTypeList(.success(types)))
+                        let types = try await pokemonAPIClient.fetchPokemonTypeList()
+                        await send(.setPokemonTypes(.success(types)))
                     } catch {
-                        await send(.setTypeList(.failure(EquatableError(error))))
+                        await send(.setPokemonTypes(.failure(EquatableError(error))))
                     }
                 }
-            case let .setTypeList(.success(types)):
-                state.typeIdentifiers = .init(uniqueElements: types)
+            case let .setPokemonTypes(.success(types)):
+                state.pokemonTypes = .init(uniqueElements: types)
                 return .none
 
-            case let .setTypeList(.failure(error)):
+            case let .setPokemonTypes(.failure(error)):
                 fatalError("Failed to fetch pokemon list: \(error)")
-            case .typeDetailTapped:
+            case .pokemonTypeTapped:
                 return .none
             }
         }
@@ -60,9 +58,10 @@ public struct TypeListFeatureView: View {
     public var body: some View {
         ScrollView {
             LazyVGrid(columns: gridItems, spacing: 16) {
-                ForEach(store.typeIdentifiers) { identifier in
-                    TypeCardView(identifier: identifier).tappable {
-                        store.send(.typeDetailTapped(identifier))
+                ForEach(store.pokemonTypes) { pokemonType in
+                    TypeCardView(pokemonType: pokemonType)
+                        .tappable {
+                        store.send(.pokemonTypeTapped(pokemonType))
                     }
                 }
             }
@@ -70,7 +69,7 @@ public struct TypeListFeatureView: View {
         }
         .navigationTitle("Types")
         .onAppear {
-            store.send(.fetchTypeIdentifiers)
+            store.send(.fetchPokemonTypes)
         }
     }
 }

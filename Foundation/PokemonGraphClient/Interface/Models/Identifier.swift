@@ -1,7 +1,7 @@
 
 import Foundation
 
-public protocol IdentifierProtocol: RawRepresentable, Codable, Hashable, Identifiable, Sendable {}
+public protocol IdentifierProtocol: RawRepresentable, Codable, Hashable, Identifiable, Sendable, CustomStringConvertible {}
 
 extension IdentifierProtocol where Self: ExpressibleByStringLiteral, RawValue == String {
     public init(stringLiteral value: String) {
@@ -21,6 +21,12 @@ extension IdentifierProtocol where Self: ExpressibleByIntegerLiteral, RawValue =
 
 extension IdentifierProtocol where Self: ExpressibleByIntegerLiteral, RawValue == Int {
     public var id: Int { rawValue }
+}
+
+extension IdentifierProtocol where Self: RawRepresentable {
+    public var description: String {
+        "\(rawValue)"
+    }
 }
 
 

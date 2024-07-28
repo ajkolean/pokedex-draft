@@ -5,13 +5,15 @@ import Foundation
 @DependencyClient
 public struct PokemonAPIClient: Sendable {
     public var fetchPokemonList: @Sendable () async throws -> [Pokemon]
+    public var fetchPokemonTypeList: @Sendable () async throws -> [PokemonType]
 }
 
 extension PokemonAPIClient: DependencyKey {
     public static let liveValue: PokemonAPIClient = {
         let client = APIService()
         return PokemonAPIClient(
-            fetchPokemonList: { try await client.fetchPokemonList() }
+            fetchPokemonList: { try await client.fetchPokemonList() },
+            fetchPokemonTypeList: { try await client.fetchPokemoTypenList() }
         )
     }()
 }
@@ -33,7 +35,7 @@ private actor APIService {
     public init() {}
 
     public func fetchPokemonList(limit: Int? = 20, offset: Int? = nil) async throws -> [Pokemon] {
-        let query = GraphClient.GetPokemonListQuery(limit: GraphQLNullable(limit), offset: GraphQLNullable(offset)/*, name: name*/)
+        let query = GraphClient.GetPokemonListQuery(limit: GraphQLNullable(limit), offset: GraphQLNullable(offset))
         let data = try await fetch(query: query)
         let p = data.pokemons.compactMap { Pokemon($0.fragments.pokemonFragment) }
         print(p)
@@ -45,6 +47,12 @@ private actor APIService {
         let data = try await fetch(query: query)
         let fragment = data.pokemon.first!.fragments.pokemonFragment
         return Pokemon(fragment)
+    }
+    
+    public func fetchPokemoTypenList(limit: Int? = 20, offset: Int? = nil) async throws -> [PokemonType] {
+        let query = GraphClient.GetPokemonTypeListQuery(limit: GraphQLNullable(limit), offset: GraphQLNullable(offset))
+        let data = try await fetch(query: query)
+        return data.types.compactMap { PokemonType($0.fragments.typeFragment) }
     }
 
     // MARK: - Helpers

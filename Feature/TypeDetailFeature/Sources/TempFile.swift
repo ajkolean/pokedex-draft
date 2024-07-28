@@ -1,43 +1,39 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonCardView.swift
 import ComposableArchitecture
 import Kingfisher
-import Models
+import PokemonGraphClientInterface
 import SwiftUI
 
 public struct PokemonCardView: View {
-    public let identifier: PokemonIdentifier
-    public var pokemon: Pokemon?
-
-    public var pokemonDetails: PokemonDetails? {
-        pokemon?.details
-    }
-
-    public init(identifier: PokemonIdentifier, pokemon: Pokemon?) {
-        self.identifier = identifier
+    public var pokemon: Pokemon
+    
+    public init(pokemon: Pokemon) {
         self.pokemon = pokemon
     }
-
-    @Dependency(\.pokemonRepo) var pokemonRepo
-
+    
+    var type: PokemonTypeEnum {
+        pokemon.types.first?.type ?? .unknown
+    }
+    
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Text(identifier.name.capitalized)
+                    Text(pokemon.name.rawValue.capitalized)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.top, 10)
                         .padding(.leading)
-
+                    
                     Text(formattedId)
                         .font(.subheadline)
                         .foregroundColor(.white)
                         .padding(.top, 10)
                         .padding(.leading, 2)
                 }
-
+                
                 HStack {
-                    Text(pokemonDetails?.primaryType?.type.name.capitalized ?? "Grass")
+                    Text(type.rawValue.capitalized)
                         .font(.subheadline).bold()
                         .foregroundColor(.white)
                         .padding(.horizontal, 16)
@@ -47,9 +43,8 @@ public struct PokemonCardView: View {
                                 .fill(Color.white.opacity(0.25))
                         )
                         .frame(width: 100, height: 24)
-                        .redacted(reason: pokemonDetails == nil ? .placeholder : [])
-
-                    KFImage(URL(string: identifier.imageURL))
+                    
+                    KFImage(URL(string: pokemon.imageURL))
                         .placeholder { value in
                             ProgressView(value: value.fractionCompleted)
                         }
@@ -62,27 +57,19 @@ public struct PokemonCardView: View {
             }
         }
         .background(
-            ZStack(alignment: .topLeading) {
-                if let pokemonDetails {
-                    pokemonDetails.backgroundColor
-                } else {
-                    Color.gray
-                        .blur(radius: 10)
-                        .edgesIgnoringSafeArea(.all)
-                }
-            }
+            type.color()
         )
         .cornerRadius(12)
-        .shadow(color: pokemonDetails?.backgroundColor ?? .gray, radius: 4, x: 1.0, y: 1.0)
+        .shadow(color: type.color(), radius: 4, x: 1.0, y: 1.0)
     }
-
+    
     var formattedId: String {
-        if identifier.id / 10 < 1 {
-            return "#00\(identifier.id)"
-        } else if identifier.id / 10 < 10 {
-            return "#0\(identifier.id)"
+        if pokemon.id.rawValue / 10 < 1 {
+            return "#00\(pokemon.id.rawValue)"
+        } else if pokemon.id.rawValue / 10 < 10 {
+            return "#0\(pokemon.id.rawValue)"
         } else {
-            return "#\(identifier.id)"
+            return "#\(pokemon.id.rawValue)"
         }
     }
 }

@@ -1,11 +1,11 @@
 import ComposableArchitecture
 import ItemListFeature
-import Models
-import PokemonDetailFeature
-import PokemonListFeature
-import SwiftUI
+import PokemonGraphClientInterface
 import TypeDetailFeature
 import TypeListFeature
+import PokemonListFeature
+import PokemonDetailFeature
+import SwiftUI
 
 @Reducer
 public struct AppFeature: Reducer {
@@ -46,11 +46,11 @@ public struct AppFeature: Reducer {
                     return .none
                 }
                 return .none
-            case let .path(.element(id: _, action: .typeList(.typeDetailTapped(typeIdentifier)))):
-                state.path.append(.typeDetail(TypeDetailFeature.State(typeIdentifier: typeIdentifier)))
+            case let .path(.element(id: _, action: .typeList(.pokemonTypeTapped(pokemonType)))):
+                state.path.append(.typeDetail(TypeDetailFeature.State(pokemonType: pokemonType)))
                 return .none
             case let .path(.element(id: _, action: .typeDetail(.pokemonCardTapped(pokemon)))):
-//                state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemon: pokemon)))
+                state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemon: pokemon)))
                 return .none
             case let .path(.element(id: _, action: .pokemon(.pokemonCardTapped(pokemon)))):
                 state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemon: pokemon)))
@@ -122,7 +122,7 @@ public struct AppView: View {
                     }
                     .background(Color(UIColor.systemBackground))
                     .overlay(
-                        ModelsAsset
+                        PokemonGraphClientInterfaceAsset
                             .spinningball
                             .swiftUIImage
                             .resizable()
