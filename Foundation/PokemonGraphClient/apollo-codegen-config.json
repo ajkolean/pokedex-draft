@@ -14,7 +14,7 @@
       }
     },
     "schemaTypes" : {
-      "path" : "./Interface",
+      "path" : "./Sources/Generated",
       "moduleType" : {
         "embeddedInTarget" : {
           "name" : "PokemonGraphClient"
