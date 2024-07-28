@@ -24,8 +24,7 @@ public final class PokemonEntity: Sendable {
         baseExperience: Int? = nil,
         types: [Pokemon.TypeSlot],
         stats: [Pokemon.Stat],
-        descriptions: [String],
-        _$backingData: any BackingData<PokemonEntity> = PokemonEntity.createBackingData()
+        descriptions: [String]
     ) {
         self.id = id
         self.name = name
@@ -36,20 +35,24 @@ public final class PokemonEntity: Sendable {
         self.types = types
         self.stats = stats
         self.descriptions = descriptions
-        self._$backingData = _$backingData
     }
 }
 
 extension PokemonEntity {
     convenience init(_ model: Pokemon) {
         self.init(
-            id: model.id.rawValue, name: model.name.rawValue, height: model.height, weight: model.weight, order: model.order, baseExperience: model.baseExperience, types: model.types, stats: model.stats, descriptions: model.descriptions)
+            id: model._id, name: model._name, height: model.height, weight: model.weight, order: model.order,
+            baseExperience: model.baseExperience, types: model.types, stats: model.stats, descriptions: model.descriptions
+        )
     }
 }
 
 extension Pokemon {
     init(_ model: PokemonEntity) {
         self.init(
-            id: Pokemon.ID(rawValue: model.id), name: Pokemon.Name(rawValue: model.name), height: model.height, weight: model.weight, order: model.order, baseExperience: model.baseExperience, types: model.types, stats: model.stats, descriptions: model.descriptions)
+            _id:  model.id, _name: model.name, height: model.height,
+            weight: model.weight, order: model.order, baseExperience: model.baseExperience, types: model.types,
+            stats: model.stats, descriptions: model.descriptions
+        )
     }
 }

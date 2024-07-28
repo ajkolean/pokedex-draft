@@ -1,8 +1,8 @@
 import ComposableArchitecture
 import Foundation
-import PokemonGraphClientInterface
 import PokemonDataStoreClient
 import PokemonDataStoreClientInterface
+import PokemonGraphClientInterface
 import PokemonRepoInterface
 
 extension PokemonRepo: DependencyKey {

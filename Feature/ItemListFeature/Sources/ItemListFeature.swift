@@ -1,10 +1,10 @@
 //// Feature/ItemListFeature/Sources/ItemListFeature/ItemListFeature.swift
-//import ComposableArchitecture
-//import Kingfisher
-//import SwiftUI
+// import ComposableArchitecture
+// import Kingfisher
+// import SwiftUI
 //
-//@Reducer
-//public struct ItemListFeature: Reducer {
+// @Reducer
+// public struct ItemListFeature: Reducer {
 //    @ObservableState
 //    public struct State: Equatable {
 //        public var itemNames: IdentifiedArrayOf<ItemName> = []
@@ -62,9 +62,9 @@
 //            }
 //        }
 //    }
-//}
+// }
 //
-//public struct ItemListFeatureView: View {
+// public struct ItemListFeatureView: View {
 //    @Bindable public var store: StoreOf<ItemListFeature>
 //
 //    public init(store: StoreOf<ItemListFeature>) {
@@ -95,18 +95,18 @@
 //            store.send(.fetchItemNames)
 //        }
 //    }
-//}
+// }
 //
-//#Preview {
+// #Preview {
 //    ItemListFeatureView(
 //        store: Store(initialState: ItemListFeature.State()) {
 //            ItemListFeature()
 //        }
 //    )
-//}
+// }
 //
-//extension ItemName {
+// extension ItemName {
 //    var imageUrl: URL {
 //        URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/\(rawValue).png")!
 //    }
-//}
+// }

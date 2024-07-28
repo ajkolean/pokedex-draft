@@ -87,5 +87,5 @@ public actor ModelActorDatabase: ModelActor, Database {
 }
 
 public typealias SenablePersistentModel = PersistentModel & Sendable
-extension FetchDescriptor: @unchecked Sendable where T: SenablePersistentModel { }
-//extension FetchDescriptor: @unchecked Sendable {}
+extension FetchDescriptor: @unchecked Sendable where T: SenablePersistentModel {}
+// extension FetchDescriptor: @unchecked Sendable {}

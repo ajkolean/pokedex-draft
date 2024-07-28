@@ -1,6 +1,7 @@
 // Feature/TypeListFeature/Sources/TypeListFeature/TypeListFeature.swift
 import ComposableArchitecture
 import PokemonGraphClientInterface
+import PokemonRepo
 import SwiftUI
 
 @Reducer
@@ -18,7 +19,7 @@ public struct TypeListFeature: Reducer {
         case pokemonTypeTapped(PokemonType)
     }
 
-    @Dependency(\.pokemonAPIClient) var pokemonAPIClient
+    @Dependency(\.pokemonRepo) var pokemonRepo
 
     public init() {}
 
@@ -28,7 +29,7 @@ public struct TypeListFeature: Reducer {
             case .fetchPokemonTypes:
                 return .run { send in
                     do {
-                        let types = try await pokemonAPIClient.fetchPokemonTypeList()
+                        let types = try await pokemonRepo.fetchPokemonTypeList()
                         await send(.setPokemonTypes(.success(types)))
                     } catch {
                         await send(.setPokemonTypes(.failure(EquatableError(error))))

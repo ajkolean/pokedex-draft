@@ -6,8 +6,8 @@ import MemberwiseInit
 
 @MemberwiseInit(.public)
 public struct Pokemon: Hashable, Codable, Identifiable, Sendable {
-    public let id: ID
-    public let name: Name
+    public let _id: Int
+    public let _name: String
     public let height: Int?
     public let weight: Int?
     public let order: Int?
@@ -25,6 +25,10 @@ public struct Pokemon: Hashable, Codable, Identifiable, Sendable {
             self.rawValue = rawValue
         }
     }
+    
+    public var name: Name {
+        get { .init(rawValue: _name) }
+    }
 
     // MARK: - PokemonID
 
@@ -34,6 +38,10 @@ public struct Pokemon: Hashable, Codable, Identifiable, Sendable {
         public init(rawValue: Int) {
             self.rawValue = rawValue
         }
+    }
+    
+    public var id: ID {
+        get { .init(rawValue: _id) }
     }
 
     // MARK: - PokemonType
@@ -72,8 +80,8 @@ extension Pokemon {
         let stats = apiModel.stats.map { Stat(baseStat: $0.base_stat, effort: $0.effort, name: $0.statName?.name ?? "") }
         let descriptions = apiModel.species?.descriptions.map(\.text) ?? []
         self.init(
-            id: Pokemon.ID(rawValue: apiModel.id),
-            name: Pokemon.Name(rawValue: apiModel.name),
+            _id: apiModel.id,
+            _name: apiModel.name,
             height: apiModel.height,
             weight: apiModel.weight,
             order: apiModel.order,

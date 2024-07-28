@@ -16,7 +16,7 @@ let project: Project = .moduleProject(
                 .TypeListFeature,
                 .TypeDetailFeature,
                 .PokemonDetailFeature,
-                .ItemListFeature
+                .ItemListFeature,
             ]
         ),
         .moduleTarget(

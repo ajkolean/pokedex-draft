@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import PokemonGraphClientInterface
+import SwiftUI
 
 public enum MenuItem: String, CaseIterable, Identifiable {
     public var id: String { rawValue }

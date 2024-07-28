@@ -6,7 +6,7 @@ import MemberwiseInit
 
 @MemberwiseInit(.public)
 public struct PokemonType: Hashable, Codable, Identifiable, Sendable {
-    public let id: ID
+    public let _id: Int
     public let type: PokemonTypeEnum
     public let attackDamageRelations: [DamageRelation]
     public let defenseDamageRelations: [DamageRelation]
@@ -20,6 +20,10 @@ public struct PokemonType: Hashable, Codable, Identifiable, Sendable {
         public init(rawValue: Int) {
             self.rawValue = rawValue
         }
+    }
+    
+    public var id: ID {
+        get { .init(rawValue: _id) }
     }
 
     public struct DamageRelation: Hashable, Codable, Sendable {
@@ -52,6 +56,7 @@ public struct PokemonType: Hashable, Codable, Identifiable, Sendable {
     }
 }
 
+@MemberwiseInit(.public)
 public struct PokemonByTypeSlot: Hashable, Codable, Sendable {
     public let slot: Int
     public let pokemonID: Int
@@ -60,7 +65,7 @@ public struct PokemonByTypeSlot: Hashable, Codable, Sendable {
 
 extension PokemonType {
     init(_ apiModel: GraphClient.TypeFragment) {
-        let id = PokemonType.ID(rawValue: apiModel.id)
+        let id = apiModel.id
         let type = PokemonTypeEnum(rawValue: apiModel.name) ?? .unknown
         let attackDamageRelations = apiModel.attackDamageRelations.map {
             DamageRelation(
@@ -80,7 +85,7 @@ extension PokemonType {
         }
 
         self.init(
-            id: id,
+            _id: id,
             type: type,
             attackDamageRelations: attackDamageRelations,
             defenseDamageRelations: defenseDamageRelations,
