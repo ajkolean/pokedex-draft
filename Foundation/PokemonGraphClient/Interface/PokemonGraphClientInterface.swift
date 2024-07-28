@@ -4,14 +4,14 @@ import Foundation
 
 @DependencyClient
 public struct PokemonAPIClient: Sendable {
-    public var fetchPokemon: @Sendable () async throws -> [Pokemon]
+    public var fetchPokemonList: @Sendable () async throws -> [Pokemon]
 }
 
 extension PokemonAPIClient: DependencyKey {
     public static let liveValue: PokemonAPIClient = {
         let client = APIService()
         return PokemonAPIClient(
-            fetchPokemon: { try await client.fetchPokemon() }
+            fetchPokemonList: { try await client.fetchPokemonList() }
         )
     }()
 }
@@ -32,15 +32,19 @@ private actor APIService {
 
     public init() {}
 
-    public func fetchPokemon(limit: Int? = 20, offset: Int? = nil) async throws -> [Pokemon] {
-        let limit: GraphQLNullable<Int> = limit.map { .some($0) } ?? .none
-        let offset: GraphQLNullable<Int> = offset.map { .some($0) } ?? .none
-
-        let query = GraphClient.GetPokemonQuery(limit: limit, offset: offset)
+    public func fetchPokemonList(limit: Int? = 20, offset: Int? = nil) async throws -> [Pokemon] {
+        let query = GraphClient.GetPokemonListQuery(limit: GraphQLNullable(limit), offset: GraphQLNullable(offset)/*, name: name*/)
         let data = try await fetch(query: query)
-        let p = data.pokemon.compactMap { Pokemon($0) }
+        let p = data.pokemons.compactMap { Pokemon($0.fragments.pokemonFragment) }
         print(p)
         return p
+    }
+    
+    public func fetchPokemon(name: String) async throws -> Pokemon {
+        let query = GraphClient.GetPokemonByNameQuery(name: name)
+        let data = try await fetch(query: query)
+        let fragment = data.pokemon.first!.fragments.pokemonFragment
+        return Pokemon(fragment)
     }
 
     // MARK: - Helpers
@@ -59,6 +63,16 @@ private actor APIService {
                     continuation.resume(throwing: error)
                 }
             }
+        }
+    }
+}
+
+extension GraphQLNullable where Wrapped == Int {
+    init(_ value: Int?) {
+        if let value {
+            self = .some(value)
+        } else {
+            self = .none
         }
     }
 }

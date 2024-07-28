@@ -34,3 +34,14 @@ run = """
     swiftformat $MISE_PROJECT_ROOT --lint
     swiftlint lint --quiet --config $MISE_PROJECT_ROOT/.swiftlint.yml $MISE_PROJECT_ROOT
 """
+
+[tasks.build]
+description = "Generate code and build project"
+run = """
+    #!/bin/bash
+    set -euo pipefail
+
+    $MISE_PROJECT_ROOT/Foundation/PokemonGraphClient/apollo-ios-cli generate --path $MISE_PROJECT_ROOT/Foundation/PokemonGraphClient/apollo-codegen-config.json
+    tuist install
+    tuist generate
+"""

@@ -1,66 +1,7 @@
-import Foundation
-import Apollo
-
-// MARK: - Pokemon
-
-public struct Pokemon: Hashable, Codable, Identifiable, Sendable {
-    public let id: Int
-    public let name: String
-    public let height: Int?
-    public let weight: Int?
-    public let order: Int?
-    public let baseExperience: Int?
-    public let types: [PokemonTypeSlot]
-    public let stats: [Stat]
-    public let descriptions: [String]
-    
-    public // MARK: - PokemonType
-    
-    struct PokemonTypeSlot: Hashable, Codable, Sendable {
-        public let slot: Int
-        public let type: PokemonType
-    }
-    
-    // MARK: - PokemonStat
-    
-    public struct Stat: Hashable, Codable, Sendable {
-        public let baseStat: Int
-        public let effort: Int
-        public let name: String
-    }
-    
-    public var imageURL: String {
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(id).png"
-    }
-    
-    public var primaryType: PokemonType {
-        let type = types.first { $0.slot == 1 }
-        return type?.type ?? .unknown
-    }
-}
-
-extension Pokemon {
-    init(_ apiModel: GraphClient.GetPokemonQuery.Data.Pokemon) {
-        let types = apiModel.types.map { PokemonTypeSlot(slot: $0.slot, type: PokemonType(rawValue: $0.type?.name ?? "") ?? .unknown) }
-        let stats = apiModel.stats.map { Stat(baseStat: $0.base_stat, effort: $0.effort, name: $0.statName?.name ?? "") }
-        let descriptions = apiModel.species?.descriptions.map(\.text) ?? []
-        self.init(
-            id: apiModel.id,
-            name: apiModel.name,
-            height: apiModel.height,
-            weight: apiModel.weight,
-            order: apiModel.order,
-            baseExperience: apiModel.baseExperience,
-            types: types,
-            stats: stats,
-            descriptions: descriptions
-        )
-    }
-}
 
 import SwiftUI
 
-public enum PokemonType: String, Codable, Sendable {
+public enum PokemonTypeEnum: String, Codable, Sendable {
     case normal
     case fighting
     case flying
@@ -83,7 +24,7 @@ public enum PokemonType: String, Codable, Sendable {
     case unknown
 }
 
-extension PokemonType {
+extension PokemonTypeEnum {
     public var icon: Image {
         switch self {
         case .normal:

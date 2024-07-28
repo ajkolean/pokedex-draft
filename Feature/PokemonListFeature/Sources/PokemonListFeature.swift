@@ -14,7 +14,7 @@ public struct PokemonListFeature: Reducer {
             var filteredList: [Pokemon] = []
 
             for pokemon in pokemonIdentifiers {
-                if pokemon.name.contains(searchText.lowercased()) {
+                if pokemon.name.rawValue.contains(searchText.lowercased()) {
                     filteredList.append(pokemon)
                 } else if searchText == "\(pokemon.id)" {
                     filteredList.append(pokemon)
@@ -47,7 +47,7 @@ public struct PokemonListFeature: Reducer {
             case .fetchPokemonIdentifiers:
                 return .run { [client = pokemonAPIClient] send in
                     do {
-                        let pokemon = try await client.fetchPokemon()
+                        let pokemon = try await client.fetchPokemonList()
                         await send(.setPokemonList(.success(pokemon)))
                     } catch {
                         await send(.setPokemonList(.failure(error as NSError)))
@@ -58,7 +58,8 @@ public struct PokemonListFeature: Reducer {
                 return .none
 
             case let .setPokemonList(.failure(error)):
-                fatalError("Failed to fetch pokemon list: \(error)")
+                print("Failed to fetch pokemon list: \(error)")
+                return .none
             case .pokemonCardTapped:
                 return .none
             }

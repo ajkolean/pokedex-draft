@@ -55,7 +55,7 @@ public struct PokemonDetailView: View {
                     .frame(width: 200, height: 200)
 
                 VStack {
-                    Text(store.pokemon.name.capitalized)
+                    Text(store.pokemon.name.rawValue.capitalized)
                         .font(.largeTitle)
                         .padding(.top, 40)
 

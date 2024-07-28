@@ -11,7 +11,7 @@ public struct PokemonCardView: View {
         self.pokemon = pokemon
     }
 
-    var type: PokemonType {
+    var type: PokemonTypeEnum {
         pokemon.types.first?.type ?? .unknown
     }
 
@@ -19,7 +19,7 @@ public struct PokemonCardView: View {
         ZStack {
             VStack(alignment: .leading) {
                 HStack {
-                    Text(pokemon.name.capitalized)
+                    Text(pokemon.name.rawValue.capitalized)
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.top, 10)
@@ -64,12 +64,12 @@ public struct PokemonCardView: View {
     }
 
     var formattedId: String {
-        if pokemon.id / 10 < 1 {
-            return "#00\(pokemon.id)"
-        } else if pokemon.id / 10 < 10 {
-            return "#0\(pokemon.id)"
+        if pokemon.id.rawValue / 10 < 1 {
+            return "#00\(pokemon.id.rawValue)"
+        } else if pokemon.id.rawValue / 10 < 10 {
+            return "#0\(pokemon.id.rawValue)"
         } else {
-            return "#\(pokemon.id)"
+            return "#\(pokemon.id.rawValue)"
         }
     }
 }
