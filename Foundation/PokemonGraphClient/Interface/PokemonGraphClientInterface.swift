@@ -1,6 +1,7 @@
 import Apollo
 import ComposableArchitecture
 import Foundation
+import Models
 
 @DependencyClient
 public struct PokemonAPIClient: Sendable {

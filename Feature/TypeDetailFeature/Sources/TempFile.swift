@@ -3,6 +3,7 @@ import ComposableArchitecture
 import Kingfisher
 import PokemonGraphClientInterface
 import SwiftUI
+import Models
 
 public struct PokemonCardView: View {
     public var pokemon: Pokemon

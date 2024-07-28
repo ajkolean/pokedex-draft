@@ -1,6 +1,7 @@
 import Foundation
 import PokemonGraphClientInterface
 import SwiftUI
+import Models
 
 public enum MenuItem: String, CaseIterable, Identifiable {
     public var id: String { rawValue }
@@ -65,7 +66,7 @@ struct MenuCardView: View {
                 Spacer()
                 VStack {
                     Spacer()
-                    PokemonGraphClientInterfaceAsset
+                    ModelsAsset
                         .spinningball
                         .swiftUIImage
                         .renderingMode(.template)

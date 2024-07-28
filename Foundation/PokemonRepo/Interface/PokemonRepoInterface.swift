@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import Foundation
 import PokemonGraphClientInterface
+import Models
 
 @DependencyClient
 public struct PokemonRepo: TestDependencyKey {

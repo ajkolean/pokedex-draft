@@ -19,11 +19,11 @@ let project: Project = .moduleProject(
         .moduleTarget(
             module: foundation,
             targetType: .interface,
-            includeResources: true,
             dependencies: [
                 //                .package(product: "InstallCLI", type: .plugin),
                 .external(name: "Apollo"),
                 .ComposableArchitecture,
+                .Models,
                 .external(name: "MemberwiseInit"),
             ]
         ),

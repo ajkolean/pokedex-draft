@@ -1,4 +1,4 @@
-import PokemonGraphClientInterface
+import Models
 import SwiftData
 
 @Model

@@ -2,6 +2,7 @@ import ComposableArchitecture
 import Kingfisher
 import PokemonGraphClientInterface
 import SwiftUI
+import Models
 
 @Reducer
 public struct PokemonDetailFeature: Reducer {

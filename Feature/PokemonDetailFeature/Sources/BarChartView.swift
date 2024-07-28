@@ -1,5 +1,6 @@
 import PokemonGraphClientInterface
 import SwiftUI
+import Models
 
 struct BarView: View {
     var value: Int = 0

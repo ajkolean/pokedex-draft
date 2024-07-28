@@ -7,6 +7,7 @@ import PokemonListFeature
 import SwiftUI
 import TypeDetailFeature
 import TypeListFeature
+import Models
 
 @Reducer
 public struct AppFeature: Reducer {
@@ -124,7 +125,7 @@ public struct AppView: View {
                     }
                     .background(Color(UIColor.systemBackground))
                     .overlay(
-                        PokemonGraphClientInterfaceAsset
+                         ModelsAsset
                             .spinningball
                             .swiftUIImage
                             .resizable()

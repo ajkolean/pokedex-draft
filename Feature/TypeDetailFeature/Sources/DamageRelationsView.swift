@@ -1,5 +1,6 @@
 import PokemonGraphClientInterface
 import SwiftUI
+import Models
 
 struct DamageRelationsStackView: View {
     let pokemonType: PokemonType

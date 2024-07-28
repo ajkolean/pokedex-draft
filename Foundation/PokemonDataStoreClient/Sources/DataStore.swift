@@ -1,6 +1,7 @@
 import Foundation
 import PokemonGraphClientInterface
 import SwiftData
+import Models
 
 public actor DataStore {
     private let db: ModelActorDatabase

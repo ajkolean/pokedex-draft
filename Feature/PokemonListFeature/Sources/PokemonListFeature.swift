@@ -3,6 +3,7 @@ import ComposableArchitecture
 import PokemonGraphClientInterface
 import PokemonRepo
 import SwiftUI
+import Models
 
 @Reducer
 public struct PokemonListFeature: Reducer {

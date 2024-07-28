@@ -27,90 +27,90 @@ extension PokemonTypeEnum {
     public var icon: Image {
         switch self {
         case .normal:
-            return PokemonGraphClientInterfaceAsset.normalIcon.swiftUIImage
+            return ModelsAsset.normalIcon.swiftUIImage
         case .fighting:
-            return PokemonGraphClientInterfaceAsset.fightingIcn.swiftUIImage
+            return ModelsAsset.fightingIcn.swiftUIImage
         case .flying:
-            return PokemonGraphClientInterfaceAsset.flyingIcon.swiftUIImage
+            return ModelsAsset.flyingIcon.swiftUIImage
         case .poison:
-            return PokemonGraphClientInterfaceAsset.poisonIcon.swiftUIImage
+            return ModelsAsset.poisonIcon.swiftUIImage
         case .ground:
-            return PokemonGraphClientInterfaceAsset.groundIcon.swiftUIImage
+            return ModelsAsset.groundIcon.swiftUIImage
         case .rock:
-            return PokemonGraphClientInterfaceAsset.rockIcon.swiftUIImage
+            return ModelsAsset.rockIcon.swiftUIImage
         case .bug:
-            return PokemonGraphClientInterfaceAsset.bugIcon.swiftUIImage
+            return ModelsAsset.bugIcon.swiftUIImage
         case .ghost:
-            return PokemonGraphClientInterfaceAsset.ghostIcon.swiftUIImage
+            return ModelsAsset.ghostIcon.swiftUIImage
         case .steel:
-            return PokemonGraphClientInterfaceAsset.steelIcon.swiftUIImage
+            return ModelsAsset.steelIcon.swiftUIImage
         case .fire:
-            return PokemonGraphClientInterfaceAsset.fireIcon.swiftUIImage
+            return ModelsAsset.fireIcon.swiftUIImage
         case .water:
-            return PokemonGraphClientInterfaceAsset.waterIcon.swiftUIImage
+            return ModelsAsset.waterIcon.swiftUIImage
         case .grass:
-            return PokemonGraphClientInterfaceAsset.grassIcon.swiftUIImage
+            return ModelsAsset.grassIcon.swiftUIImage
         case .electric:
-            return PokemonGraphClientInterfaceAsset.electricIcon.swiftUIImage
+            return ModelsAsset.electricIcon.swiftUIImage
         case .psychic:
-            return PokemonGraphClientInterfaceAsset.psychicIcon.swiftUIImage
+            return ModelsAsset.psychicIcon.swiftUIImage
         case .ice:
-            return PokemonGraphClientInterfaceAsset.iceIcon.swiftUIImage
+            return ModelsAsset.iceIcon.swiftUIImage
         case .dragon:
-            return PokemonGraphClientInterfaceAsset.dragonIcon.swiftUIImage
+            return ModelsAsset.dragonIcon.swiftUIImage
         case .dark:
-            return PokemonGraphClientInterfaceAsset.darkIcon.swiftUIImage
+            return ModelsAsset.darkIcon.swiftUIImage
         case .fairy:
-            return PokemonGraphClientInterfaceAsset.fairyIcon.swiftUIImage
+            return ModelsAsset.fairyIcon.swiftUIImage
         case .stellar:
-            return PokemonGraphClientInterfaceAsset.spinningball.swiftUIImage
+            return ModelsAsset.spinningball.swiftUIImage
         case .unknown:
-            return PokemonGraphClientInterfaceAsset.spinningball.swiftUIImage
+            return ModelsAsset.spinningball.swiftUIImage
         }
     }
 
     public var pokemonImage: Image {
         switch self {
         case .normal:
-            return PokemonGraphClientInterfaceAsset.normalCover.swiftUIImage
+            return ModelsAsset.normalCover.swiftUIImage
         case .fighting:
-            return PokemonGraphClientInterfaceAsset.fightingCover.swiftUIImage
+            return ModelsAsset.fightingCover.swiftUIImage
         case .flying:
-            return PokemonGraphClientInterfaceAsset.flyingCover.swiftUIImage
+            return ModelsAsset.flyingCover.swiftUIImage
         case .poison:
-            return PokemonGraphClientInterfaceAsset.poisonCover.swiftUIImage
+            return ModelsAsset.poisonCover.swiftUIImage
         case .ground:
-            return PokemonGraphClientInterfaceAsset.groundCover.swiftUIImage
+            return ModelsAsset.groundCover.swiftUIImage
         case .rock:
-            return PokemonGraphClientInterfaceAsset.rockCover.swiftUIImage
+            return ModelsAsset.rockCover.swiftUIImage
         case .bug:
-            return PokemonGraphClientInterfaceAsset.bugCover.swiftUIImage
+            return ModelsAsset.bugCover.swiftUIImage
         case .ghost:
-            return PokemonGraphClientInterfaceAsset.ghostCover.swiftUIImage
+            return ModelsAsset.ghostCover.swiftUIImage
         case .steel:
-            return PokemonGraphClientInterfaceAsset.steelCover.swiftUIImage
+            return ModelsAsset.steelCover.swiftUIImage
         case .fire:
-            return PokemonGraphClientInterfaceAsset.fireCover.swiftUIImage
+            return ModelsAsset.fireCover.swiftUIImage
         case .water:
-            return PokemonGraphClientInterfaceAsset.waterCover.swiftUIImage
+            return ModelsAsset.waterCover.swiftUIImage
         case .grass:
-            return PokemonGraphClientInterfaceAsset.grassCover.swiftUIImage
+            return ModelsAsset.grassCover.swiftUIImage
         case .electric:
-            return PokemonGraphClientInterfaceAsset.electricCover.swiftUIImage
+            return ModelsAsset.electricCover.swiftUIImage
         case .psychic:
-            return PokemonGraphClientInterfaceAsset.psychicCover.swiftUIImage
+            return ModelsAsset.psychicCover.swiftUIImage
         case .ice:
-            return PokemonGraphClientInterfaceAsset.iceCover.swiftUIImage
+            return ModelsAsset.iceCover.swiftUIImage
         case .dragon:
-            return PokemonGraphClientInterfaceAsset.dragonCover.swiftUIImage
+            return ModelsAsset.dragonCover.swiftUIImage
         case .dark:
-            return PokemonGraphClientInterfaceAsset.darkCover.swiftUIImage
+            return ModelsAsset.darkCover.swiftUIImage
         case .fairy:
-            return PokemonGraphClientInterfaceAsset.fairyCover.swiftUIImage
+            return ModelsAsset.fairyCover.swiftUIImage
         case .stellar:
-            return PokemonGraphClientInterfaceAsset.spinningball.swiftUIImage
+            return ModelsAsset.spinningball.swiftUIImage
         case .unknown:
-            return PokemonGraphClientInterfaceAsset.spinningball.swiftUIImage
+            return ModelsAsset.spinningball.swiftUIImage
         }
     }
 
