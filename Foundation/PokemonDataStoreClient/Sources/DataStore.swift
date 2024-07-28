@@ -1,7 +1,6 @@
 import Foundation
-import Models
+import PokemonGraphClientInterface
 import SwiftData
-import UIKit
 
 public final class DataStore {
     private let db: ModelActorDatabase
@@ -9,60 +8,47 @@ public final class DataStore {
         db = ModelActorDatabase(modelContainer: container)
     }
 
-    public func savePokemon(_ pokemon: Pokemon) async throws {
-        let entity = pokemon.asEntity
-        await db.insert(entity)
+    public func savePokemons(_ pokemons: [Pokemon]) async throws {
+        for pokemon in pokemons.map(PokemonEntity.init) {
+            await db.insert(pokemon)
+        }
         try await db.debounceSave()
     }
 
-    public func fetchPokemonIdentifiers() async throws -> [PokemonIdentifier] {
-        let sortDescriptor = SortDescriptor(\PokemonIdentifierEntity.id, order: .forward)
-        let fetchDescriptor = FetchDescriptor<PokemonIdentifierEntity>(sortBy: [sortDescriptor])
+    public func fetchPokemonList() async throws -> [Pokemon] {
+        let sortDescriptor = SortDescriptor(\PokemonEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<PokemonEntity>(sortBy: [sortDescriptor])
         let models = try await db.fetch(fetchDescriptor)
-        let identifiers = models.map(\.asModel)
+        let identifiers = models.map(Pokemon.init)
         return identifiers
     }
 
-    public func savePokemonIdentifiers(_ pokemonIdentifiers: [PokemonIdentifier]) async throws {
-        for identifier in pokemonIdentifiers {
-            let entity = identifier.asEntity
-            await db.insert(entity)
-        }
-        try await db.save()
-    }
-
-    public func fetchPokemon(_ name: String) async throws -> Pokemon? {
+    public func fetchPokemon(_ name: Pokemon.Name) async throws -> Pokemon? {
         let fetchDescriptor = FetchDescriptor<PokemonEntity>(predicate: #Predicate { $0.name == name })
         let fetchedPokemons = try await db.fetch(fetchDescriptor)
-        return fetchedPokemons.first?.asModel
+        let pokemon = fetchedPokemons.first
+        return pokemon.map(Pokemon.init)
     }
 
-    public func fetchPokemonTypeIdentifiers() async throws -> [TypeIdentifier] {
-        let sortDescriptor = SortDescriptor(\TypeIdentifierEntity.name, order: .forward)
-        let fetchDescriptor = FetchDescriptor<TypeIdentifierEntity>(sortBy: [sortDescriptor])
+    public func fetchPokemonTypeList() async throws -> [PokemonType] {
+        let sortDescriptor = SortDescriptor(\PokemonTypeEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<PokemonTypeEntity>(sortBy: [sortDescriptor])
         let models = try await db.fetch(fetchDescriptor)
-        let identifiers = models.map(\.asModel)
-        return identifiers
+        return models.map(PokemonType.init)
     }
 
-    public func saveTypeIdentifiers(_ identifiers: [TypeIdentifier]) async throws {
-        for identifier in identifiers {
-            let entity = TypeIdentifierEntity(identifier)
-            await db.insert(entity)
+    public func savePokemonTypes(_ types: [PokemonType]) async throws {
+        for type in types.map(PokemonTypeEntity.init) {
+            await db.insert(type)
         }
-        try await db.save()
-    }
-
-    public func fetchPokemonTypeDetails(_ name: String) async throws -> PokemonTypeDetails? {
-        let fetchDescriptor = FetchDescriptor<PokemonTypeDetailsEntity>(predicate: #Predicate { $0.name == name })
-        let results = try await db.fetch(fetchDescriptor)
-        return results.first?.asModel
-    }
-
-    public func savePokemonTypeDetails(_ details: PokemonTypeDetails) async throws {
-        let entity = PokemonTypeDetailsEntity(details)
-        await db.insert(entity)
         try await db.debounceSave()
+    }
+
+    public func fetchPokemonType(_ type: PokemonTypeEnum) async throws -> PokemonType? {
+        let fetchDescriptor = FetchDescriptor<PokemonTypeEntity>(predicate: #Predicate { $0.type == type })
+        let fetchedPokemons = try await db.fetch(fetchDescriptor)
+        let pokemon = fetchedPokemons.first
+        return pokemon.map(PokemonType.init)
     }
 }
 

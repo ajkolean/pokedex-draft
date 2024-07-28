@@ -1,4 +1,3 @@
-
 import Foundation
 
 public protocol IdentifierProtocol: RawRepresentable, Codable, Hashable, Identifiable, Sendable, CustomStringConvertible {}
@@ -28,5 +27,3 @@ extension IdentifierProtocol where Self: RawRepresentable {
         "\(rawValue)"
     }
 }
-
-

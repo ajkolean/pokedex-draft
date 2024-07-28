@@ -12,16 +12,15 @@ let project: Project = .moduleProject(
             dependencies: [
                 .PokemonDataStoreClientInterface,
                 .ComposableArchitecture,
-                .Models,
+                .PokemonGraphClientInterface,
             ]
         ),
         .moduleTarget(
             module: foundation,
             targetType: .interface,
-            infoPlist: .default,
             dependencies: [
                 .ComposableArchitecture,
-                .Models,
+                .PokemonGraphClientInterface,
             ]
         ),
         .moduleTarget(

@@ -24,6 +24,7 @@ let project: Project = .moduleProject(
                 //                .package(product: "InstallCLI", type: .plugin),
                 .external(name: "Apollo"),
                 .ComposableArchitecture,
+                .external(name: "MemberwiseInit"),
             ]
         ),
         .moduleTarget(

@@ -11,7 +11,7 @@ let project: Project = .moduleProject(
             targetType: .implementation,
             dependencies: [
                 .ComposableArchitecture,
-                .PokemonGraphClientInterface
+                .PokemonGraphClientInterface,
             ]
         ),
         .moduleTarget(

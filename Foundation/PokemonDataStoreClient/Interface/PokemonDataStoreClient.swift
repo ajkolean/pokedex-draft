@@ -1,17 +1,11 @@
 import ComposableArchitecture
 import Foundation
-import Models
+import PokemonGraphClientInterface
 
 @DependencyClient
-public struct DataStoreClient: Sendable, TestDependencyKey, PokemonDataService {
-    public var fetchPokemonIdentifiers: @Sendable () async throws -> [PokemonIdentifier]
-    public var fetchPokemon: @Sendable (PokemonName) async throws -> Pokemon?
-    public var fetchPokemonTypeIdentifiers: @Sendable () async throws -> [TypeIdentifier]
-    public var fetchPokemonTypeDetails: @Sendable (String) async throws -> PokemonTypeDetails?
-    public var savePokemonIdentifiers: @Sendable ([PokemonIdentifier]) async throws -> Void
-    public var savePokemon: @Sendable (Pokemon) async throws -> Void
-    public var saveTypeIdentifiers: @Sendable ([TypeIdentifier]) async throws -> Void
-    public var savePokemonTypeDetails: @Sendable (PokemonTypeDetails) async throws -> Void
+public struct DataStoreClient: Sendable, TestDependencyKey {
+    public var fetchPokemonList: @Sendable () async throws -> [Pokemon]
+    public var fetchPokemonTypeList: @Sendable () async throws -> [PokemonType]
 
     public static let testValue = Self()
 }

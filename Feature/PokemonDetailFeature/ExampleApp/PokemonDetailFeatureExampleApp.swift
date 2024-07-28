@@ -1,9 +1,9 @@
-//import ComposableArchitecture
-//import PokemonDetailFeature
-//import SwiftUI
+// import ComposableArchitecture
+// import PokemonDetailFeature
+// import SwiftUI
 //
-//@main
-//struct PokemonDetailFeatureExampleApp: App {
+// @main
+// struct PokemonDetailFeatureExampleApp: App {
 //    static let store = Store(initialState: PokemonDetailFeature.State()) {
 //        PokemonDetailFeature()
 //    }
@@ -13,12 +13,12 @@
 //            PokemonDetailView(store: Self.store)
 //        }
 //    }
-//}
+// }
 //
-//#Preview {
+// #Preview {
 //    PokemonDetailView(
 //        store: Store(initialState: PokemonDetailFeature.State()) {
 //            PokemonDetailFeature()
 //        }
 //    )
-//}
+// }

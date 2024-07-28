@@ -61,8 +61,8 @@ public struct TypeListFeatureView: View {
                 ForEach(store.pokemonTypes) { pokemonType in
                     TypeCardView(pokemonType: pokemonType)
                         .tappable {
-                        store.send(.pokemonTypeTapped(pokemonType))
-                    }
+                            store.send(.pokemonTypeTapped(pokemonType))
+                        }
                 }
             }
             .padding()

@@ -6,15 +6,15 @@ import SwiftUI
 
 public struct PokemonCardView: View {
     public var pokemon: Pokemon
-    
+
     public init(pokemon: Pokemon) {
         self.pokemon = pokemon
     }
-    
+
     var type: PokemonTypeEnum {
         pokemon.types.first?.type ?? .unknown
     }
-    
+
     public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
@@ -24,14 +24,14 @@ public struct PokemonCardView: View {
                         .foregroundColor(.white)
                         .padding(.top, 10)
                         .padding(.leading)
-                    
+
                     Text(formattedId)
                         .font(.subheadline)
                         .foregroundColor(.white)
                         .padding(.top, 10)
                         .padding(.leading, 2)
                 }
-                
+
                 HStack {
                     Text(type.rawValue.capitalized)
                         .font(.subheadline).bold()
@@ -43,7 +43,7 @@ public struct PokemonCardView: View {
                                 .fill(Color.white.opacity(0.25))
                         )
                         .frame(width: 100, height: 24)
-                    
+
                     KFImage(URL(string: pokemon.imageURL))
                         .placeholder { value in
                             ProgressView(value: value.fractionCompleted)
@@ -62,7 +62,7 @@ public struct PokemonCardView: View {
         .cornerRadius(12)
         .shadow(color: type.color(), radius: 4, x: 1.0, y: 1.0)
     }
-    
+
     var formattedId: String {
         if pokemon.id.rawValue / 10 < 1 {
             return "#00\(pokemon.id.rawValue)"

@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct TappableModifier: ViewModifier {
     public let action: () -> Void
-    
+
     public func body(content: Content) -> some View {
         Button(action: action) {
             content

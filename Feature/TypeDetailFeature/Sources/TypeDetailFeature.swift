@@ -8,23 +8,23 @@ public struct TypeDetailFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
         public let pokemonType: PokemonType
-        
+
         public init(pokemonType: PokemonType) {
             self.pokemonType = pokemonType
         }
     }
-    
+
     public enum Action: Equatable {
         case onAppear
         case pokemonCardTapped(Pokemon)
     }
-    
+
     @Dependency(\.pokemonAPIClient) var pokemonAPIClient
-    
+
     public init() {}
-    
+
     public var body: some ReducerOf<Self> {
-        Reduce<State, Action> { state, action in
+        Reduce<State, Action> { _, action in
             switch action {
             case .onAppear:
                 return .none
@@ -37,11 +37,11 @@ public struct TypeDetailFeature: Reducer {
 
 public struct TypeDetailView: View {
     @Bindable public var store: StoreOf<TypeDetailFeature>
-    
+
     public init(store: StoreOf<TypeDetailFeature>) {
         self.store = store
     }
-    
+
     public var body: some View {
         ZStack {
             LinearGradient(
@@ -50,9 +50,9 @@ public struct TypeDetailView: View {
                 endPoint: .bottom
             )
             .ignoresSafeArea()
-            
+
             Color(UIColor.systemBackground).offset(y: 300)
-            
+
             ScrollView {
                 store
                     .pokemonType
@@ -61,7 +61,7 @@ public struct TypeDetailView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 300)
-                
+
                 VStack {
                     HStack(alignment: .center) {
                         store.pokemonType.type.icon
@@ -80,10 +80,10 @@ public struct TypeDetailView: View {
                     .cornerRadius(20)
                     .shadow(color: store.pokemonType.type.color(), radius: 4, x: 1.0, y: 1.0)
                     .padding(.top, 75)
-                    
+
                     DamageRelationsStackView(pokemonType: store.pokemonType)
                         .padding(.top, 24)
-                    
+
                     Text("Pokemon")
                         .font(.title2)
                         .bold()
@@ -93,26 +93,25 @@ public struct TypeDetailView: View {
                         .cornerRadius(8)
                         .shadow(color: store.pokemonType.type.color(), radius: 4, x: 1.0, y: 1.0)
                         .padding(.bottom, 24)
-                    
+
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                         ForEach(store.pokemonType.pokemonByTypeSlot.map(\.pokemon)) { pokemon in
-                            
+
                             PokemonCardView(pokemon: pokemon)
                                 .tappable {
                                     store.send(.pokemonCardTapped(pokemon))
                                 }
                         }
-                        
                     }
                 }
-                
+
                 .background(Color(UIColor.systemBackground))
                 .cornerRadius(40)
                 .padding(.top, -40)
                 .zIndex(-1)
             }
         }
-        
+
         .onAppear {
             store.send(.onAppear)
         }

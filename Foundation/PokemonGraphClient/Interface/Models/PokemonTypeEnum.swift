@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 public enum PokemonTypeEnum: String, Codable, Sendable {
@@ -69,7 +68,7 @@ extension PokemonTypeEnum {
             return PokemonGraphClientInterfaceAsset.spinningball.swiftUIImage
         }
     }
-    
+
     public var pokemonImage: Image {
         switch self {
         case .normal:
@@ -114,7 +113,7 @@ extension PokemonTypeEnum {
             return PokemonGraphClientInterfaceAsset.spinningball.swiftUIImage
         }
     }
-    
+
     // swiftlint:disable:next function_body_length
     public func color() -> Color {
         return Color(UIColor { traitCollection in

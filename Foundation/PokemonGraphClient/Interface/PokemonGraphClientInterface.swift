@@ -41,14 +41,14 @@ private actor APIService {
         print(p)
         return p
     }
-    
+
     public func fetchPokemon(name: String) async throws -> Pokemon {
         let query = GraphClient.GetPokemonByNameQuery(name: name)
         let data = try await fetch(query: query)
         let fragment = data.pokemon.first!.fragments.pokemonFragment
         return Pokemon(fragment)
     }
-    
+
     public func fetchPokemoTypenList(limit: Int? = 20, offset: Int? = nil) async throws -> [PokemonType] {
         let query = GraphClient.GetPokemonTypeListQuery(limit: GraphQLNullable(limit), offset: GraphQLNullable(offset))
         let data = try await fetch(query: query)
