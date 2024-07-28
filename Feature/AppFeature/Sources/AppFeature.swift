@@ -1,5 +1,5 @@
 import ComposableArchitecture
-import ItemListFeature
+//import ItemListFeature
 import PokemonDetailFeature
 import PokemonGraphClientInterface
 import PokemonListFeature
@@ -26,7 +26,7 @@ public struct AppFeature: Reducer {
         case typeDetail(TypeDetailFeature)
         case typeList(TypeListFeature)
         case pokemonDetail(PokemonDetailFeature)
-        case itemList(ItemListFeature)
+//        case itemList(ItemListFeature)
     }
 
     public init() {}
@@ -41,7 +41,8 @@ public struct AppFeature: Reducer {
                 case .types:
                     state.path.append(.typeList(TypeListFeature.State()))
                 case .items:
-                    state.path.append(.itemList(ItemListFeature.State()))
+                    return .none
+//                    state.path.append(.itemList(ItemListFeature.State()))
                 default:
                     return .none
                 }
@@ -55,8 +56,8 @@ public struct AppFeature: Reducer {
             case let .path(.element(id: _, action: .pokemon(.pokemonCardTapped(pokemon)))):
                 state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemon: pokemon)))
                 return .none
-            case .path(.element(id: _, action: .itemList(.itemRowTapped))):
-                return .none
+//            case .path(.element(id: _, action: .itemList(.itemRowTapped))):
+//                return .none
             case .path:
                 return .none
             }
@@ -144,8 +145,8 @@ public struct AppView: View {
                 TypeDetailView(store: store)
             case let .pokemonDetail(store):
                 PokemonDetailView(store: store)
-            case let .itemList(store):
-                ItemListFeatureView(store: store)
+//            case let .itemList(store):
+//                ItemListFeatureView(store: store)
             }
         }
     }

@@ -1,5 +1,5 @@
 import Foundation
-import Models
+import PokemonGraphClientInterface
 import SwiftData
 
 public class ModelContainerProvider {
@@ -21,11 +21,7 @@ public class ModelContainerProvider {
             }
             container = try ModelContainer(
                 for: PokemonEntity.self,
-                PokemonIdentifierEntity.self,
-                PokemonDetailsEntity.self,
-                PokemonSpeciesEntity.self,
-                TypeIdentifierEntity.self,
-                PokemonTypeDetailsEntity.self,
+                PokemonTypeEntity.self,
                 configurations: config
             )
         } catch {

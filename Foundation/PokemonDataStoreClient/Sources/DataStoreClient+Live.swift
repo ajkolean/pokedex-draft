@@ -1,6 +1,5 @@
 import ComposableArchitecture
 import Foundation
-import Models
 import PokemonDataStoreClientInterface
 
 extension DataStoreClient: DependencyKey {
@@ -8,7 +7,9 @@ extension DataStoreClient: DependencyKey {
         let dataStore = DataStore.shared
         return DataStoreClient(
             fetchPokemonList: { try await dataStore.fetchPokemonList() },
-            fetchPokemonTypeList: { try await dataStore.fetchPokemonTypeList() }
+            savePokemons: { try await dataStore.savePokemons($0) },
+            fetchPokemonTypeList: { try await dataStore.fetchPokemonTypeList() },
+            savePokemonTypes: { try await dataStore.savePokemonTypes($0) }
         )
     }()
 }
