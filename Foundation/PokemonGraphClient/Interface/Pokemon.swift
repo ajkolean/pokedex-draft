@@ -32,6 +32,11 @@ public struct Pokemon: Hashable, Codable, Identifiable, Sendable {
     public var imageURL: String {
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(id).png"
     }
+    
+    public var primaryType: PokemonType {
+        let type = types.first { $0.slot == 1 }
+        return type?.type ?? .unknown
+    }
 }
 
 extension Pokemon {

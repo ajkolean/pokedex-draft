@@ -1,15 +1,15 @@
 import ComposableArchitecture
 import Kingfisher
-import Models
+import PokemonGraphClientInterface
 import SwiftUI
 
 @Reducer
 public struct PokemonDetailFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
-        public var pokemon: Pokemon?
+        public let pokemon: Pokemon
 
-        public init(pokemon: Pokemon? = nil) {
+        public init(pokemon: Pokemon) {
             self.pokemon = pokemon
         }
     }
@@ -41,7 +41,7 @@ public struct PokemonDetailView: View {
     public var body: some View {
         ZStack {
             LinearGradient(
-                gradient: Gradient(colors: [store.pokemon!.details.backgroundColor, Color(UIColor.systemBackground)]),
+                gradient: Gradient(colors: [store.pokemon.primaryType.color(), Color(UIColor.systemBackground)]),
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -50,22 +50,22 @@ public struct PokemonDetailView: View {
             Color(UIColor.systemBackground).offset(y: 300)
 
             ScrollView {
-                KFImage(URL(string: store.pokemon!.details.imageURL))
+                KFImage(URL(string: store.pokemon.imageURL))
                     .resizable()
                     .frame(width: 200, height: 200)
 
                 VStack {
-                    Text(store.pokemon!.details.name.capitalized)
+                    Text(store.pokemon.name.capitalized)
                         .font(.largeTitle)
                         .padding(.top, 40)
 
                     HStack {
-                        ForEach(store.pokemon!.details.types, id: \.self) { type in
-                            Text(type.type.name.capitalized)
+                        ForEach(store.pokemon.types, id: \.self) { type in
+                            Text(type.type.rawValue.capitalized)
                                 .font(.subheadline).bold()
                                 .foregroundColor(Color(UIColor.systemBackground))
                                 .padding(.init(top: 8, leading: 24, bottom: 8, trailing: 24))
-                                .background(type.backgroundColor)
+                                .background(type.type.color())
                                 .cornerRadius(20)
                         }
                     }
@@ -80,7 +80,7 @@ public struct PokemonDetailView: View {
                     .padding(.horizontal, 20)
 
                     HStack {
-                        Text(store.pokemon!.description)
+                        Text(store.pokemon.descriptions.first ?? "")
 
                         Spacer()
                     }
@@ -133,7 +133,7 @@ public struct PokemonDetailView: View {
                     .padding(.top, 16)
                     .padding(.horizontal, 20)
 
-                    BarChartView(pokemon: store.pokemon!)
+                    BarChartView(pokemon: store.pokemon)
                         .padding(.trailing)
                         .padding(.top, 24)
 
@@ -153,13 +153,15 @@ public struct PokemonDetailView: View {
     }
 
     var heightToString: String {
-        let m = (Double(store.pokemon!.details.height) / 10.0)
+        guard let height = store.pokemon.height else { return "?????" }
+        let m = (Double(height) / 10.0)
         let ft = m * 3.281
         return String(format: "%.2f m (%.2f ft)", m, ft)
     }
 
     var weightToString: String {
-        let kg = (Double(store.pokemon!.details.weight) / 10.0)
+        guard let weight = store.pokemon.weight else { return "?????" }
+        let kg = (Double(weight) / 10.0)
         let lbs = kg * 2.205
         return String(format: "%.2f kg (%.2f lbs)", kg, lbs)
     }

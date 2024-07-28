@@ -1,4 +1,4 @@
-import Models
+import PokemonGraphClientInterface
 import SwiftUI
 
 struct BarView: View {
@@ -54,8 +54,8 @@ struct BarChartView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            ForEach(Array(pokemon.details.stats.enumerated()), id: \.offset) { index, stat in
-                let title = stat.stat.name.capitalized
+            ForEach(Array(pokemon.stats.enumerated()), id: \.offset) { index, stat in
+                let title = stat.name.capitalized
                     .replacingOccurrences(of: "Special-Attack", with: "Sp. Atk")
                     .replacingOccurrences(of: "Special-Defense", with: "Sp. Def")
                 BarView(value: stat.baseStat, title: "\(title)", color: colorArray[index % colorArray.count])
