@@ -1,5 +1,6 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonListFeature.swift
 import ComposableArchitecture
+import PokemonRepo
 import PokemonGraphClientInterface
 import SwiftUI
 
@@ -34,7 +35,7 @@ public struct PokemonListFeature: Reducer {
         case pokemonCardTapped(Pokemon)
     }
 
-    @Dependency(\.pokemonAPIClient) var pokemonAPIClient
+    @Dependency(\.pokemonRepo) var pokemonRepo
 
     public init() {}
 
@@ -45,7 +46,7 @@ public struct PokemonListFeature: Reducer {
             case .binding:
                 return .none
             case .fetchPokemonIdentifiers:
-                return .run { [client = pokemonAPIClient] send in
+                return .run { [client = pokemonRepo] send in
                     do {
                         let pokemon = try await client.fetchPokemonList()
                         await send(.setPokemonList(.success(pokemon)))

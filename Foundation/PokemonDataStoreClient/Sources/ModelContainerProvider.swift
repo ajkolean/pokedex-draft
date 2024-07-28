@@ -15,7 +15,7 @@ public class ModelContainerProvider {
             if isTest {
                 config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
             } else {
-                let storeURL = URL.documentsDirectory.appending(path: "database_type.sqlite34")
+                let storeURL = URL.documentsDirectory.appending(path: "database_typec1.sqlite")
                 print(storeURL)
                 config = ModelConfiguration(url: storeURL, cloudKitDatabase: .none)
             }

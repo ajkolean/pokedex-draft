@@ -6,7 +6,7 @@ public protocol Database {
     func delete<T>(_ model: T) async where T: PersistentModel
     func insert<T>(_ model: T) async where T: PersistentModel
     func save() async throws
-    func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel
+    func fetch<T: Sendable>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel
 
     func delete<T: PersistentModel>(
         where predicate: Predicate<T>?
@@ -30,11 +30,11 @@ public actor ModelActorDatabase: ModelActor, Database {
         }
     }
 
-    public func delete(_ model: some PersistentModel) async {
+    public func delete(_ model: some SenablePersistentModel) async {
         modelContext.delete(model)
     }
 
-    public func insert(_ model: some PersistentModel) async {
+    public func insert(_ model: some SenablePersistentModel) async {
         modelContext.insert(model)
     }
 
@@ -48,7 +48,7 @@ public actor ModelActorDatabase: ModelActor, Database {
         try modelContext.save()
     }
 
-    public func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel {
+    public func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel & Sendable {
         return try modelContext.fetch(descriptor)
     }
 
@@ -85,3 +85,7 @@ public actor ModelActorDatabase: ModelActor, Database {
         try await save()
     }
 }
+
+public typealias SenablePersistentModel = PersistentModel & Sendable
+extension FetchDescriptor: @unchecked Sendable where T: SenablePersistentModel { }
+//extension FetchDescriptor: @unchecked Sendable {}

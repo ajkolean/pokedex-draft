@@ -24,7 +24,7 @@ public final class DataStore {
     }
 
     public func fetchPokemon(_ name: Pokemon.Name) async throws -> Pokemon? {
-        let fetchDescriptor = FetchDescriptor<PokemonEntity>(predicate: #Predicate { $0.name == name })
+        let fetchDescriptor = FetchDescriptor<PokemonEntity>(predicate: #Predicate { $0.name == name.rawValue })
         let fetchedPokemons = try await db.fetch(fetchDescriptor)
         let pokemon = fetchedPokemons.first
         return pokemon.map(Pokemon.init)

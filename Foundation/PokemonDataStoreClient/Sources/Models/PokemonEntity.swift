@@ -1,11 +1,12 @@
+
 import PokemonGraphClientInterface
 import SwiftData
 
 @Model
-public final class PokemonEntity {
-    public let id: Pokemon.ID
+public final class PokemonEntity: Sendable {
     @Attribute(.unique)
-    public let name: Pokemon.Name
+    public let id: Int
+    public let name: String
     public let height: Int?
     public let weight: Int?
     public let order: Int?
@@ -15,8 +16,8 @@ public final class PokemonEntity {
     public let descriptions: [String]
 
     public init(
-        id: Pokemon.ID,
-        name: Pokemon.Name,
+        id: Int,
+        name: String,
         height: Int? = nil,
         weight: Int? = nil,
         order: Int? = nil,
@@ -42,13 +43,13 @@ public final class PokemonEntity {
 extension PokemonEntity {
     convenience init(_ model: Pokemon) {
         self.init(
-            id: model.id, name: model.name, height: model.height, weight: model.weight, order: model.order, baseExperience: model.baseExperience, types: model.types, stats: model.stats, descriptions: model.descriptions)
+            id: model.id.rawValue, name: model.name.rawValue, height: model.height, weight: model.weight, order: model.order, baseExperience: model.baseExperience, types: model.types, stats: model.stats, descriptions: model.descriptions)
     }
 }
 
 extension Pokemon {
     init(_ model: PokemonEntity) {
         self.init(
-            id: model.id, name: model.name, height: model.height, weight: model.weight, order: model.order, baseExperience: model.baseExperience, types: model.types, stats: model.stats, descriptions: model.descriptions)
+            id: Pokemon.ID(rawValue: model.id), name: Pokemon.Name(rawValue: model.name), height: model.height, weight: model.weight, order: model.order, baseExperience: model.baseExperience, types: model.types, stats: model.stats, descriptions: model.descriptions)
     }
 }

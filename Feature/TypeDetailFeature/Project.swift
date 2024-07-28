@@ -13,6 +13,7 @@ let project: Project = .moduleProject(
                 .ComposableArchitecture,
                 .PokemonRepoInterface,
                 .PokemonRepoImplementation,
+                .Kingfisher
             ]
         ),
         .moduleTarget(
