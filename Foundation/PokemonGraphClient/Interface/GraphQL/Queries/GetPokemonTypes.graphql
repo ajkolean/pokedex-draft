@@ -1,0 +1,9 @@
+query GetPokemonTypes($limit: Int, $offset: Int, $name: String) {
+  types: pokemon_v2_type(
+    limit: $limit
+    offset: $offset
+    where: { name: { _eq: $name } }
+  ) {
+    ...TypeFragment
+  }
+}

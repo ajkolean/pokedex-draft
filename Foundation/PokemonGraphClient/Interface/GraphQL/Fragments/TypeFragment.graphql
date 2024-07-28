@@ -1,0 +1,27 @@
+fragment TypeFragment on pokemon_v2_type {
+  id
+  name
+  attackDamageRelations: pokemon_v2_typeefficacies(
+    where: { damage_factor: { _in: [200, 0, 50] } }
+  ) {
+    damageFactor: damage_factor
+    targetType: pokemonV2TypeByTargetTypeId {
+      name
+    }
+  }
+  defenseDamageRelation: pokemonV2TypeefficaciesByTargetTypeId(
+    where: { damage_factor: { _in: [200, 0, 50] } }
+  ) {
+    damageFactor: damage_factor
+    targetType: pokemon_v2_type {
+      name
+    }
+  }
+  pokemonByTypeSlot: pokemon_v2_pokemontypes {
+    typeSlot:slot
+    pokemonID: pokemon_id
+    pokemon: pokemon_v2_pokemon {
+      ...PokemonFragment
+    }
+  }
+}
