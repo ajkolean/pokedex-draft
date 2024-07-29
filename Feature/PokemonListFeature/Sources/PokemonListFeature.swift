@@ -79,7 +79,6 @@ public struct PokemonListFeatureView: View {
     }
 
     public var body: some View {
-        
         ZStack {
             ScrollView {
                 LazyVGrid(columns: gridItems, spacing: 16) {
@@ -103,10 +102,7 @@ public struct PokemonListFeatureView: View {
         .searchable(text: $store.searchText)
         .navigationTitle("Pokédex")
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                
-                store.send(.fetchPokemonIdentifiers)
-            }
+            store.send(.fetchPokemonIdentifiers)
         }
         .animation(.easeInOut, value: store.filteredPokemons)
     }

@@ -2,9 +2,9 @@ import SwiftUI
 
 public struct LoadingOverlayView: View {
     @State private var isAnimating = false
-    
+
     public init() {}
-    
+
     public var body: some View {
         ModelsAsset.spinningball.swiftUIImage
             .resizable()
