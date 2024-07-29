@@ -40,3 +40,17 @@ extension LocationArea {
 
     public var id: ID { .init(rawValue: _id) }
 }
+
+extension Array {
+    public func filterRemovingDuplicates<T: Hashable>(_ keyProvider: (Element) -> T) -> [Element] {
+        var seenKeys = Set<T>()
+        return self.filter { element in
+            let key = keyProvider(element)
+            guard !seenKeys.contains(key) else {
+                return false
+            }
+            seenKeys.insert(key)
+            return true
+        }
+    }
+}

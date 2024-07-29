@@ -70,6 +70,9 @@ public struct AppFeature: Reducer {
             case .path(.element(id: _, action: .regionList(.regionTapped(let region)))):
                 state.path.append(.locationsList(LocationsListFeature.State(regionID: region.id)))
                 return .none
+            case .path(.element(id: _, action: .locationsList(.locationAreaTapped(let area)))):
+                state.path.append(.pokemon(PokemonListFeature.State(listLoadType: .locationArea(area))))
+                return .none
             case .path:
                 return .none
             }

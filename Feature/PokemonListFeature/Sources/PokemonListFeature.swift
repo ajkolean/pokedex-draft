@@ -4,6 +4,11 @@ import Models
 import PokemonRepo
 import SwiftUI
 
+public enum ListLoadType: Sendable, Equatable {
+    case fullList
+    case locationArea(Location.Area)
+}
+
 @Reducer
 public struct PokemonListFeature: Reducer {
     @ObservableState
@@ -11,6 +16,7 @@ public struct PokemonListFeature: Reducer {
         public var pokemonIdentifiers: IdentifiedArrayOf<Pokemon> = []
         public var searchText: String = ""
         public var isLoading = true
+        public var listLoadType: ListLoadType
 
         var filteredPokemons: [Pokemon] {
             var filteredList: [Pokemon] = []
@@ -26,7 +32,9 @@ public struct PokemonListFeature: Reducer {
             return searchText == "" ? pokemonIdentifiers.elements : filteredList
         }
 
-        public init() {}
+        public init(listLoadType: ListLoadType = .fullList) {
+            self.listLoadType = listLoadType
+        }
     }
 
     public enum Action: BindableAction, Equatable, Sendable {
@@ -47,9 +55,14 @@ public struct PokemonListFeature: Reducer {
             case .binding:
                 return .none
             case .fetchPokemonIdentifiers:
-                return .run { [client = pokemonRepo] send in
+                return .run { [client = pokemonRepo, listLoadType = state.listLoadType] send in
                     do {
-                        let pokemon = try await client.fetchPokemonList()
+                        let pokemon = switch listLoadType {
+                        case .fullList:
+                            try await pokemonRepo.fetchPokemonList()
+                        case .locationArea(let area):
+                            try await pokemonRepo.fetchLocationArea(id: area.id).encouters.map { $0.pokemon }
+                        }
                         await send(.setPokemonList(.success(pokemon)))
                     } catch {
                         await send(.setPokemonList(.failure(error as NSError)))
@@ -68,6 +81,8 @@ public struct PokemonListFeature: Reducer {
             }
         }
     }
+    
+
 }
 
 public struct PokemonListFeatureView: View {
@@ -102,6 +117,7 @@ public struct PokemonListFeatureView: View {
         .searchable(text: $store.searchText)
         .navigationTitle("Pokédex")
         .onAppear {
+            guard store.pokemonIdentifiers.isEmpty else { return }
             store.send(.fetchPokemonIdentifiers)
         }
         .animation(.easeInOut, value: store.filteredPokemons)

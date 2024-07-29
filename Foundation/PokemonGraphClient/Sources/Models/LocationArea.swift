@@ -6,10 +6,14 @@ extension LocationArea {
         self.init(
             _id: apiModel.id,
             _name: apiModel.name,
-            encouters: apiModel.encounters.compactMap {
+            encouters: apiModel.encounters
+            .compactMap {
                 guard let fragment = $0.pokemon.map({ Pokemon($0.fragments.pokemonFragment) }) else { return nil }
                 return Encounter(minLevel: $0.minLevl, maxLevel: $0.maxLevel, pokemon: fragment)
             }
+                .filterRemovingDuplicates { encouter in
+                    encouter.pokemon.id
+                }
         )
     }
 }
