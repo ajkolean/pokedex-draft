@@ -10,9 +10,9 @@ let project: Project = .moduleProject(
             module: foundation,
             targetType: .implementation,
             dependencies: [
-                .PokemonDataStoreClientInterface,
                 .ComposableArchitecture,
-                .PokemonGraphClientInterface,
+                .Models,
+                .PokemonDataStoreClientInterface
             ]
         ),
         .moduleTarget(
@@ -20,7 +20,7 @@ let project: Project = .moduleProject(
             targetType: .interface,
             dependencies: [
                 .ComposableArchitecture,
-                .PokemonGraphClientInterface,
+                .Models,
             ]
         ),
         .moduleTarget(

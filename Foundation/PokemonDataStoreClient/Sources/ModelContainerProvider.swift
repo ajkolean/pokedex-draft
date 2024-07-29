@@ -1,5 +1,5 @@
 import Foundation
-import PokemonGraphClientInterface
+
 import SwiftData
 
 public class ModelContainerProvider {

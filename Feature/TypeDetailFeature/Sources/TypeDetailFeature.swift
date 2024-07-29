@@ -1,6 +1,6 @@
 import ComposableArchitecture
 import Kingfisher
-import PokemonGraphClientInterface
+import PokemonRepo
 import SwiftUI
 import Models
 

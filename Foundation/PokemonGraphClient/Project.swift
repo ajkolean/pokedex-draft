@@ -13,7 +13,11 @@ let project: Project = .moduleProject(
             module: foundation,
             targetType: .implementation,
             dependencies: [
-                .PokemonGraphClientInterface,
+                .external(name: "Apollo"),
+                .ComposableArchitecture,
+                .Models,
+                .external(name: "MemberwiseInit"),
+                .PokemonGraphClientInterface
             ]
         ),
         .moduleTarget(
@@ -21,10 +25,8 @@ let project: Project = .moduleProject(
             targetType: .interface,
             dependencies: [
                 //                .package(product: "InstallCLI", type: .plugin),
-                .external(name: "Apollo"),
                 .ComposableArchitecture,
-                .Models,
-                .external(name: "MemberwiseInit"),
+                .Models
             ]
         ),
         .moduleTarget(

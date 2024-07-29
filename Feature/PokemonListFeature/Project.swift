@@ -12,10 +12,10 @@ let project: Project = .moduleProject(
             targetType: .implementation,
             dependencies: [
                 .ComposableArchitecture,
-                .PokemonRepoInterface,
+                .Models,
                 .PokemonRepoImplementation,
-                .Kingfisher,
-                .PokemonGraphClientInterface,
+                .PokemonRepoInterface,
+                .Kingfisher
             ]
         ),
         .moduleTarget(

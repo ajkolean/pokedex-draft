@@ -1,6 +1,5 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonListFeature.swift
 import ComposableArchitecture
-import PokemonGraphClientInterface
 import PokemonRepo
 import SwiftUI
 import Models

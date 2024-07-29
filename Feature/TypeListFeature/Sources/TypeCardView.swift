@@ -1,6 +1,6 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonCardView.swift
 import ComposableArchitecture
-import PokemonGraphClientInterface
+
 import Models
 import SwiftUI
 

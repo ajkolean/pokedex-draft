@@ -2,6 +2,7 @@ import ComposableArchitecture
 import Foundation
 import PokemonDataStoreClient
 import PokemonDataStoreClientInterface
+import PokemonGraphClient
 import PokemonGraphClientInterface
 import PokemonRepoInterface
 

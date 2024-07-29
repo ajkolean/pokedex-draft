@@ -1,7 +1,7 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonCardView.swift
 import ComposableArchitecture
 import Kingfisher
-import PokemonGraphClientInterface
+
 import SwiftUI
 import Models
 

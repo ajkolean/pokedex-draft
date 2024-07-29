@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import Foundation
+import Models
 import PokemonDataStoreClientInterface
 
 extension DataStoreClient: DependencyKey {
