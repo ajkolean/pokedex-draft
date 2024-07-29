@@ -4,35 +4,48 @@
 @_exported import ApolloAPI
 
 extension GraphClient {
-  class GetPokemonByNameQuery: GraphQLQuery {
-    static let operationName: String = "GetPokemonByName"
-    static let operationDocument: ApolloAPI.OperationDocument = .init(
-      definition: .init(
-        #"query GetPokemonByName($name: String!) { pokemon: pokemon_v2_pokemon(where: { name: { _eq: $name } }) { __typename ...PokemonFragment } }"#,
-        fragments: [PokemonFragment.self]
-      ))
-
-    public var name: String
-
-    public init(name: String) {
-      self.name = name
+  struct LocationAreaFragment: GraphClient.SelectionSet, Fragment {
+    static var fragmentDefinition: StaticString {
+      #"fragment LocationAreaFragment on pokemon_v2_locationarea { __typename id name encounters: pokemon_v2_encounters { __typename minLevl: min_level maxLevel: max_level pokemon: pokemon_v2_pokemon { __typename ...PokemonFragment } } }"#
     }
 
-    public var __variables: Variables? { ["name": name] }
+    let __data: DataDict
+    init(_dataDict: DataDict) { __data = _dataDict }
 
-    struct Data: GraphClient.SelectionSet {
+    static var __parentType: any ApolloAPI.ParentType { GraphClient.Objects.Pokemon_v2_locationarea }
+    static var __selections: [ApolloAPI.Selection] { [
+      .field("__typename", String.self),
+      .field("id", Int.self),
+      .field("name", String.self),
+      .field("pokemon_v2_encounters", alias: "encounters", [Encounter].self),
+    ] }
+
+    var id: Int { __data["id"] }
+    var name: String { __data["name"] }
+    /// An array relationship
+    var encounters: [Encounter] { __data["encounters"] }
+
+    /// Encounter
+    ///
+    /// Parent Type: `Pokemon_v2_encounter`
+    struct Encounter: GraphClient.SelectionSet {
       let __data: DataDict
       init(_dataDict: DataDict) { __data = _dataDict }
 
-      static var __parentType: any ApolloAPI.ParentType { GraphClient.Objects.Query_root }
+      static var __parentType: any ApolloAPI.ParentType { GraphClient.Objects.Pokemon_v2_encounter }
       static var __selections: [ApolloAPI.Selection] { [
-        .field("pokemon_v2_pokemon", alias: "pokemon", [Pokemon].self, arguments: ["where": ["name": ["_eq": .variable("name")]]]),
+        .field("__typename", String.self),
+        .field("min_level", alias: "minLevl", Int.self),
+        .field("max_level", alias: "maxLevel", Int.self),
+        .field("pokemon_v2_pokemon", alias: "pokemon", Pokemon?.self),
       ] }
 
-      /// fetch data from the table: "pokemon_v2_pokemon"
-      var pokemon: [Pokemon] { __data["pokemon"] }
+      var minLevl: Int { __data["minLevl"] }
+      var maxLevel: Int { __data["maxLevel"] }
+      /// An object relationship
+      var pokemon: Pokemon? { __data["pokemon"] }
 
-      /// Pokemon
+      /// Encounter.Pokemon
       ///
       /// Parent Type: `Pokemon_v2_pokemon`
       struct Pokemon: GraphClient.SelectionSet {
@@ -73,4 +86,5 @@ extension GraphClient {
       }
     }
   }
+
 }
