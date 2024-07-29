@@ -7,7 +7,7 @@ public final class LocationAreaEntity {
     public let id: Int
     public let name: String
     public let encouters: [LocationArea.Encounter]
-   
+
     public init(id: Int, name: String, encouters: [LocationArea.Encounter]) {
         self.id = id
         self.name = name

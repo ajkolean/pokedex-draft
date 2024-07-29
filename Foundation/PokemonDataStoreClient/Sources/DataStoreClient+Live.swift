@@ -12,7 +12,7 @@ extension DataStoreClient: DependencyKey {
             fetchPokemonTypeList: { try await dataStore.fetchPokemonTypeList() },
             savePokemonTypes: { try await dataStore.savePokemonTypes($0) },
             fetchItemCategoryList: { try await dataStore.fetchItemCategoryList() },
-            saveItemCategories: { try await dataStore.saveItemCategories($0) } ,
+            saveItemCategories: { try await dataStore.saveItemCategories($0) },
             fetchRegionList: { try await dataStore.fetchRegionList() },
             saveRegions: { try await dataStore.saveRegions($0) },
             fetchLocationsList: { try await dataStore.fetchLocationsList() },

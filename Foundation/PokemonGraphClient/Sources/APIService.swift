@@ -34,20 +34,21 @@ actor APIService {
         let data = try await fetch(query: query)
         return data.categories.compactMap { ItemCategory($0.fragments.itemCategoryFragment) }
     }
-    
+
     // MARK: - Location
+
     public func fetchRegionList() async throws -> [Region] {
         let query = GraphClient.GetRegionListQuery()
         let data = try await fetch(query: query)
         return data.regions.compactMap { Region($0.fragments.regionFragment) }
     }
-    
+
     public func fetchLocationsList() async throws -> [Location] {
         let query = GraphClient.GetLocationsListQuery()
         let data = try await fetch(query: query)
         return data.pokemon_v2_location.compactMap { Location($0.fragments.locationFramgment) }
     }
-    
+
     public func fetchLocationArea(id: LocationArea.ID) async throws -> LocationArea {
         let query = GraphClient.GetLocationAreaQuery(id: GraphQLNullable<Int>(id.rawValue))
         let data = try await fetch(query: query)
@@ -55,7 +56,6 @@ actor APIService {
         let fragment = data.area.first!.fragments.locationAreaFragment
         return LocationArea(fragment)
     }
-
 
     // MARK: - Helpers
 

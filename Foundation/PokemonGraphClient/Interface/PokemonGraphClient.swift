@@ -7,7 +7,7 @@ public struct PokemonAPIClient: Sendable {
     public var fetchPokemonList: @Sendable () async throws -> [Pokemon]
     public var fetchPokemonTypeList: @Sendable () async throws -> [PokemonType]
     public var fetchItemCategoryList: @Sendable () async throws -> [ItemCategory]
-    
+
     // Location
     public var fetchRegionList: @Sendable () async throws -> [Region]
     public var fetchLocationsList: @Sendable () async throws -> [Location]

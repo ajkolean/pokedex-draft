@@ -19,7 +19,7 @@ public struct DataStoreClient: Sendable, TestDependencyKey {
 
     public var fetchItemCategoryList: @Sendable () async throws -> [ItemCategory]
     public var saveItemCategories: @Sendable ([ItemCategory]) async throws -> Void
-    
+
     // Location
     public var fetchRegionList: @Sendable () async throws -> [Region]
     public var saveRegions: @Sendable ([Region]) async throws -> Void

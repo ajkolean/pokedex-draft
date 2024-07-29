@@ -11,8 +11,9 @@ public struct PokemonRepo: TestDependencyKey, Sendable {
     // MARK: - Item
 
     public var fetchItemCategoryList: @Sendable () async throws -> [ItemCategory]
-    
+
     // MARK: - Location
+
     public var fetchRegionList: @Sendable () async throws -> [Region]
     public var fetchLocationsList: @Sendable () async throws -> [Location]
     public var fetchLocationArea: @Sendable (_ id: LocationArea.ID) async throws -> LocationArea
