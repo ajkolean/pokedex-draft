@@ -6,9 +6,9 @@ import Models
 import SwiftUI
 
 public struct PokemonCardView: View {
-    public var pokemon: Pokemon
+    public var pokemon: PokemonSummary
 
-    public init(pokemon: Pokemon) {
+    public init(pokemon: PokemonSummary) {
         self.pokemon = pokemon
     }
 

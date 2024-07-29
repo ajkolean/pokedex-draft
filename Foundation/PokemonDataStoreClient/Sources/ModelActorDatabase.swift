@@ -37,10 +37,10 @@ public actor ModelActorDatabase: ModelActor, Database {
     public func insert(_ model: some SenablePersistentModel) {
         modelContext.insert(model)
     }
-    
+
     public func insertAndSave(_ model: some SenablePersistentModel) throws {
-        self.insert(model)
-        try self.save()
+        insert(model)
+        try save()
     }
 
     public func delete<T: PersistentModel>(
@@ -56,9 +56,9 @@ public actor ModelActorDatabase: ModelActor, Database {
     public func fetch<T>(_ descriptor: FetchDescriptor<T>) throws -> [T] where T: PersistentModel & Sendable {
         return try modelContext.fetch(descriptor)
     }
-    
+
     public func fetchOne<T>(_ descriptor: FetchDescriptor<T>) throws -> T? where T: PersistentModel & Sendable {
-        return try self.fetch(descriptor).first
+        return try fetch(descriptor).first
     }
 
     public func debounceSave() throws {

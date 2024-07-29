@@ -1,14 +1,3 @@
-# List Query
-query GetPokemonList($limit: Int, $offset: Int) {
-  pokemons: pokemon_v2_pokemon(
-    limit: $limit
-    offset: $offset
-  ) {
-    ...PokemonFragment
-  }
-}
-
-# Single Item Query
 query GetPokemonByName($name: String!) {
   pokemon: pokemon_v2_pokemon(where: { name: { _eq: $name } }) {
     ...PokemonFragment

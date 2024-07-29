@@ -1,0 +1,8 @@
+query GetPokemonSummaryList($limit: Int, $offset: Int) {
+  pokemons: pokemon_v2_pokemon(
+    limit: $limit
+    offset: $offset
+  ) {
+    ...PokemonSummaryFragment
+  }
+}

@@ -1,17 +1,18 @@
 import ComposableArchitecture
 import Kingfisher
 import Models
-import SwiftUI
 import PokemonRepoInterface
+import SwiftUI
 
 @Reducer
 public struct PokemonDetailFeature: Reducer {
     @ObservableState
     public struct State: Equatable, Sendable {
-        public let pokemonSummary = PokemonSummary(_id: 1, _name: "bulbasaur", types: [.init(slot: 1, type: .grass)])
+        public let pokemonSummary: PokemonSummary
         public var pokemon: Pokemon?
 
-        public init(pokemon: Pokemon) {
+        public init(pokemonSummary: PokemonSummary, pokemon: Pokemon? = nil) {
+            self.pokemonSummary = pokemonSummary
             self.pokemon = pokemon
         }
     }
@@ -20,7 +21,7 @@ public struct PokemonDetailFeature: Reducer {
         case onAppear
         case setPokemon(Result<Pokemon, EquatableError>)
     }
-    
+
     @Dependency(\.pokemonRepo) var pokemonRepo
 
     public init() {}
@@ -40,7 +41,7 @@ public struct PokemonDetailFeature: Reducer {
             case let .setPokemon(.success(pokemon)):
                 state.pokemon = pokemon
                 return .none
-                
+
             case let .setPokemon(.failure(error)):
                 fatalError("Failed to fetch item list: \(error)")
             }
@@ -164,7 +165,7 @@ public struct PokemonDetailView: View {
                             .padding(.trailing)
                             .padding(.top, 24)
                     }
-          
+
                     HStack { Spacer() }
                 }
 

@@ -5,7 +5,7 @@ fragment LocationAreaFragment on pokemon_v2_locationarea {
     minLevl:min_level
     maxLevel:max_level
     pokemon:pokemon_v2_pokemon {
-      ...PokemonFragment
+      ...PokemonSummaryFragment
     }
   }
 }

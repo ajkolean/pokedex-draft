@@ -18,8 +18,8 @@ extension PokemonType {
             )
         }
         let pokemonByTypeSlot = apiModel.pokemonByTypeSlot.compactMap { data -> PokemonByTypeSlot? in
-            guard let fragment = data.pokemon?.fragments.pokemonFragment else { return nil }
-            return PokemonByTypeSlot(slot: data.typeSlot, pokemonID: data.pokemonID ?? 0, pokemon: Pokemon(fragment))
+            guard let fragment = data.pokemon?.fragments.pokemonSummaryFragment else { return nil }
+            return PokemonByTypeSlot(slot: data.typeSlot, pokemonID: data.pokemonID ?? 0, pokemon: PokemonSummary(fragment))
         }
 
         self.init(

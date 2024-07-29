@@ -12,13 +12,13 @@ extension PokemonRepo: DependencyKey {
         let pokemonAPIClient = PokemonAPIClient.liveValue
 
         return PokemonRepo(
-            fetchPokemonList: {
-                let cachedPokemons = try await dataStoreClient.fetchPokemonList()
+            fetchPokemonSummaryList: {
+                let cachedPokemons = try await dataStoreClient.fetchPokemonSummaryList()
                 if !cachedPokemons.isEmpty {
                     return cachedPokemons
                 } else {
-                    let pokemons = try await pokemonAPIClient.fetchPokemonList()
-                    try await dataStoreClient.savePokemons(pokemons)
+                    let pokemons = try await pokemonAPIClient.fetchPokemonSummaryList()
+                    try await dataStoreClient.savePokemonSummaries(pokemons)
                     return pokemons
                 }
             },

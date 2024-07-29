@@ -21,7 +21,7 @@ fragment TypeFragment on pokemon_v2_type {
     typeSlot:slot
     pokemonID: pokemon_id
     pokemon: pokemon_v2_pokemon {
-      ...PokemonFragment
+      ...PokemonSummaryFragment
     }
   }
 }

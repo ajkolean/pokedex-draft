@@ -12,10 +12,9 @@ public struct Location: Hashable, Codable, Identifiable, Sendable {
     public struct Area: Hashable, Codable, Identifiable, Sendable {
         public let _id: Int
         public let _name: String
-        
+
         public var id: LocationArea.ID { .init(rawValue: _id) }
         public var name: LocationArea.Name { .init(rawValue: _name) }
-
     }
 
     public init(_id: Int, _name: String, areas: [Location.Area]) {

@@ -7,7 +7,8 @@ extension DataStoreClient: DependencyKey {
     public static let liveValue: DataStoreClient = {
         let dataStore = DataStore.shared
         return DataStoreClient(
-            fetchPokemonList: { try await dataStore.fetchPokemonList() }, 
+            fetchPokemonSummaryList: { try await dataStore.fetchPokemonSummaryList() },
+            savePokemonSummaries: { try await dataStore.savePokemonSummaries($0) },
             fetchPokemon: { try await dataStore.fetchPokemon(name: $0) },
             savePokemons: { try await dataStore.savePokemons($0) },
             fetchPokemonTypeList: { try await dataStore.fetchPokemonTypeList() },

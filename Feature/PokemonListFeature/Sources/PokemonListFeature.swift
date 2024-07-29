@@ -13,13 +13,13 @@ public enum ListLoadType: Sendable, Equatable {
 public struct PokemonListFeature: Reducer {
     @ObservableState
     public struct State: Equatable, Sendable {
-        public var pokemonIdentifiers: IdentifiedArrayOf<Pokemon> = []
+        public var pokemonIdentifiers: IdentifiedArrayOf<PokemonSummary> = []
         public var searchText: String = ""
         public var isLoading = true
         public var listLoadType: ListLoadType
 
-        var filteredPokemons: [Pokemon] {
-            var filteredList: [Pokemon] = []
+        var filteredPokemons: [PokemonSummary] {
+            var filteredList: [PokemonSummary] = []
 
             for pokemon in pokemonIdentifiers {
                 if pokemon.name.rawValue.contains(searchText.lowercased()) {
@@ -40,8 +40,8 @@ public struct PokemonListFeature: Reducer {
     public enum Action: BindableAction, Equatable, Sendable {
         case binding(BindingAction<State>)
         case fetchPokemonIdentifiers
-        case setPokemonList(Result<[Pokemon], NSError>)
-        case pokemonCardTapped(Pokemon)
+        case setPokemonList(Result<[PokemonSummary], NSError>)
+        case pokemonCardTapped(PokemonSummary)
     }
 
     @Dependency(\.pokemonRepo) var pokemonRepo
@@ -55,13 +55,13 @@ public struct PokemonListFeature: Reducer {
             case .binding:
                 return .none
             case .fetchPokemonIdentifiers:
-                return .run { [client = pokemonRepo, listLoadType = state.listLoadType] send in
+                return .run { [listLoadType = state.listLoadType] send in
                     do {
                         let pokemon = switch listLoadType {
                         case .fullList:
-                            try await pokemonRepo.fetchPokemonList()
-                        case .locationArea(let area):
-                            try await pokemonRepo.fetchLocationArea(id: area.id).encouters.map { $0.pokemon }
+                            try await pokemonRepo.fetchPokemonSummaryList()
+                        case let .locationArea(area):
+                            try await pokemonRepo.fetchLocationArea(id: area.id).encouters.map(\.pokemon)
                         }
                         await send(.setPokemonList(.success(pokemon)))
                     } catch {
@@ -81,8 +81,6 @@ public struct PokemonListFeature: Reducer {
             }
         }
     }
-    
-
 }
 
 public struct PokemonListFeatureView: View {

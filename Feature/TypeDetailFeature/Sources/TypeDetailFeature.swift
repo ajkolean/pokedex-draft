@@ -17,7 +17,7 @@ public struct TypeDetailFeature: Reducer {
 
     public enum Action: Equatable, Sendable {
         case onAppear
-        case pokemonCardTapped(Pokemon)
+        case pokemonCardTapped(PokemonSummary)
     }
 
     @Dependency(\.pokemonAPIClient) var pokemonAPIClient

@@ -11,6 +11,13 @@ public actor DataStore {
 
     // MARK: - Pokemon
 
+    public func savePokemonSummaries(_ pokemons: [PokemonSummary]) async throws {
+        for pokemon in pokemons.map(PokemonSummaryEntity.init) {
+            await db.insert(pokemon)
+        }
+        try await db.debounceSave()
+    }
+
     public func savePokemons(_ pokemons: [Pokemon]) async throws {
         for pokemon in pokemons.map(PokemonEntity.init) {
             await db.insert(pokemon)
@@ -18,11 +25,11 @@ public actor DataStore {
         try await db.debounceSave()
     }
 
-    public func fetchPokemonList() async throws -> [Pokemon] {
-        let sortDescriptor = SortDescriptor(\PokemonEntity.id, order: .forward)
-        let fetchDescriptor = FetchDescriptor<PokemonEntity>(sortBy: [sortDescriptor])
+    public func fetchPokemonSummaryList() async throws -> [PokemonSummary] {
+        let sortDescriptor = SortDescriptor(\PokemonSummaryEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<PokemonSummaryEntity>(sortBy: [sortDescriptor])
         let models = try await db.fetch(fetchDescriptor)
-        let identifiers = models.map(Pokemon.init)
+        let identifiers = models.map(PokemonSummary.init)
         return identifiers
     }
 
@@ -30,8 +37,9 @@ public actor DataStore {
         let fetchDescriptor = FetchDescriptor<PokemonEntity>(predicate: #Predicate { $0.name == name.rawValue })
         guard let model = try await db.fetchOne(fetchDescriptor) else { return nil }
         try await db.insertAndSave(model)
-        return Pokemon.init(model)
+        return Pokemon(model)
     }
+
     // MARK: - Type
 
     public func fetchPokemonTypeList() async throws -> [PokemonType] {
@@ -108,7 +116,7 @@ public actor DataStore {
         let fetchDescriptor = FetchDescriptor<LocationAreaEntity>(predicate: #Predicate { $0.id == id.rawValue })
         guard let model = try await db.fetchOne(fetchDescriptor) else { return nil }
         try await db.insertAndSave(model)
-        return LocationArea.init(model)
+        return LocationArea(model)
     }
 
     public func saveLocationAreas(_ types: [LocationArea]) async throws {

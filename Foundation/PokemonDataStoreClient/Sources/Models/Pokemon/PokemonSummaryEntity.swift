@@ -1,9 +1,32 @@
-//
-//  PokemonSummaryEntity.swift
-//  PokemonDataStoreClient
-//
-//  Created by Andy Kolean on 7/29/24.
-//  Copyright © 2024 SwiftlyAndy. All rights reserved.
-//
+import Models
+import SwiftData
 
-import Foundation
+@Model
+public final class PokemonSummaryEntity {
+    @Attribute(.unique)
+    public let id: Int
+    public let name: String
+    public let types: [Pokemon.TypeSlot]
+
+    public init(id: Int, name: String, types: [Pokemon.TypeSlot]) {
+        self.id = id
+        self.name = name
+        self.types = types
+    }
+}
+
+extension PokemonSummaryEntity {
+    convenience init(_ model: PokemonSummary) {
+        self.init(
+            id: model._id, name: model._name, types: model.types
+        )
+    }
+}
+
+extension PokemonSummary {
+    init(_ model: PokemonSummaryEntity) {
+        self.init(
+            _id: model.id, _name: model.name, types: model.types
+        )
+    }
+}

@@ -7,7 +7,8 @@ import Models
 public struct DataStoreClient: Sendable, TestDependencyKey {
     // MARK: - Pokemon
 
-    public var fetchPokemonList: @Sendable () async throws -> [Pokemon]
+    public var fetchPokemonSummaryList: @Sendable () async throws -> [PokemonSummary]
+    public var savePokemonSummaries: @Sendable ([PokemonSummary]) async throws -> Void
     public var fetchPokemon: @Sendable (_ name: Pokemon.Name) async throws -> Pokemon?
     public var savePokemons: @Sendable ([Pokemon]) async throws -> Void
 

@@ -1,0 +1,11 @@
+fragment PokemonSummaryFragment on pokemon_v2_pokemon {
+  id
+  name
+  types: pokemon_v2_pokemontypes {
+    slot
+    type: pokemon_v2_type {
+      id
+      name
+    }
+  }
+}

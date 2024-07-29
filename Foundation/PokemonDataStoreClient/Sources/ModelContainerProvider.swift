@@ -15,12 +15,13 @@ public class ModelContainerProvider {
             if isTest {
                 config = ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none)
             } else {
-                let storeURL = URL.documentsDirectory.appending(path: "database_typsdsb1.sqlite")
+                let storeURL = URL.documentsDirectory.appending(path: "database_typsddb1.sqlite")
                 print(storeURL)
                 config = ModelConfiguration(url: storeURL, cloudKitDatabase: .none)
             }
             container = try ModelContainer(
                 for: PokemonEntity.self,
+                PokemonSummaryEntity.self,
                 PokemonTypeEntity.self,
                 ItemCategoryEntity.self,
                 RegionEntity.self,

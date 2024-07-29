@@ -60,10 +60,10 @@ public struct AppFeature: Reducer {
                 state.path.append(.typeDetail(TypeDetailFeature.State(pokemonType: pokemonType)))
                 return .none
             case let .path(.element(id: _, action: .typeDetail(.pokemonCardTapped(pokemon)))):
-                state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemon: pokemon)))
+                state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemonSummary: pokemon)))
                 return .none
             case let .path(.element(id: _, action: .pokemon(.pokemonCardTapped(pokemon)))):
-                state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemon: pokemon)))
+                state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemonSummary: pokemon)))
                 return .none
             case .path(.element(id: _, action: .itemList(.itemRowTapped))):
                 return .none

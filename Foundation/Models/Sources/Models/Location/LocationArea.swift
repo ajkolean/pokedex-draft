@@ -13,7 +13,7 @@ public struct LocationArea: Hashable, Codable, Identifiable, Sendable {
     public struct Encounter: Hashable, Codable, Sendable {
         public let minLevel: Int?
         public let maxLevel: Int
-        public let pokemon: Pokemon
+        public let pokemon: PokemonSummary
     }
 }
 
@@ -44,7 +44,7 @@ extension LocationArea {
 extension Array {
     public func filterRemovingDuplicates<T: Hashable>(_ keyProvider: (Element) -> T) -> [Element] {
         var seenKeys = Set<T>()
-        return self.filter { element in
+        return filter { element in
             let key = keyProvider(element)
             guard !seenKeys.contains(key) else {
                 return false

@@ -58,5 +58,5 @@ public struct PokemonType: Hashable, Codable, Identifiable, Sendable {
 public struct PokemonByTypeSlot: Hashable, Codable, Sendable {
     public let slot: Int
     public let pokemonID: Int
-    public let pokemon: Pokemon
+    public let pokemon: PokemonSummary
 }
