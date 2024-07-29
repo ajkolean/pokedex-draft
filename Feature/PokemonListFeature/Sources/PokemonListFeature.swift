@@ -7,7 +7,7 @@ import Models
 @Reducer
 public struct PokemonListFeature: Reducer {
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         public var pokemonIdentifiers: IdentifiedArrayOf<Pokemon> = []
         public var searchText: String = ""
 

@@ -1,5 +1,4 @@
 import Foundation
-import Apollo
 import Models
 
 extension PokemonType {

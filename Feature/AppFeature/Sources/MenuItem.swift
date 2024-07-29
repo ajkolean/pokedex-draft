@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import Models
 
-public enum MenuItem: String, CaseIterable, Identifiable {
+public enum MenuItem: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     case pokedex

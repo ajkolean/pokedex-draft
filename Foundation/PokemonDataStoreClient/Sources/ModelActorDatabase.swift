@@ -3,8 +3,8 @@ import SwiftData
 import UIKit
 
 public protocol Database {
-    func delete<T>(_ model: T) async where T: PersistentModel
-    func insert<T>(_ model: T) async where T: PersistentModel
+    func delete<T: Sendable>(_ model: T) async where T: PersistentModel
+    func insert<T: Sendable>(_ model: T) async where T: PersistentModel
     func save() async throws
     func fetch<T: Sendable>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel
 

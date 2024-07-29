@@ -9,6 +9,7 @@ public actor DataStore {
         db = ModelActorDatabase(modelContainer: container)
     }
 
+    // MARK: - Pokemon
     public func savePokemons(_ pokemons: [Pokemon]) async throws {
         for pokemon in pokemons.map(PokemonEntity.init) {
             await db.insert(pokemon)
@@ -31,6 +32,7 @@ public actor DataStore {
         return pokemon.map(Pokemon.init)
     }
 
+    // MARK: - Type
     public func fetchPokemonTypeList() async throws -> [PokemonType] {
         let sortDescriptor = SortDescriptor(\PokemonTypeEntity.id, order: .forward)
         let fetchDescriptor = FetchDescriptor<PokemonTypeEntity>(sortBy: [sortDescriptor])

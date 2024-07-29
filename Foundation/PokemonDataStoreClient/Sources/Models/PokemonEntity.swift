@@ -3,7 +3,7 @@ import Models
 import SwiftData
 
 @Model
-public final class PokemonEntity: Sendable {
+public final class PokemonEntity {
     @Attribute(.unique)
     public let id: Int
     public let name: String

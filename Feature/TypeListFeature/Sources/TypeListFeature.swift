@@ -8,7 +8,7 @@ import Models
 @Reducer
 public struct TypeListFeature: Reducer {
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         public var pokemonTypes: IdentifiedArrayOf<PokemonType> = []
 
         public init() {}
@@ -28,7 +28,7 @@ public struct TypeListFeature: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .fetchPokemonTypes:
-                return .run { send in
+                return .run { [pokemonRepo = self.pokemonRepo] send in
                     do {
                         let types = try await pokemonRepo.fetchPokemonTypeList()
                         await send(.setPokemonTypes(.success(types)))

@@ -16,7 +16,6 @@ let project: Project = .moduleProject(
                 .external(name: "Apollo"),
                 .ComposableArchitecture,
                 .Models,
-                .external(name: "MemberwiseInit"),
                 .PokemonGraphClientInterface
             ]
         ),

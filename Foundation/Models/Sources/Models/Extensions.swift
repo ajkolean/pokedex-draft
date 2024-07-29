@@ -27,3 +27,5 @@ extension View {
         }
     }
 }
+
+extension ModelsAsset: @unchecked Sendable { }

@@ -6,7 +6,7 @@ import Models
 @Reducer
 public struct PokemonDetailFeature: Reducer {
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         public let pokemon: Pokemon
 
         public init(pokemon: Pokemon) {
@@ -14,7 +14,7 @@ public struct PokemonDetailFeature: Reducer {
         }
     }
 
-    public enum Action: Equatable {
+    public enum Action: Equatable, Sendable {
         case onAppear
     }
 

@@ -6,7 +6,7 @@ extension Project {
         module: Module,
         options: Project.Options = .options(),
         packages: [Package] = [],
-        settings: Settings? = .settings(base: ["SWIFT_STRICT_CONCURRENCY": "complete"]),
+        settings: Settings? = .settings(),
         targets: [Target] = [],
         schemes: [Scheme] = [],
         fileHeaderTemplate: FileHeaderTemplate? = nil,

@@ -2,7 +2,7 @@ import Models
 import SwiftData
 
 @Model
-public final class PokemonTypeEntity: Sendable {
+public final class PokemonTypeEntity {
     @Attribute(.unique)
     public let id: Int
     public let type: PokemonTypeEnum

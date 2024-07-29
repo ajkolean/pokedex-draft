@@ -11,12 +11,12 @@ import Models
 @Reducer
 public struct AppFeature: Reducer {
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         public init() {}
         var path = StackState<Path.State>()
     }
 
-    public enum Action {
+    public enum Action: Sendable {
         case path(StackActionOf<Path>)
         case menuItemTapped(MenuItem)
     }

@@ -7,7 +7,7 @@ actor APIService {
     
     public init() {}
     
-    public func fetchPokemonList(limit: Int? = 20, offset: Int? = nil) async throws -> [Pokemon] {
+    public func fetchPokemonList(limit: Int? = nil, offset: Int? = nil) async throws -> [Pokemon] {
         let query = GraphClient.GetPokemonListQuery(limit: GraphQLNullable(limit), offset: GraphQLNullable(offset))
         let data = try await fetch(query: query)
         let p = data.pokemons.compactMap { Pokemon($0.fragments.pokemonFragment) }
@@ -22,7 +22,7 @@ actor APIService {
         return Pokemon(fragment)
     }
     
-    public func fetchPokemoTypenList(limit: Int? = 20, offset: Int? = nil) async throws -> [PokemonType] {
+    public func fetchPokemoTypenList(limit: Int? = nil, offset: Int? = nil) async throws -> [PokemonType] {
         let query = GraphClient.GetPokemonTypeListQuery(limit: GraphQLNullable(limit), offset: GraphQLNullable(offset))
         let data = try await fetch(query: query)
         return data.types.compactMap { PokemonType($0.fragments.typeFragment) }
