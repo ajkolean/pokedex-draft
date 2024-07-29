@@ -22,17 +22,7 @@ extension PokemonRepo: DependencyKey {
                     return pokemons
                 }
             },
-//            fetchPokemon: { name in
-//                if let cachedPokemon = try await dataStoreClient.fetchPokemon(name) {
-//                    return cachedPokemon
-//                } else {
-//                    let pokemon = try await pokemonAPIClient.fetchPokemon(name)
-//                    if let pokemon {
-//                        try await dataStoreClient.savePokemon(pokemon)
-//                    }
-//                    return pokemon
-//                }
-//            },
+
             fetchPokemonTypeList: {
                 let cachedTypes = try await dataStoreClient.fetchPokemonTypeList()
                 if !cachedTypes.isEmpty {
@@ -51,6 +41,35 @@ extension PokemonRepo: DependencyKey {
                     let types = try await pokemonAPIClient.fetchItemCategoryList()
                     try await dataStoreClient.saveItemCategories(types)
                     return types
+                }
+            },
+            fetchRegionList: {
+                let cachedTypes = try await dataStoreClient.fetchRegionList()
+                if !cachedTypes.isEmpty {
+                    return cachedTypes
+                } else {
+                    let results = try await pokemonAPIClient.fetchRegionList()
+                    try await dataStoreClient.saveRegions(results)
+                    return results
+                }
+            },
+            fetchLocationsList: {
+                let cachedTypes = try await dataStoreClient.fetchLocationsList()
+                if !cachedTypes.isEmpty {
+                    return cachedTypes
+                } else {
+                    let results = try await pokemonAPIClient.fetchLocationsList()
+                    try await dataStoreClient.saveLocations(results)
+                    return results
+                }
+            },
+            fetchLocationArea: { id in
+                if let cachedItem = try await dataStoreClient.fetchLocationArea(id: id) {
+                    return cachedItem
+                } else {
+                    let result = try await pokemonAPIClient.fetchLocationArea(id: id)
+                    try await dataStoreClient.saveLocationAreas([result])
+                    return result
                 }
             }
         )

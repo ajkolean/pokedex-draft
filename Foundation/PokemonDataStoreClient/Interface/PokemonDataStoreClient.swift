@@ -19,6 +19,14 @@ public struct DataStoreClient: Sendable, TestDependencyKey {
 
     public var fetchItemCategoryList: @Sendable () async throws -> [ItemCategory]
     public var saveItemCategories: @Sendable ([ItemCategory]) async throws -> Void
+    
+    // Location
+    public var fetchRegionList: @Sendable () async throws -> [Region]
+    public var saveRegions: @Sendable ([Region]) async throws -> Void
+    public var fetchLocationsList: @Sendable () async throws -> [Location]
+    public var saveLocations: @Sendable ([Location]) async throws -> Void
+    public var fetchLocationArea: @Sendable (_ id: LocationArea.ID) async throws -> LocationArea?
+    public var saveLocationAreas: @Sendable ([LocationArea]) async throws -> Void
 
     public static let testValue = Self()
 }

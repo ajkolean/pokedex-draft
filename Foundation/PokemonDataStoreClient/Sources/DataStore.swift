@@ -71,6 +71,50 @@ public actor DataStore {
         }
         try await db.debounceSave()
     }
+    
+    // MARK: - Location
+    
+    public func fetchRegionList() async throws -> [Region] {
+        let sortDescriptor = SortDescriptor(\RegionEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<RegionEntity>(sortBy: [sortDescriptor])
+        let models = try await db.fetch(fetchDescriptor)
+        return models.map(Region.init)
+    }
+    
+    public func saveRegions(_ types: [Region]) async throws {
+        for type in types.map(RegionEntity.init) {
+            await db.insert(type)
+        }
+        try await db.debounceSave()
+    }
+    
+    public func fetchLocationsList() async throws -> [Location] {
+        let sortDescriptor = SortDescriptor(\LocationEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<LocationEntity>(sortBy: [sortDescriptor])
+        let models = try await db.fetch(fetchDescriptor)
+        return models.map(Location.init)
+    }
+    
+    public func saveLocations(_ types: [Location]) async throws {
+        for type in types.map(LocationEntity.init) {
+            await db.insert(type)
+        }
+        try await db.debounceSave()
+    }
+    
+    public func fetchLocationArea(id: LocationArea.ID) async throws -> LocationArea? {
+        let fetchDescriptor = FetchDescriptor<LocationAreaEntity>(predicate: #Predicate { $0.id == id.rawValue })
+        let models = try await db.fetch(fetchDescriptor)
+        return models.first.map(LocationArea.init)
+    }
+    
+    public func saveLocationAreas(_ types: [LocationArea]) async throws {
+        for type in types.map(LocationAreaEntity.init) {
+            await db.insert(type)
+        }
+        try await db.debounceSave()
+    }
+    
 }
 
 extension DataStore {
