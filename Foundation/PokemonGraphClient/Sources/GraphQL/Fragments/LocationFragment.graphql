@@ -1,0 +1,8 @@
+fragment LocationFramgment on pokemon_v2_location {
+  id
+  name
+  areas:pokemon_v2_locationareas {
+    id
+    name
+  }
+}

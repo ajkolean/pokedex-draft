@@ -1,0 +1,11 @@
+fragment LocationAreaFragment on pokemon_v2_locationarea {
+  id
+  name
+  encounters:pokemon_v2_encounters {
+    minLevl:min_level
+    maxLevel:max_level
+    pokemon:pokemon_v2_pokemon {
+      ...PokemonFragment
+    }
+  }
+}

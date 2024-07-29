@@ -1,0 +1,8 @@
+fragment RegionFragment on pokemon_v2_region {
+    id
+    name
+    generation:pokemon_v2_generation {
+      id
+      name
+    }
+}

@@ -1,0 +1,5 @@
+query GetLocationsList {
+  pokemon_v2_location {
+   ...LocationFramgment
+  }
+}

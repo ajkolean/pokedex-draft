@@ -1,0 +1,5 @@
+query GetRegionList {
+  regions: pokemon_v2_region {
+    ...RegionFragment
+  }
+}

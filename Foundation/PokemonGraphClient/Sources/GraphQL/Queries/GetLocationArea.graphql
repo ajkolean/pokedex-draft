@@ -1,0 +1,5 @@
+query GetLocationArea($id: Int) {
+  area:pokemon_v2_locationarea(limit: 1, where: {id: {_eq: $id}}) {
+    ...LocationAreaFragment
+  }
+}
