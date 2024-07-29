@@ -13,7 +13,7 @@ private enum ItemListType {
 @Reducer
 public struct ItemListFeature: Reducer {
     @ObservableState
-    public struct State: Equatable {
+    public struct State: Equatable, Sendable {
         public var itemNames: IdentifiedArrayOf<ItemCategory> = []
         public var searchText: String = ""
 

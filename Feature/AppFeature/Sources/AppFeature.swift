@@ -7,6 +7,8 @@ import PokemonListFeature
 import SwiftUI
 import TypeDetailFeature
 import TypeListFeature
+import RegionListFeature
+import PokemonRepo
 
 @Reducer
 public struct AppFeature: Reducer {
@@ -28,6 +30,8 @@ public struct AppFeature: Reducer {
         case typeList(TypeListFeature)
         case pokemonDetail(PokemonDetailFeature)
         case itemList(ItemListFeature)
+        case regionList(RegionListFeature)
+
     }
 
     public init() {}
@@ -44,6 +48,9 @@ public struct AppFeature: Reducer {
                 case .items:
                     state.path.append(.itemList(ItemListFeature.State()))
                     return .none
+                case .regions:
+                    state.path.append(.regionList(RegionListFeature.State()))
+                    return .none
                 default:
                     return .none
                 }
@@ -58,6 +65,8 @@ public struct AppFeature: Reducer {
                 state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemon: pokemon)))
                 return .none
             case .path(.element(id: _, action: .itemList(.itemRowTapped))):
+                return .none
+            case .path(.element(id: _, action: .regionList(.regionTapped(let region)))):
                 return .none
             case .path:
                 return .none
@@ -148,6 +157,8 @@ public struct AppView: View {
                 PokemonDetailView(store: store)
             case let .itemList(store):
                 ItemListFeatureView(store: store)
+            case let .regionList(store):
+                RegionListFeatureView(store: store)
             }
         }
     }
