@@ -9,7 +9,7 @@ extension Pokemon {
         ) }
         let stats = apiModel.stats.map { Stat(baseStat: $0.base_stat, effort: $0.effort, name: $0.statName?.name ?? "") }
         let descriptions = apiModel.species?.descriptions.map(\.text).map {
-            $0.replacingOccurrences(of: "\u{0C}", with: " ").replacingOccurrences(of: "\n", with: " ")
+            $0.cleaned
         } ?? []
         self.init(
             _id: apiModel.id,
