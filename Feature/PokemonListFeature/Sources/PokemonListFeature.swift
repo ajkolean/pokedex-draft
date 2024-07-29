@@ -10,6 +10,7 @@ public struct PokemonListFeature: Reducer {
     public struct State: Equatable, Sendable {
         public var pokemonIdentifiers: IdentifiedArrayOf<Pokemon> = []
         public var searchText: String = ""
+        public var isLoading = true
 
         var filteredPokemons: [Pokemon] {
             var filteredList: [Pokemon] = []
@@ -55,6 +56,7 @@ public struct PokemonListFeature: Reducer {
                     }
                 }
             case let .setPokemonList(.success(pokemonIdentifiers)):
+                state.isLoading = false
                 state.pokemonIdentifiers = .init(uniqueElements: pokemonIdentifiers)
                 return .none
 
@@ -77,22 +79,36 @@ public struct PokemonListFeatureView: View {
     }
 
     public var body: some View {
-        ScrollView {
-            LazyVGrid(columns: gridItems, spacing: 16) {
-                ForEach(store.filteredPokemons) { pokemon in
-
-                    PokemonCardView(pokemon: pokemon)
-                        .onTapGesture { // tappable
-                            store.send(.pokemonCardTapped(pokemon))
-                        }
+        
+        ZStack {
+            ScrollView {
+                LazyVGrid(columns: gridItems, spacing: 16) {
+                    ForEach(store.filteredPokemons) { pokemon in
+                        PokemonCardView(pokemon: pokemon)
+                            .onTapGesture { // tappable
+                                store.send(.pokemonCardTapped(pokemon))
+                            }
+                            .transition(.scale.combined(with: .opacity))
+                    }
                 }
+            }
+
+            if store.isLoading {
+                LoadingOverlayView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.black.opacity(0.5))
+                    .edgesIgnoringSafeArea(.all)
             }
         }
         .searchable(text: $store.searchText)
         .navigationTitle("Pokédex")
         .onAppear {
-            store.send(.fetchPokemonIdentifiers)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                
+                store.send(.fetchPokemonIdentifiers)
+            }
         }
+        .animation(.easeInOut, value: store.filteredPokemons)
     }
 }
 
