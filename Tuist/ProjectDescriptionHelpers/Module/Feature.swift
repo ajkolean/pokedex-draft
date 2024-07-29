@@ -9,6 +9,7 @@ public enum Feature: String, CaseIterable, Module {
     case TypeDetailFeature
     case ItemListFeature
     case RegionListFeature
+    case LocationsListFeature
     
     public var type: ModuleType { .feature }
 }

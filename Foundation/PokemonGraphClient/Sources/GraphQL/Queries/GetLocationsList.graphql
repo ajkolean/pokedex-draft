@@ -1,5 +1,5 @@
-query GetLocationsList {
-  areas:pokemon_v2_location {
-   ...LocationFramgment
+query GetLocationsList($id: Int) {
+  areas: pokemon_v2_location(where: {id: {_eq: $id}}) {
+    ...LocationFramgment
   }
 }

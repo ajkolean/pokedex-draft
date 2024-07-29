@@ -9,6 +9,7 @@ import TypeDetailFeature
 import TypeListFeature
 import RegionListFeature
 import PokemonRepo
+import LocationsListFeature
 
 @Reducer
 public struct AppFeature: Reducer {
@@ -31,6 +32,7 @@ public struct AppFeature: Reducer {
         case pokemonDetail(PokemonDetailFeature)
         case itemList(ItemListFeature)
         case regionList(RegionListFeature)
+        case locationsList(LocationsListFeature)
 
     }
 
@@ -67,6 +69,7 @@ public struct AppFeature: Reducer {
             case .path(.element(id: _, action: .itemList(.itemRowTapped))):
                 return .none
             case .path(.element(id: _, action: .regionList(.regionTapped(let region)))):
+                state.path.append(.locationsList(LocationsListFeature.State()))
                 return .none
             case .path:
                 return .none
@@ -159,6 +162,8 @@ public struct AppView: View {
                 ItemListFeatureView(store: store)
             case let .regionList(store):
                 RegionListFeatureView(store: store)
+            case let .locationsList(store):
+                LocationsListFeatureView(store: store)
             }
         }
     }

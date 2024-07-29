@@ -68,3 +68,9 @@ extension Location.Area {
 
     public var id: ID { .init(rawValue: _id) }
 }
+
+extension [Location] {
+    public var allAreas: [Location.Area] {
+        flatMap(\.areas)
+    }
+}
