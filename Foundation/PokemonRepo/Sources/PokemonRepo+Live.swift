@@ -22,7 +22,15 @@ extension PokemonRepo: DependencyKey {
                     return pokemons
                 }
             },
-
+            fetchPokemon: { name in
+                if let cachedItem = try await dataStoreClient.fetchPokemon(name: name) {
+                    return cachedItem
+                } else {
+                    let result = try await pokemonAPIClient.fetchPokemon(name: name)
+                    try await dataStoreClient.savePokemons([result])
+                    return result
+                }
+            },
             fetchPokemonTypeList: {
                 let cachedTypes = try await dataStoreClient.fetchPokemonTypeList()
                 if !cachedTypes.isEmpty {

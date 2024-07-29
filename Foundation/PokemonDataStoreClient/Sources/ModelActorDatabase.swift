@@ -30,12 +30,17 @@ public actor ModelActorDatabase: ModelActor, Database {
         }
     }
 
-    public func delete(_ model: some SenablePersistentModel) async {
+    public func delete(_ model: some SenablePersistentModel) {
         modelContext.delete(model)
     }
 
-    public func insert(_ model: some SenablePersistentModel) async {
+    public func insert(_ model: some SenablePersistentModel) {
         modelContext.insert(model)
+    }
+    
+    public func insertAndSave(_ model: some SenablePersistentModel) throws {
+        self.insert(model)
+        try self.save()
     }
 
     public func delete<T: PersistentModel>(
@@ -44,15 +49,19 @@ public actor ModelActorDatabase: ModelActor, Database {
         try modelContext.delete(model: T.self, where: predicate)
     }
 
-    public func save() async throws {
+    public func save() throws {
         try modelContext.save()
     }
 
-    public func fetch<T>(_ descriptor: FetchDescriptor<T>) async throws -> [T] where T: PersistentModel & Sendable {
+    public func fetch<T>(_ descriptor: FetchDescriptor<T>) throws -> [T] where T: PersistentModel & Sendable {
         return try modelContext.fetch(descriptor)
     }
+    
+    public func fetchOne<T>(_ descriptor: FetchDescriptor<T>) throws -> T? where T: PersistentModel & Sendable {
+        return try self.fetch(descriptor).first
+    }
 
-    public func debounceSave() async throws {
+    public func debounceSave() throws {
         saveTask?.cancel()
         savesCancelled += 1
         saveTask = Task {

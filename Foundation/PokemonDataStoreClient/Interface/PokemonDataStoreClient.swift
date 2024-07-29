@@ -8,6 +8,7 @@ public struct DataStoreClient: Sendable, TestDependencyKey {
     // MARK: - Pokemon
 
     public var fetchPokemonList: @Sendable () async throws -> [Pokemon]
+    public var fetchPokemon: @Sendable (_ name: Pokemon.Name) async throws -> Pokemon?
     public var savePokemons: @Sendable ([Pokemon]) async throws -> Void
 
     // MARK: - Type

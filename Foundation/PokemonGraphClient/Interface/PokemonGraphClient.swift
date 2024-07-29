@@ -5,6 +5,7 @@ import Models
 @DependencyClient
 public struct PokemonAPIClient: Sendable {
     public var fetchPokemonList: @Sendable () async throws -> [Pokemon]
+    public var fetchPokemon: @Sendable (_ name: Pokemon.Name) async throws -> Pokemon
     public var fetchPokemonTypeList: @Sendable () async throws -> [PokemonType]
     public var fetchItemCategoryList: @Sendable () async throws -> [ItemCategory]
 

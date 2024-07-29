@@ -6,6 +6,7 @@ import Models
 @DependencyClient
 public struct PokemonRepo: TestDependencyKey, Sendable {
     public var fetchPokemonList: @Sendable () async throws -> [Pokemon]
+    public var fetchPokemon: @Sendable (_ name: Pokemon.Name) async throws -> Pokemon
     public var fetchPokemonTypeList: @Sendable () async throws -> [PokemonType]
 
     // MARK: - Item

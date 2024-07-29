@@ -15,8 +15,8 @@ actor APIService {
         return p
     }
 
-    public func fetchPokemon(name: String) async throws -> Pokemon {
-        let query = GraphClient.GetPokemonByNameQuery(name: name)
+    public func fetchPokemon(name: Pokemon.Name) async throws -> Pokemon {
+        let query = GraphClient.GetPokemonByNameQuery(name: name.rawValue)
         let data = try await fetch(query: query)
         // throw error here
         let fragment = data.pokemon.first!.fragments.pokemonFragment

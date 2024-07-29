@@ -3,8 +3,14 @@ import Foundation
 
 // MARK: - Pokemon
 
+public protocol PokemonConforming {
+    var id: Pokemon.ID { get }
+    var name: Pokemon.Name { get }
+    var types: [Pokemon.TypeSlot] { get }
+}
+
 @MemberwiseInit(.public)
-public struct Pokemon: Hashable, Codable, Identifiable, Sendable {
+public struct Pokemon: Hashable, Codable, Identifiable, Sendable, PokemonConforming {
     public let _id: Int
     public let _name: String
     public let height: Int?
@@ -57,7 +63,7 @@ public struct Pokemon: Hashable, Codable, Identifiable, Sendable {
     }
 }
 
-extension Pokemon {
+extension PokemonConforming {
     public var imageURL: String {
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(id).png"
     }

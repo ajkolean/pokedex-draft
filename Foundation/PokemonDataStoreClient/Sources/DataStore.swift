@@ -26,13 +26,12 @@ public actor DataStore {
         return identifiers
     }
 
-    public func fetchPokemon(_ name: Pokemon.Name) async throws -> Pokemon? {
+    public func fetchPokemon(name: Pokemon.Name) async throws -> Pokemon? {
         let fetchDescriptor = FetchDescriptor<PokemonEntity>(predicate: #Predicate { $0.name == name.rawValue })
-        let fetchedPokemons = try await db.fetch(fetchDescriptor)
-        let pokemon = fetchedPokemons.first
-        return pokemon.map(Pokemon.init)
+        guard let model = try await db.fetchOne(fetchDescriptor) else { return nil }
+        try await db.insertAndSave(model)
+        return Pokemon.init(model)
     }
-
     // MARK: - Type
 
     public func fetchPokemonTypeList() async throws -> [PokemonType] {
@@ -107,8 +106,9 @@ public actor DataStore {
 
     public func fetchLocationArea(id: LocationArea.ID) async throws -> LocationArea? {
         let fetchDescriptor = FetchDescriptor<LocationAreaEntity>(predicate: #Predicate { $0.id == id.rawValue })
-        let models = try await db.fetch(fetchDescriptor)
-        return models.first.map(LocationArea.init)
+        guard let model = try await db.fetchOne(fetchDescriptor) else { return nil }
+        try await db.insertAndSave(model)
+        return LocationArea.init(model)
     }
 
     public func saveLocationAreas(_ types: [LocationArea]) async throws {

@@ -2,12 +2,14 @@ import ComposableArchitecture
 import Kingfisher
 import Models
 import SwiftUI
+import PokemonRepoInterface
 
 @Reducer
 public struct PokemonDetailFeature: Reducer {
     @ObservableState
     public struct State: Equatable, Sendable {
-        public let pokemon: Pokemon
+        public let pokemonSummary = PokemonSummary(_id: 1, _name: "bulbasaur", types: [.init(slot: 1, type: .grass)])
+        public var pokemon: Pokemon?
 
         public init(pokemon: Pokemon) {
             self.pokemon = pokemon
@@ -16,16 +18,31 @@ public struct PokemonDetailFeature: Reducer {
 
     public enum Action: Equatable, Sendable {
         case onAppear
+        case setPokemon(Result<Pokemon, EquatableError>)
     }
+    
+    @Dependency(\.pokemonRepo) var pokemonRepo
 
     public init() {}
 
     public var body: some ReducerOf<Self> {
-        Reduce<State, Action> { _, action in
+        Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
-                // You can add any side effects or logic here if needed
+                return .run { [pokemon = state.pokemon] send in
+                    do {
+                        let pokemon = try await pokemonRepo.fetchPokemon(name: pokemon?.name ?? "charmander")
+                        await send(.setPokemon(.success(pokemon)))
+                    } catch {
+                        await send(.setPokemon(.failure(EquatableError(error))))
+                    }
+                }
+            case let .setPokemon(.success(pokemon)):
+                state.pokemon = pokemon
                 return .none
+                
+            case let .setPokemon(.failure(error)):
+                fatalError("Failed to fetch item list: \(error)")
             }
         }
     }
@@ -41,7 +58,7 @@ public struct PokemonDetailView: View {
     public var body: some View {
         ZStack {
             LinearGradient(
-                gradient: Gradient(colors: [store.pokemon.primaryType.color(), Color(UIColor.systemBackground)]),
+                gradient: Gradient(colors: [store.pokemonSummary.primaryType.color(), Color(UIColor.systemBackground)]),
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -50,7 +67,7 @@ public struct PokemonDetailView: View {
             Color(UIColor.systemBackground).offset(y: 300)
 
             ScrollView {
-                KFImage(URL(string: store.pokemon.imageURL))
+                KFImage(URL(string: store.pokemonSummary.imageURL))
                     .resizable()
                     .frame(width: 200, height: 200)
                     .background(
@@ -65,12 +82,12 @@ public struct PokemonDetailView: View {
                     )
 
                 VStack {
-                    Text(store.pokemon.name.rawValue.capitalized)
+                    Text(store.pokemonSummary.name.rawValue.capitalized)
                         .font(.largeTitle)
                         .padding(.top, 40)
 
                     HStack {
-                        ForEach(store.pokemon.types, id: \.self) { type in
+                        ForEach(store.pokemonSummary.types, id: \.self) { type in
                             Text(type.type.rawValue.capitalized)
                                 .font(.subheadline).bold()
                                 .foregroundColor(Color(UIColor.systemBackground))
@@ -90,7 +107,7 @@ public struct PokemonDetailView: View {
                     .padding(.horizontal, 20)
 
                     HStack {
-                        Text(store.pokemon.descriptions.first ?? "")
+                        Text(store.pokemon?.descriptions.first ?? "")
 
                         Spacer()
                     }
@@ -142,11 +159,12 @@ public struct PokemonDetailView: View {
                     }
                     .padding(.top, 16)
                     .padding(.horizontal, 20)
-
-                    BarChartView(pokemon: store.pokemon)
-                        .padding(.trailing)
-                        .padding(.top, 24)
-
+                    if let pokemon = store.pokemon {
+                        BarChartView(pokemon: pokemon)
+                            .padding(.trailing)
+                            .padding(.top, 24)
+                    }
+          
                     HStack { Spacer() }
                 }
 
@@ -163,14 +181,14 @@ public struct PokemonDetailView: View {
     }
 
     var heightToString: String {
-        guard let height = store.pokemon.height else { return "?????" }
+        guard let height = store.pokemon?.height else { return "?????" }
         let m = (Double(height) / 10.0)
         let ft = m * 3.281
         return String(format: "%.2f m (%.2f ft)", m, ft)
     }
 
     var weightToString: String {
-        guard let weight = store.pokemon.weight else { return "?????" }
+        guard let weight = store.pokemon?.weight else { return "?????" }
         let kg = (Double(weight) / 10.0)
         let lbs = kg * 2.205
         return String(format: "%.2f kg (%.2f lbs)", kg, lbs)
