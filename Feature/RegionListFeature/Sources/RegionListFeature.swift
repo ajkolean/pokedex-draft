@@ -58,6 +58,7 @@ public struct RegionListFeatureView: View {
                     Image(systemName: "chevron.right")
                         .foregroundColor(.gray)
                 }
+                .contentShape(Rectangle())
                 .tappable {
                     store.send(.regionTapped(region))
                 }

@@ -13,6 +13,7 @@ private enum ItemListType {
 public struct LocationsListFeature: Reducer {
     @ObservableState
     public struct State: Equatable, Sendable {
+        public let regionID: Region.ID
         public var locations: IdentifiedArrayOf<Location> = []
         public var searchText: String = ""
         
@@ -28,7 +29,9 @@ public struct LocationsListFeature: Reducer {
             return searchText == "" ? .locations : .locationArea(filteredList)
         }
         
-        public init() {}
+        public init(regionID: Region.ID) {
+            self.regionID = regionID
+        }
     }
     
     public enum Action: BindableAction, Equatable {
@@ -49,9 +52,9 @@ public struct LocationsListFeature: Reducer {
             case .binding:
                 return .none
             case .fetchLocationsList:
-                return .run { send in
+                return .run { [regionID = state.regionID] send in
                     do {
-                        let locations = try await pokemonRepo.fetchLocationsList()
+                        let locations = try await pokemonRepo.fetchLocationsList(regionID: regionID)
                         await send(.setLocationsList(.success(locations)))
                     } catch {
                         await send(.setLocationsList(.failure(EquatableError(error))))
@@ -80,7 +83,7 @@ public struct LocationsListFeatureView: View {
     public var body: some View {
         listView
             .searchable(text: $store.searchText)
-            .navigationTitle("Items")
+            .navigationTitle("Region Name here")
             .onAppear {
                 store.send(.fetchLocationsList)
             }
@@ -138,7 +141,7 @@ public struct LocationsListFeatureView: View {
 
 #Preview {
     LocationsListFeatureView(
-        store: Store(initialState: LocationsListFeature.State()) {
+        store: Store(initialState: LocationsListFeature.State(regionID: 1)) {
             LocationsListFeature()
         }
     )

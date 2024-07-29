@@ -15,7 +15,7 @@ extension DataStoreClient: DependencyKey {
             saveItemCategories: { try await dataStore.saveItemCategories($0) },
             fetchRegionList: { try await dataStore.fetchRegionList() },
             saveRegions: { try await dataStore.saveRegions($0) },
-            fetchLocationsList: { try await dataStore.fetchLocationsList() },
+            fetchLocationsList: { try await dataStore.fetchLocationsList(regionID: $0) },
             saveLocations: { try await dataStore.saveLocations($0) },
             fetchLocationArea: { try await dataStore.fetchLocationArea(id: $0) },
             saveLocationAreas: { try await dataStore.saveLocationAreas($0) }

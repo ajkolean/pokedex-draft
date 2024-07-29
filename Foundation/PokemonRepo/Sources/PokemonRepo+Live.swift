@@ -53,12 +53,12 @@ extension PokemonRepo: DependencyKey {
                     return results
                 }
             },
-            fetchLocationsList: {
-                let cachedTypes = try await dataStoreClient.fetchLocationsList()
+            fetchLocationsList: { regionID in
+                let cachedTypes = try await dataStoreClient.fetchLocationsList(regionID: regionID)
                 if !cachedTypes.isEmpty {
                     return cachedTypes
                 } else {
-                    let results = try await pokemonAPIClient.fetchLocationsList()
+                    let results = try await pokemonAPIClient.fetchLocationsList(regionID: regionID)
                     try await dataStoreClient.saveLocations(results)
                     return results
                 }

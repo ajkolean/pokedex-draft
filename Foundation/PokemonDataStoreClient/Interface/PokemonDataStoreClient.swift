@@ -23,7 +23,7 @@ public struct DataStoreClient: Sendable, TestDependencyKey {
     // Location
     public var fetchRegionList: @Sendable () async throws -> [Region]
     public var saveRegions: @Sendable ([Region]) async throws -> Void
-    public var fetchLocationsList: @Sendable () async throws -> [Location]
+    public var fetchLocationsList: @Sendable (_ regionID: Region.ID) async throws -> [Location]
     public var saveLocations: @Sendable ([Location]) async throws -> Void
     public var fetchLocationArea: @Sendable (_ id: LocationArea.ID) async throws -> LocationArea?
     public var saveLocationAreas: @Sendable ([LocationArea]) async throws -> Void

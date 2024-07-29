@@ -88,9 +88,9 @@ public actor DataStore {
         try await db.debounceSave()
     }
 
-    public func fetchLocationsList() async throws -> [Location] {
+    public func fetchLocationsList(regionID: Region.ID) async throws -> [Location] {
         let sortDescriptor = SortDescriptor(\LocationEntity.id, order: .forward)
-        let fetchDescriptor = FetchDescriptor<LocationEntity>(sortBy: [sortDescriptor])
+        let fetchDescriptor = FetchDescriptor<LocationEntity>(predicate: #Predicate { $0.id == regionID.rawValue }, sortBy: [sortDescriptor])
         let models = try await db.fetch(fetchDescriptor)
         return models.map(Location.init)
     }

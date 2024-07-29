@@ -11,7 +11,7 @@ extension PokemonAPIClient: DependencyKey {
             fetchPokemonTypeList: { try await client.fetchPokemoTypenList() },
             fetchItemCategoryList: { try await client.fetchItemCategoryList() },
             fetchRegionList: { try await client.fetchRegionList() },
-            fetchLocationsList: { try await client.fetchLocationsList() },
+            fetchLocationsList: { try await client.fetchLocationsList(id: $0) },
             fetchLocationArea: { try await client.fetchLocationArea(id: $0) }
         )
     }()

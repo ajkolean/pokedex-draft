@@ -43,10 +43,10 @@ actor APIService {
         return data.regions.compactMap { Region($0.fragments.regionFragment) }
     }
 
-    public func fetchLocationsList() async throws -> [Location] {
-        let query = GraphClient.GetLocationsListQuery()
+    public func fetchLocationsList(id: Region.ID) async throws -> [Location] {
+        let query = GraphClient.GetLocationsListQuery(regionID: GraphQLNullable(id.rawValue))
         let data = try await fetch(query: query)
-        return data.pokemon_v2_location.compactMap { Location($0.fragments.locationFramgment) }
+        return data.areas.compactMap { Location($0.fragments.locationFramgment) }
     }
 
     public func fetchLocationArea(id: LocationArea.ID) async throws -> LocationArea {
@@ -85,4 +85,5 @@ extension GraphQLNullable where Wrapped == Int {
             self = .none
         }
     }
+    
 }
