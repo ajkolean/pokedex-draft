@@ -3,6 +3,4 @@ import XCTest
 @testable import RegionListFeature
 
 @MainActor
-final class RegionListFeatureTests: XCTestCase {
-
-}
+final class RegionListFeatureTests: XCTestCase {}

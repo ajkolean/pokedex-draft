@@ -1,15 +1,15 @@
 import ComposableArchitecture
 
 import ItemListFeature
+import LocationsListFeature
 import Models
 import PokemonDetailFeature
 import PokemonListFeature
+import PokemonRepo
+import RegionListFeature
 import SwiftUI
 import TypeDetailFeature
 import TypeListFeature
-import RegionListFeature
-import PokemonRepo
-import LocationsListFeature
 
 @Reducer
 public struct AppFeature: Reducer {
@@ -33,7 +33,6 @@ public struct AppFeature: Reducer {
         case itemList(ItemListFeature)
         case regionList(RegionListFeature)
         case locationsList(LocationsListFeature)
-
     }
 
     public init() {}

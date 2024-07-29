@@ -16,35 +16,35 @@ public struct LocationsListFeature: Reducer {
         public let regionID: Region.ID
         public var locations: IdentifiedArrayOf<Location> = []
         public var searchText: String = ""
-        
+
         fileprivate var filteredItems: ItemListType {
             var filteredList: [Location.Area] = []
-            
+
             for area in locations.elements.allAreas {
                 if area._name.contains(searchText.lowercased()) {
                     filteredList.append(area)
                 }
             }
-            
+
             return searchText == "" ? .locations : .locationArea(filteredList)
         }
-        
+
         public init(regionID: Region.ID) {
             self.regionID = regionID
         }
     }
-    
+
     public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case fetchLocationsList
         case setLocationsList(Result<[Location], EquatableError>)
         case locationAreaTapped(Location.Area)
     }
-    
+
     @Dependency(\.pokemonRepo) var pokemonRepo
-    
+
     public init() {}
-    
+
     public var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce<State, Action> { state, action in
@@ -63,7 +63,7 @@ public struct LocationsListFeature: Reducer {
             case let .setLocationsList(.success(locations)):
                 state.locations = .init(uniqueElements: locations)
                 return .none
-                
+
             case let .setLocationsList(.failure(error)):
                 fatalError("Failed to fetch item list: \(error)")
             case .locationAreaTapped:
@@ -75,11 +75,11 @@ public struct LocationsListFeature: Reducer {
 
 public struct LocationsListFeatureView: View {
     @Bindable public var store: StoreOf<LocationsListFeature>
-    
+
     public init(store: StoreOf<LocationsListFeature>) {
         self.store = store
     }
-    
+
     public var body: some View {
         listView
             .searchable(text: $store.searchText)
@@ -88,7 +88,7 @@ public struct LocationsListFeatureView: View {
                 store.send(.fetchLocationsList)
             }
     }
-    
+
     var locationsListView: some View {
         List {
             ForEach(store.locations) { location in
@@ -96,9 +96,9 @@ public struct LocationsListFeatureView: View {
                     ForEach(location.areas) { area in
                         HStack {
                             Text(area._name.capitalized)
-                            
+
                             Spacer()
-                            
+
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.gray)
                         }
@@ -110,7 +110,7 @@ public struct LocationsListFeatureView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     var listView: some View {
         switch store.filteredItems {
@@ -120,14 +120,14 @@ public struct LocationsListFeatureView: View {
             locationAreaLisView(areas: areas)
         }
     }
-    
+
     func locationAreaLisView(areas: [Location.Area]) -> some View {
         List {
             ForEach(areas) { area in
                 HStack {
                     Text(area._name.capitalized)
                     Spacer()
-                    
+
                     Image(systemName: "chevron.right")
                         .foregroundColor(.gray)
                 }

@@ -1,13 +1,13 @@
 import ComposableArchitecture
-import SwiftUI
 import RegionListFeature
+import SwiftUI
 
 @main
 struct RegionListFeatureExampleApp: App {
     static let store = Store(initialState: RegionListFeature.State()) {
         RegionListFeature()
     }
-    
+
     var body: some Scene {
         WindowGroup {
             RegionListFeatureView(store: Self.store)

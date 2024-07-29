@@ -8,20 +8,20 @@ public struct RegionListFeature {
     @ObservableState
     public struct State: Equatable, Sendable {
         public var regions: IdentifiedArrayOf<Region> = []
-        
+
         public init() {}
     }
-    
+
     public enum Action {
         case onAppear
         case regionTapped(_ region: Region)
         case setRegionList([Region])
     }
-    
+
     @Dependency(\.pokemonRepo) var pokemonRepo
 
-    public init() { }
-    
+    public init() {}
+
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -30,7 +30,7 @@ public struct RegionListFeature {
                     let regions = try await pokemonRepo.fetchRegionList()
                     await send(.setRegionList(regions))
                 }
-            case .setRegionList(let regions):
+            case let .setRegionList(regions):
                 state.regions = .init(uniqueElements: regions)
                 return .none
             case .regionTapped:
@@ -42,19 +42,19 @@ public struct RegionListFeature {
 
 public struct RegionListFeatureView: View {
     public var store: StoreOf<RegionListFeature>
-    
+
     public init(store: StoreOf<RegionListFeature>) {
         self.store = store
     }
-    
+
     public var body: some View {
         List {
             ForEach(store.regions) { region in
                 HStack {
                     Text(region._name.capitalized)
-                    
+
                     Spacer()
-                    
+
                     Image(systemName: "chevron.right")
                         .foregroundColor(.gray)
                 }

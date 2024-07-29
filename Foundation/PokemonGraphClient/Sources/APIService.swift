@@ -85,5 +85,4 @@ extension GraphQLNullable where Wrapped == Int {
             self = .none
         }
     }
-    
 }
