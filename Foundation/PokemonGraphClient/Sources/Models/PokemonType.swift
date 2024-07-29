@@ -21,7 +21,7 @@ extension PokemonType {
             guard let fragment = data.pokemon?.fragments.pokemonFragment else { return nil }
             return PokemonByTypeSlot(slot: data.typeSlot, pokemonID: data.pokemonID ?? 0, pokemon: Pokemon(fragment))
         }
-        
+
         self.init(
             _id: id,
             type: type,

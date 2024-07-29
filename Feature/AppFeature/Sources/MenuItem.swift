@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import Models
+import SwiftUI
 
 public enum MenuItem: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }

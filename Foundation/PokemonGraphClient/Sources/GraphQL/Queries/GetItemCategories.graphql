@@ -1,0 +1,5 @@
+query GetItemCategories {
+  categories:pokemon_v2_itemcategory {
+    ...ItemCategoryFragment
+  }
+}

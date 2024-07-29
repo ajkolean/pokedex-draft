@@ -20,10 +20,8 @@ public struct PokemonType: Hashable, Codable, Identifiable, Sendable {
             self.rawValue = rawValue
         }
     }
-    
-    public var id: ID {
-        get { .init(rawValue: _id) }
-    }
+
+    public var id: ID { .init(rawValue: _id) }
 
     @MemberwiseInit(.public)
     public struct DamageRelation: Hashable, Codable, Sendable {

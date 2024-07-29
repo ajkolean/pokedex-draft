@@ -1,7 +1,7 @@
 import ComposableArchitecture
 import Kingfisher
-import SwiftUI
 import Models
+import SwiftUI
 
 @Reducer
 public struct PokemonDetailFeature: Reducer {
@@ -53,6 +53,16 @@ public struct PokemonDetailView: View {
                 KFImage(URL(string: store.pokemon.imageURL))
                     .resizable()
                     .frame(width: 200, height: 200)
+                    .background(
+                        ModelsAsset
+                            .spinningball
+                            .swiftUIImage
+                            .resizable()
+                            .renderingMode(.template)
+                            .opacity(0.2)
+                            .foregroundColor(Color(UIColor.systemBackground))
+                            .frame(width: 250, height: 250)
+                    )
 
                 VStack {
                     Text(store.pokemon.name.rawValue.capitalized)

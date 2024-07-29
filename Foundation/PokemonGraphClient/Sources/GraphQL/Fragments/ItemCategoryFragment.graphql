@@ -1,0 +1,58 @@
+fragment ItemCategoryFragment on pokemon_v2_itemcategory {
+  id
+  name
+  items: pokemon_v2_items {
+    ...ItemFragment
+  }
+  itemPocket: pokemon_v2_itempocket {
+    name
+  }
+}
+
+fragment ItemFragment on pokemon_v2_item {
+  id
+  name
+  cost
+  flingPower: fling_power
+  flavorText: pokemon_v2_itemflavortexts(limit: 1) {
+    flavor_text
+  }
+  effectText: pokemon_v2_itemeffecttexts {
+    effect
+  }
+  flingEffect: pokemon_v2_itemflingeffect {
+    name
+  }
+}
+
+# pokemon_v2_move(limit: 100) {
+#   power
+#   pp
+#   priority
+#   accuracy
+#   id
+#   name
+#   move_effect_chance
+#   pokemon_v2_moveflavortexts(limit: 1) {
+#     flavor_text
+#   }
+#   pokemon_v2_movemeta {
+#     ailment_chance
+#     crit_rate
+#     drain
+#     flinch_chance
+#     healing
+#     max_hits
+#     max_turns
+#     min_hits
+#     min_turns
+#   }
+#   pokemon_v2_type {
+#     name
+#   }
+#   pokemon_v2_movemetastatchanges {
+#     pokemon_v2_stat {
+#       name
+#     }
+#   }
+# }

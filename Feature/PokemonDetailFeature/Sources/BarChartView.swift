@@ -1,5 +1,5 @@
-import SwiftUI
 import Models
+import SwiftUI
 
 struct BarView: View {
     var value: Int = 0

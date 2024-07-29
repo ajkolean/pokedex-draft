@@ -8,7 +8,8 @@ extension PokemonAPIClient: DependencyKey {
         let client = APIService()
         return PokemonAPIClient(
             fetchPokemonList: { try await client.fetchPokemonList() },
-            fetchPokemonTypeList: { try await client.fetchPokemoTypenList() }
+            fetchPokemonTypeList: { try await client.fetchPokemoTypenList() },
+            fetchItemCategoryList: { try await client.fetchItemCategoryList() }
         )
     }()
 }

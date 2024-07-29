@@ -42,6 +42,16 @@ extension PokemonRepo: DependencyKey {
                     try await dataStoreClient.savePokemonTypes(types)
                     return types
                 }
+            },
+            fetchItemCategoryList: {
+                let cachedTypes = try await dataStoreClient.fetchItemCategoryList()
+                if !cachedTypes.isEmpty {
+                    return cachedTypes
+                } else {
+                    let types = try await pokemonAPIClient.fetchItemCategoryList()
+                    try await dataStoreClient.saveItemCategories(types)
+                    return types
+                }
             }
         )
     }()

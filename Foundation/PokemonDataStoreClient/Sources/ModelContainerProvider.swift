@@ -22,6 +22,7 @@ public class ModelContainerProvider {
             container = try ModelContainer(
                 for: PokemonEntity.self,
                 PokemonTypeEntity.self,
+                ItemCategoryEntity.self,
                 configurations: config
             )
         } catch {

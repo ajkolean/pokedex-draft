@@ -1,4 +1,3 @@
-
 import Models
 import SwiftData
 
@@ -50,7 +49,7 @@ extension PokemonEntity {
 extension Pokemon {
     init(_ model: PokemonEntity) {
         self.init(
-            _id:  model.id, _name: model.name, height: model.height,
+            _id: model.id, _name: model.name, height: model.height,
             weight: model.weight, order: model.order, baseExperience: model.baseExperience, types: model.types,
             stats: model.stats, descriptions: model.descriptions
         )

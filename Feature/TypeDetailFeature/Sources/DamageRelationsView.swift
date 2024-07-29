@@ -1,6 +1,5 @@
-
-import SwiftUI
 import Models
+import SwiftUI
 
 struct DamageRelationsStackView: View {
     let pokemonType: PokemonType

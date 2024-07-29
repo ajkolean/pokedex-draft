@@ -1,7 +1,7 @@
 import Foundation
 
-import SwiftData
 import Models
+import SwiftData
 
 public actor DataStore {
     private let db: ModelActorDatabase
@@ -10,6 +10,7 @@ public actor DataStore {
     }
 
     // MARK: - Pokemon
+
     public func savePokemons(_ pokemons: [Pokemon]) async throws {
         for pokemon in pokemons.map(PokemonEntity.init) {
             await db.insert(pokemon)
@@ -33,6 +34,7 @@ public actor DataStore {
     }
 
     // MARK: - Type
+
     public func fetchPokemonTypeList() async throws -> [PokemonType] {
         let sortDescriptor = SortDescriptor(\PokemonTypeEntity.id, order: .forward)
         let fetchDescriptor = FetchDescriptor<PokemonTypeEntity>(sortBy: [sortDescriptor])
@@ -52,6 +54,22 @@ public actor DataStore {
         let fetchedPokemons = try await db.fetch(fetchDescriptor)
         let pokemon = fetchedPokemons.first
         return pokemon.map(PokemonType.init)
+    }
+
+    // MARK: - Item
+
+    public func fetchItemCategoryList() async throws -> [ItemCategory] {
+        let sortDescriptor = SortDescriptor(\ItemCategoryEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<ItemCategoryEntity>(sortBy: [sortDescriptor])
+        let models = try await db.fetch(fetchDescriptor)
+        return models.map(ItemCategory.init)
+    }
+
+    public func saveItemCategories(_ types: [ItemCategory]) async throws {
+        for type in types.map(ItemCategoryEntity.init) {
+            await db.insert(type)
+        }
+        try await db.debounceSave()
     }
 }
 

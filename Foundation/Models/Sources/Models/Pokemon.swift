@@ -1,5 +1,5 @@
 import Foundation
-import MemberwiseInit
+@_exported import MemberwiseInit
 
 // MARK: - Pokemon
 
@@ -24,10 +24,8 @@ public struct Pokemon: Hashable, Codable, Identifiable, Sendable {
             self.rawValue = rawValue
         }
     }
-    
-    public var name: Name {
-        get { .init(rawValue: _name) }
-    }
+
+    public var name: Name { .init(rawValue: _name) }
 
     // MARK: - PokemonID
 
@@ -38,10 +36,8 @@ public struct Pokemon: Hashable, Codable, Identifiable, Sendable {
             self.rawValue = rawValue
         }
     }
-    
-    public var id: ID {
-        get { .init(rawValue: _id) }
-    }
+
+    public var id: ID { .init(rawValue: _id) }
 
     // MARK: - PokemonType
 

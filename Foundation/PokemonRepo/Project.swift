@@ -16,7 +16,7 @@ let project: Project = .moduleProject(
                 .PokemonGraphClient,
                 .PokemonDataStoreClient,
                 .PokemonDataStoreClientInterface,
-                .Models
+                .Models,
             ]
         ),
         .moduleTarget(
@@ -26,7 +26,7 @@ let project: Project = .moduleProject(
                 .ComposableArchitecture,
                 .PokemonGraphClientInterface,
                 .PokemonDataStoreClientInterface,
-                .Models
+                .Models,
             ]
         ),
         .moduleTarget(

@@ -28,4 +28,14 @@ extension View {
     }
 }
 
-extension ModelsAsset: @unchecked Sendable { }
+extension ModelsAsset: @unchecked Sendable {}
+
+public func pokemonRed() -> Color {
+    return Color(UIColor { traitCollection in
+        if traitCollection.userInterfaceStyle == .dark {
+            return UIColor(red: 0.83, green: 0.33, blue: 0.29, alpha: 1.0)
+        } else {
+            return UIColor(red: 0.91, green: 0.45, blue: 0.39, alpha: 1.0)
+        }
+    })
+}

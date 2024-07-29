@@ -11,8 +11,8 @@ let project: Project = .moduleProject(
             targetType: .implementation,
             includeResources: true,
             dependencies: [
-                .external(name: "MemberwiseInit")
+                .external(name: "MemberwiseInit"),
             ]
-        )
+        ),
     ]
 )

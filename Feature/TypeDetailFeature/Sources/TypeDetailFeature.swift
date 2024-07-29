@@ -1,8 +1,8 @@
 import ComposableArchitecture
 import Kingfisher
+import Models
 import PokemonRepo
 import SwiftUI
-import Models
 
 @Reducer
 public struct TypeDetailFeature: Reducer {

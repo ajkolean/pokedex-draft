@@ -1,9 +1,9 @@
 // Feature/TypeListFeature/Sources/TypeListFeature/TypeListFeature.swift
 import ComposableArchitecture
 
+import Models
 import PokemonRepo
 import SwiftUI
-import Models
 
 @Reducer
 public struct TypeListFeature: Reducer {

@@ -1,8 +1,8 @@
 // Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonListFeature.swift
 import ComposableArchitecture
+import Models
 import PokemonRepo
 import SwiftUI
-import Models
 
 @Reducer
 public struct PokemonListFeature: Reducer {
