@@ -20,11 +20,11 @@ struct BarView: View {
 
             ZStack(alignment: .leading) {
                 Capsule()
-                    .frame(width: 200, height: 20)
+                    .frame(width: 200, height: 12)
                     .foregroundColor(Color(.systemGray5))
 
                 Capsule()
-                    .frame(width: animatedWidth, height: 20)
+                    .frame(width: animatedWidth, height: 12)
                     .foregroundColor(color)
                     .animation(.easeOut(duration: 1), value: animatedWidth)
             }
@@ -53,7 +53,7 @@ struct BarChartView: View {
     ]
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 8) {
             ForEach(Array(pokemon.stats.enumerated()), id: \.offset) { index, stat in
                 let title = stat.name.capitalized
                     .replacingOccurrences(of: "Special-Attack", with: "Sp. Atk")

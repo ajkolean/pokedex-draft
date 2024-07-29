@@ -8,7 +8,9 @@ extension Pokemon {
             type: PokemonTypeEnum(rawValue: $0.type?.name ?? "") ?? .unknown
         ) }
         let stats = apiModel.stats.map { Stat(baseStat: $0.base_stat, effort: $0.effort, name: $0.statName?.name ?? "") }
-        let descriptions = apiModel.species?.descriptions.map(\.text) ?? []
+        let descriptions = apiModel.species?.descriptions.map(\.text).map {
+            $0.replacingOccurrences(of: "\u{0C}", with: " ").replacingOccurrences(of: "\n", with: " ")
+        } ?? []
         self.init(
             _id: apiModel.id,
             _name: apiModel.name,

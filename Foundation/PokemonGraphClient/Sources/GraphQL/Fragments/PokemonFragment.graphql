@@ -26,5 +26,17 @@ fragment PokemonFragment on pokemon_v2_pokemon {
     ) {
       text: flavor_text
     }
+    evolutionChain: pokemon_v2_evolutionchain {
+      id
+      species: pokemon_v2_pokemonspecies {
+        name
+        evolutions: pokemon_v2_pokemonevolutions {
+          minLevel: min_level
+          trigger: pokemon_v2_evolutiontrigger {
+            name
+          }
+        }
+      }
+    }
   }
 }

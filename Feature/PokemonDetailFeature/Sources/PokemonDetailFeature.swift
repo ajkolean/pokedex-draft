@@ -11,6 +11,7 @@ public struct PokemonDetailFeature: Reducer {
 
         public init(pokemon: Pokemon) {
             self.pokemon = pokemon
+        
         }
     }
 
