@@ -6,6 +6,9 @@ swiftformat = "0.53.3"
 [settings]
 experimental = true
 
+[env]
+_.file = '.env'
+
 [tasks.clean]
 description = "Cleans Projects"
 run = """

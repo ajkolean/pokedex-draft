@@ -71,3 +71,7 @@ Tuist/.build
 
 ### Generated 
 **/Generated/**
+
+
+### Secrets
+.env
