@@ -9,14 +9,16 @@ public final class MoveSummaryEntity {
     public let accuracy: Int?
     public let power: Int?
     public let pp: Int?
+    public let priority: Int?
     public let type: PokemonTypeEnum
 
-    public init(id: Int, name: String, accuracy: Int?, power: Int?, pp: Int?, type: PokemonTypeEnum) {
+    public init(id: Int, name: String, accuracy: Int?, power: Int?, pp: Int?, priority: Int?, type: PokemonTypeEnum) {
         self.id = id
         self.name = name
         self.accuracy = accuracy
         self.power = power
         self.pp = pp
+        self.priority = priority
         self.type = type
     }
 }
@@ -29,6 +31,7 @@ extension MoveSummaryEntity {
             accuracy: model.accuracy,
             power: model.power,
             pp: model.pp,
+            priority: model.priority,
             type: model.type
         )
     }
@@ -42,6 +45,7 @@ extension Move.Summary {
             accuracy: model.accuracy,
             power: model.power,
             pp: model.pp,
+            priority: model.priority,
             type: model.type
         )
     }

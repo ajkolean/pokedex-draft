@@ -9,10 +9,22 @@ public protocol PokemonConforming {
     var types: [Pokemon.TypeSlot] { get }
 }
 
-@MemberwiseInit(.public)
+
 public struct Pokemon: Hashable, Codable, Identifiable, Sendable, PokemonConforming {
-    public let _id: Int
-    public let _name: String
+    public typealias Name = Identifier<String>
+    public typealias ID = Identifier<Int>
+    
+    public var id: ID {
+        get { ID(rawValue: _id) }
+    }
+    
+    public var name: Name {
+        get { Name(rawValue: _name) }
+    }
+    
+    private let _id: Int
+    private let _name: String
+    
     public let height: Int?
     public let weight: Int?
     public let order: Int?
@@ -21,45 +33,64 @@ public struct Pokemon: Hashable, Codable, Identifiable, Sendable, PokemonConform
     public let stats: [Stat]
     public let descriptions: [String]
 
-    // MARK: - PokemonName
-
-    public struct Name: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
-        public let rawValue: String
-
-        public init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-    }
-
-    public var name: Name { .init(rawValue: _name) }
-
-    // MARK: - PokemonID
-
-    public struct ID: Codable, IdentifierProtocol, ExpressibleByIntegerLiteral {
-        public let rawValue: Int
-
-        public init(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-    }
-
-    public var id: ID { .init(rawValue: _id) }
-
     // MARK: - PokemonType
 
-    @MemberwiseInit(.public)
+    
     public struct TypeSlot: Hashable, Codable, Sendable {
         public let slot: Int
         public let type: PokemonTypeEnum
+        
+        
+        public init(
+            slot: Int,
+            type: PokemonTypeEnum
+        ) {
+            self.slot = slot
+            self.type = type
+        }
     }
 
     // MARK: - PokemonStat
 
-    @MemberwiseInit(.public)
+    
     public struct Stat: Hashable, Codable, Sendable {
         public let baseStat: Int
         public let effort: Int
         public let name: String
+        
+        
+        public init(
+            baseStat: Int,
+            effort: Int,
+            name: String
+        ) {
+            self.baseStat = baseStat
+            self.effort = effort
+            self.name = name
+        }
+    }
+    
+    
+    public init(
+        id: Pokemon.ID,
+        name: Pokemon.Name,
+        height: Int?,
+        weight: Int?,
+        order: Int?,
+        baseExperience: Int?,
+        types: [TypeSlot],
+        stats: [Stat],
+        descriptions: [String]
+    ) {
+        self._id = id.rawValue
+        self._name = name.rawValue
+        self.height = height
+        self.weight = weight
+        self.order = order
+        self.baseExperience = baseExperience
+        self.types = types
+        self.stats = stats
+        self.descriptions = descriptions
     }
 }
 

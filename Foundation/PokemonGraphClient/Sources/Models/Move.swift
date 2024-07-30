@@ -10,6 +10,7 @@ extension Move.Summary {
             accuracy: apiModel.accuracy,
             power: apiModel.power,
             pp: apiModel.pp,
+            priority: apiModel.priority,
             type: type ?? .unknown
         )
     }
@@ -17,6 +18,9 @@ extension Move.Summary {
 
 extension Move {
     init(_ apiModel: GraphClient.MoveFragment) {
+        let descriptions = apiModel.flavorTexts.map { $0.text }
+        let moveEffectChance = apiModel.moveEffectChance
+        let moveEffectTexts = apiModel.moveEffect?.moveEffectTexts.map { $0.effect } ?? []
         let summary = Move.Summary(apiModel.fragments.moveSummaryFragment)
         // Probably shouldn't default to physical
         let damageClass = apiModel.damageClass.map { DamageClass(rawValue: $0.name) } ?? .physical
@@ -27,7 +31,10 @@ extension Move {
             summary: summary,
             damageClass: damageClass ?? .physical,
             generation: Generation(_id: apiModel.id, _name: apiModel.name),
-            pokemon: pokemon
+            pokemon: pokemon,
+            descriptions: descriptions,
+            moveEffectChance: moveEffectChance,
+            moveEffectTexts: moveEffectTexts
         )
     }
 }

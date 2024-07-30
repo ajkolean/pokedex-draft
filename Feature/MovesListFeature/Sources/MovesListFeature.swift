@@ -2,7 +2,7 @@
 import ComposableArchitecture
 
 import Models
-import PokemonRepo
+import PokemonRepoInterface
 import SwiftUI
 
 @Reducer

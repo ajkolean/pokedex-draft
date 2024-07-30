@@ -10,8 +10,8 @@ extension Pokemon {
         let stats = apiModel.stats.map { Stat(baseStat: $0.base_stat, effort: $0.effort, name: $0.statName?.name ?? "") }
         let descriptions = apiModel.species?.descriptions.map(\.text).map(\.cleaned) ?? []
         self.init(
-            _id: apiModel.id,
-            _name: apiModel.name,
+            id: Pokemon.ID(rawValue: apiModel.id),
+            name: Pokemon.Name(rawValue: apiModel.name),
             height: apiModel.height,
             weight: apiModel.weight,
             order: apiModel.order,

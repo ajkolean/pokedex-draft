@@ -262,19 +262,3 @@ struct ItemDetailView_Previews: PreviewProvider {
         }
     }
 }
-
-struct BoxModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(Color.gray.opacity(0.1))
-            .cornerRadius(10)
-            .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
-extension View {
-    func boxStyle() -> some View {
-        modifier(BoxModifier())
-    }
-}

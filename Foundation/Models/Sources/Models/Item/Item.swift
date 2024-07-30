@@ -5,6 +5,17 @@ import MemberwiseInit
 
 @MemberwiseInit(.public)
 public struct Item: Hashable, Codable, Identifiable, Sendable {
+    public typealias Name = Identifier<String>
+    public typealias ID = Identifier<Int>
+    
+    public var id: ID {
+        get { ID(rawValue: _id) }
+    }
+    
+    public var name: Name {
+        get { Name(rawValue: _name) }
+    }
+    
     public let _id: Int
     public let _name: String
     public let flingPower: Int?
@@ -16,28 +27,4 @@ public struct Item: Hashable, Codable, Identifiable, Sendable {
     public var imageUrl: URL {
         URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/\(name).png")!
     }
-}
-
-extension Item {
-    public struct Name: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
-        public let rawValue: String
-
-        public init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-    }
-
-    public var name: Name { .init(rawValue: _name) }
-
-    // MARK: - PokemonID
-
-    public struct ID: Codable, IdentifierProtocol, ExpressibleByIntegerLiteral {
-        public let rawValue: Int
-
-        public init(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-    }
-
-    public var id: ID { .init(rawValue: _id) }
 }

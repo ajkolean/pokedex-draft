@@ -40,7 +40,7 @@ public final class PokemonEntity {
 extension PokemonEntity {
     convenience init(_ model: Pokemon) {
         self.init(
-            id: model._id, name: model._name, height: model.height, weight: model.weight, order: model.order,
+            id: model.id.rawValue, name: model.name.rawValue, height: model.height, weight: model.weight, order: model.order,
             baseExperience: model.baseExperience, types: model.types, stats: model.stats, descriptions: model.descriptions
         )
     }
@@ -49,7 +49,7 @@ extension PokemonEntity {
 extension Pokemon {
     init(_ model: PokemonEntity) {
         self.init(
-            _id: model.id, _name: model.name, height: model.height,
+            id: Pokemon.ID(rawValue: model.id), name: Pokemon.Name(rawValue: model.name), height: model.height,
             weight: model.weight, order: model.order, baseExperience: model.baseExperience, types: model.types,
             stats: model.stats, descriptions: model.descriptions
         )

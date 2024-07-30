@@ -12,6 +12,8 @@ let project: Project = .moduleProject(
             includeResources: true,
             dependencies: [
                 .external(name: "MemberwiseInit"),
+                // remove me
+                .Kingfisher
             ]
         ),
     ]

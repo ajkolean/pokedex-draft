@@ -1,5 +1,11 @@
 import SwiftUI
 
+extension [String] {
+    public func longestString() -> String? {
+        return self.max(by: { $0.count < $1.count })
+    }
+}
+
 public struct TappableModifier: ViewModifier {
     public let action: () -> Void
 
@@ -43,5 +49,22 @@ public func pokemonRed() -> Color {
 extension String {
     public var cleaned: String {
         replacingOccurrences(of: "\u{0C}", with: " ").replacingOccurrences(of: "\n", with: " ")
+    }
+}
+
+
+public struct BoxModifier: ViewModifier {
+    public func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(Color.gray.opacity(0.1))
+            .cornerRadius(10)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+extension View {
+    public func boxStyle() -> some View {
+        modifier(BoxModifier())
     }
 }

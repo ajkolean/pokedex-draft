@@ -11,6 +11,7 @@ import RegionListFeature
 import SwiftUI
 import TypeDetailFeature
 import TypeListFeature
+import MoveDetailFeature
 
 @Reducer
 public struct AppFeature: Reducer {
@@ -35,6 +36,7 @@ public struct AppFeature: Reducer {
         case regionList(RegionListFeature)
         case locationsList(LocationsListFeature)
         case movesList(MovesListFeature)
+        case moveDetail(MoveDetailFeature)
     }
 
     public init() {}
@@ -77,6 +79,9 @@ public struct AppFeature: Reducer {
                 return .none
             case .path(.element(id: _, action: .locationsList(.locationAreaTapped(let area)))):
                 state.path.append(.pokemon(PokemonListFeature.State(listLoadType: .locationArea(area))))
+                return .none
+            case .path(.element(id: _, action: .movesList(.moveTapped(let move)))):
+                state.path.append(.moveDetail(MoveDetailFeature.State(moveSummary: move)))
                 return .none
             case .path:
                 return .none
@@ -173,6 +178,8 @@ public struct AppView: View {
                 LocationsListFeatureView(store: store)
             case let .movesList(store):
                 MovesListFeatureView(store: store)
+            case let .moveDetail(store):
+                MoveDetailView(store: store)
             }
         }
     }

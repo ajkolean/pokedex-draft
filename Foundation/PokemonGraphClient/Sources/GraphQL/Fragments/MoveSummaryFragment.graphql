@@ -4,6 +4,7 @@ fragment MoveSummaryFragment on pokemon_v2_move {
   accuracy
   power
   pp
+  priority
   pokemonType: pokemon_v2_type {
     name
   }
