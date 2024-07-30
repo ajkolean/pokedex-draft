@@ -18,6 +18,16 @@ public struct Move: Hashable, Codable, Identifiable, Sendable {
         public let power: Int?
         public let pp: Int?
         public let type: PokemonTypeEnum
+        
+        public var accuracyString: String {
+            accuracy.map { "\($0)" } ?? "???"
+        }
+        public var ppString: String {
+            pp.map { "\($0)" } ?? "???"
+        }
+        public var powerString: String {
+            power.map { "\($0)" } ?? "???"
+        }
     }
     
     public let summary: Summary
@@ -26,6 +36,7 @@ public struct Move: Hashable, Codable, Identifiable, Sendable {
     public let pokemon: [PokemonSummary]
     
     public var id: ID { summary.id }
+    
 }
 
 extension Move {

@@ -27,6 +27,8 @@ public class ModelContainerProvider {
                 RegionEntity.self,
                 LocationEntity.self,
                 LocationAreaEntity.self,
+                MoveEntity.self,
+                MoveSummaryEntity.self,
                 configurations: config
             )
         } catch {
