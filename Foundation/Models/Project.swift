@@ -13,7 +13,7 @@ let project: Project = .moduleProject(
             dependencies: [
                 .external(name: "MemberwiseInit"),
                 // remove me
-                .Kingfisher
+                .Kingfisher,
             ]
         ),
     ]

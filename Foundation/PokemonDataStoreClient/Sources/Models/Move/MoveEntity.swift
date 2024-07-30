@@ -14,7 +14,17 @@ public final class MoveEntity {
     public let moveEffectChance: Int?
     public let moveEffectTexts: [String]
 
-    public init(id: Int, name: String, summary: Move.Summary, damageClass: Move.DamageClass, generation: Generation, pokemon: [PokemonSummary], descriptions: [String], moveEffectChance: Int?, moveEffectTexts: [String]) {
+    public init(
+        id: Int,
+        name: String,
+        summary: Move.Summary,
+        damageClass: Move.DamageClass,
+        generation: Generation,
+        pokemon: [PokemonSummary],
+        descriptions: [String],
+        moveEffectChance: Int?,
+        moveEffectTexts: [String]
+    ) {
         self.id = id
         self.name = name
         self.summary = summary
@@ -45,9 +55,14 @@ extension MoveEntity {
 
 extension Move {
     init(_ model: MoveEntity) {
-        self.init(summary: model.summary, damageClass: model.damageClass, generation: model.generation, pokemon: model.pokemon,
-                  descriptions: model.descriptions,
-                  moveEffectChance: model.moveEffectChance,
-                  moveEffectTexts: model.moveEffectTexts)
+        self.init(
+            summary: model.summary,
+            damageClass: model.damageClass,
+            generation: model.generation,
+            pokemon: model.pokemon,
+            descriptions: model.descriptions,
+            moveEffectChance: model.moveEffectChance,
+            moveEffectTexts: model.moveEffectTexts
+        )
     }
 }

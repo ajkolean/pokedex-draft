@@ -3,6 +3,7 @@ import ComposableArchitecture
 import ItemListFeature
 import LocationsListFeature
 import Models
+import MoveDetailFeature
 import MovesListFeature
 import PokemonDetailFeature
 import PokemonListFeature
@@ -11,7 +12,6 @@ import RegionListFeature
 import SwiftUI
 import TypeDetailFeature
 import TypeListFeature
-import MoveDetailFeature
 
 @Reducer
 public struct AppFeature: Reducer {

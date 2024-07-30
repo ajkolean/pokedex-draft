@@ -18,9 +18,9 @@ extension Move.Summary {
 
 extension Move {
     init(_ apiModel: GraphClient.MoveFragment) {
-        let descriptions = apiModel.flavorTexts.map { $0.text }
+        let descriptions = apiModel.flavorTexts.map(\.text)
         let moveEffectChance = apiModel.moveEffectChance
-        let moveEffectTexts = apiModel.moveEffect?.moveEffectTexts.map { $0.effect } ?? []
+        let moveEffectTexts = apiModel.moveEffect?.moveEffectTexts.map(\.effect) ?? []
         let summary = Move.Summary(apiModel.fragments.moveSummaryFragment)
         // Probably shouldn't default to physical
         let damageClass = apiModel.damageClass.map { DamageClass(rawValue: $0.name) } ?? .physical

@@ -21,15 +21,15 @@ let project: Project = .moduleProject(
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
                 .MoveDetailFeature,
-                .ComposableArchitecture
+                .ComposableArchitecture,
             ]
         ),
         .moduleTarget(
             module: feature,
             targetType: .tests,
             dependencies: [
-                .MoveDetailFeature
+                .MoveDetailFeature,
             ]
-        )
+        ),
     ]
 )

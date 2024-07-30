@@ -4,26 +4,26 @@ import MemberwiseInit
 public struct Move: Hashable, Codable, Identifiable, Sendable {
     public typealias Name = Identifier<String>
     public typealias ID = Identifier<Int>
-    
+
     public enum DamageClass: String, Hashable, Codable, Sendable {
         case status
         case physical
         case special
     }
-    
+
     public struct Summary: Hashable, Codable, Identifiable, Sendable {
         public var id: Move.ID {
             @storageRestrictions(initializes: _id)
             init(initialValue) { _id = initialValue.rawValue }
             get { Move.ID(rawValue: _id) }
         }
-        
+
         public var name: Move.Name {
             @storageRestrictions(initializes: _name)
             init(initialValue) { _name = initialValue.rawValue }
             get { Move.Name(rawValue: _name) }
         }
-        
+
         private let _id: Int
         private let _name: String
         public let accuracy: Int?
@@ -31,7 +31,6 @@ public struct Move: Hashable, Codable, Identifiable, Sendable {
         public let pp: Int?
         public let priority: Int?
         public let type: PokemonTypeEnum
-        
 
         public init(
             id: Move.ID,
@@ -51,7 +50,7 @@ public struct Move: Hashable, Codable, Identifiable, Sendable {
             self.type = type
         }
     }
-    
+
     public var id: ID { summary.id }
     public let summary: Summary
     public let damageClass: DamageClass
@@ -60,9 +59,16 @@ public struct Move: Hashable, Codable, Identifiable, Sendable {
     public let descriptions: [String]
     public let moveEffectChance: Int?
     public let moveEffectTexts: [String]
-    
-    
-    public init(summary: Summary, damageClass: DamageClass, generation: Generation, pokemon: [PokemonSummary], descriptions: [String], moveEffectChance: Int?, moveEffectTexts: [String]) {
+
+    public init(
+        summary: Summary,
+        damageClass: DamageClass,
+        generation: Generation,
+        pokemon: [PokemonSummary],
+        descriptions: [String],
+        moveEffectChance: Int?,
+        moveEffectTexts: [String]
+    ) {
         self.summary = summary
         self.damageClass = damageClass
         self.generation = generation
@@ -78,19 +84,19 @@ extension Move.Summary {
     public static var maxAccurancy = 100
     public static var maxPower = 250
     public static var maxPriority = 13 // (-5, 7)
-    
+
     public var accuracyString: String {
         accuracy.map { "\($0)" } ?? "???"
     }
-    
+
     public var ppString: String {
         pp.map { "\($0)" } ?? "???"
     }
-    
+
     public var powerString: String {
         power.map { "\($0)" } ?? "???"
     }
-    
+
     public var priorityString: String {
         priority.map { "\($0)" } ?? "???"
     }
@@ -98,9 +104,9 @@ extension Move.Summary {
 
 extension Move {
     public var longDescription: String? {
-        self.descriptions.longestString()
+        descriptions.longestString()
     }
-    
+
     public var moveEffectTextFormatted: String? {
         guard let text = moveEffectTexts.longestString() else { return nil }
         guard let moveEffectChance else { return text }
@@ -109,18 +115,19 @@ extension Move {
 }
 
 import SwiftUI
+
 extension Move.DamageClass {
     public var color: Color {
         switch self {
         case .status:
-                .mint
+            .mint
         case .physical:
-                .orange
+            .orange
         case .special:
-                .purple
+            .purple
         }
     }
-    
+
     public var icon: Image {
         switch self {
         case .status:
@@ -129,7 +136,6 @@ extension Move.DamageClass {
             Image(systemName: "hands.clap.fill")
         case .special:
             Image(systemName: "sparkle")
-            
         }
     }
 }

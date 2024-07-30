@@ -52,7 +52,6 @@ extension String {
     }
 }
 
-
 public struct BoxModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content

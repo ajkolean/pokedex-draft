@@ -1,11 +1,11 @@
 //// Feature/PokemonListFeature/Sources/PokemonListFeature/PokemonCardView.swift
-//import ComposableArchitecture
-//import Kingfisher
+// import ComposableArchitecture
+// import Kingfisher
 //
-//import Models
-//import SwiftUI
+// import Models
+// import SwiftUI
 //
-//public struct PokemonCardView: View {
+// public struct PokemonCardView: View {
 //    public var pokemon: PokemonSummary
 //
 //    public init(pokemon: PokemonSummary) {
@@ -73,4 +73,4 @@
 //            return "#\(pokemon.id.rawValue)"
 //        }
 //    }
-//}
+// }

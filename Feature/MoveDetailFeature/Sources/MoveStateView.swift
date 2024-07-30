@@ -1,9 +1,9 @@
-import SwiftUI
 import Models
+import SwiftUI
 
 struct SizePreferenceKey: PreferenceKey {
     static var defaultValue: CGSize = .zero
-    
+
     static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
         value = nextValue()
     }
@@ -15,7 +15,7 @@ struct MeasureSize: ViewModifier {
             Color.clear.preference(key: SizePreferenceKey.self, value: geometry.size)
         }
     }
-    
+
     func body(content: Content) -> some View {
         content.background(sizeView)
     }
@@ -23,17 +23,16 @@ struct MeasureSize: ViewModifier {
 
 extension View {
     func measureSize() -> some View {
-        self.modifier(MeasureSize())
+        modifier(MeasureSize())
     }
 }
 
-
 struct MoveDetailStatView: View {
     let move: Move.Summary
-    
+
     @State private var minTitleWidth: CGFloat = 0
     @State private var minValueWidth: CGFloat = 0
-    
+
     var body: some View {
         VStack {
             BarView(
@@ -45,10 +44,10 @@ struct MoveDetailStatView: View {
                 minTitleWidth: $minTitleWidth,
                 minValueWidth: $minValueWidth
             )
-            
+
             BarView(
                 value: move.accuracy ?? 0,
-                valueText: move.accuracyString, 
+                valueText: move.accuracyString,
                 title: "Accuracy",
                 color: .blue,
                 maxValue: Move.Summary.maxAccurancy,
@@ -64,7 +63,7 @@ struct MoveDetailStatView: View {
                 minTitleWidth: $minTitleWidth,
                 minValueWidth: $minValueWidth
             )
-            
+
             BarView(
                 value: move.priority.map { $0 + 5 } ?? 0,
                 valueText: move.priorityString,
@@ -79,8 +78,6 @@ struct MoveDetailStatView: View {
     }
 }
 
-
-
 public struct BarView: View {
     public var value: Int = 0
     public var valueText: String = ""
@@ -89,10 +86,10 @@ public struct BarView: View {
     public var maxValue: Int
     @Binding var minTitleWidth: CGFloat
     @Binding var minValueWidth: CGFloat
-    
+
     @State private var animatedWidth: CGFloat = 0
     @State private var geometryWidth: CGFloat = 0
-    
+
     public var body: some View {
         HStack(alignment: .center) {
             Text(title)
@@ -102,21 +99,20 @@ public struct BarView: View {
                     minTitleWidth = max(minTitleWidth, size.width)
                 }
                 .frame(minWidth: minTitleWidth, alignment: .leading)
-            
+
             Text(valueText)
                 .measureSize()
-            
                 .onPreferenceChange(SizePreferenceKey.self) { size in
                     minValueWidth = max(minValueWidth, size.width)
                 }
                 .frame(minWidth: minValueWidth, alignment: .leading)
-            
+
             ZStack(alignment: .leading) {
                 GeometryReader { geometry in
                     Capsule()
                         .frame(height: 12)
                         .foregroundColor(Color(.systemGray5))
-                    
+
                     Capsule()
                         .frame(width: animatedWidth, height: 12)
                         .foregroundColor(color)
@@ -129,6 +125,5 @@ public struct BarView: View {
             }
             .frame(height: 12)
         }
-        
     }
 }
