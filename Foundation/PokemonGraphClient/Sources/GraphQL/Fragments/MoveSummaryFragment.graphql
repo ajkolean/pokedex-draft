@@ -1,0 +1,11 @@
+fragment MoveSummaryFragment on pokemon_v2_move {
+  id
+  name
+  accuracy
+  power
+  pp
+  pokemontType: pokemon_v2_type {
+    id
+    name
+  }
+}

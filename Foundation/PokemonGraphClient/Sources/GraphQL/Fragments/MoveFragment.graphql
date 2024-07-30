@@ -1,0 +1,30 @@
+fragment MoveFragment on pokemon_v2_move {
+  ...MoveSummaryFragment
+  priority
+  flavorTexts: pokemon_v2_moveflavortexts(
+    where: { language_id: { _eq: 9 } }
+    limit: 10
+  ) {
+    text: flavor_text
+  }
+  moveEffectChance: move_effect_chance
+  moveEffect: pokemon_v2_moveeffect {
+    moveEffectTexts: pokemon_v2_moveeffecteffecttexts(
+      where: { language_id: { _eq: 9 } }
+    ) {
+      effect
+    }
+  }
+  damageClass: pokemon_v2_movedamageclass {
+    name
+  }
+  generation: pokemon_v2_generation {
+    id
+    name
+  }
+  pokemonMoves: pokemon_v2_pokemonmoves(distinct_on: pokemon_id) {
+    pokemon: pokemon_v2_pokemon {
+      ...PokemonSummaryFragment
+    }
+  }
+}
