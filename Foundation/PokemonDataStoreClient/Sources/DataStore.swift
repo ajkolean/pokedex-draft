@@ -125,6 +125,36 @@ public actor DataStore {
         }
         try await db.debounceSave()
     }
+    
+    // MARK: - Move
+    public func fetchMoveSummaryList() async throws -> [Move.Summary] {
+        let sortDescriptor = SortDescriptor(\MoveSummaryEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<MoveSummaryEntity>(sortBy: [sortDescriptor])
+        let models = try await db.fetch(fetchDescriptor)
+        let identifiers = models.map(Move.Summary.init)
+        return identifiers
+    }
+    
+    public func fetchMove(name: Move.Name) async throws -> Move? {
+        let fetchDescriptor = FetchDescriptor<MoveEntity>(predicate: #Predicate { $0.name == name.rawValue })
+        guard let model = try await db.fetchOne(fetchDescriptor) else { return nil }
+        try await db.insertAndSave(model)
+        return Move(model)
+    }
+    
+    public func saveMoveSummaries(_ moves: [Move.Summary]) async throws {
+        for move in moves.map(MoveSummaryEntity.init) {
+            await db.insert(move)
+        }
+        try await db.debounceSave()
+    }
+    
+    public func saveMoves(_ moves: [Move]) async throws {
+        for move in moves.map(MoveEntity.init) {
+            await db.insert(move)
+        }
+        try await db.debounceSave()
+    }
 }
 
 extension DataStore {

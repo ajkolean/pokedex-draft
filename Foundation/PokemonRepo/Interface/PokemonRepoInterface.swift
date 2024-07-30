@@ -18,6 +18,11 @@ public struct PokemonRepo: TestDependencyKey, Sendable {
     public var fetchRegionList: @Sendable () async throws -> [Region]
     public var fetchLocationsList: @Sendable (_ regionID: Region.ID) async throws -> [Location]
     public var fetchLocationArea: @Sendable (_ id: LocationArea.ID) async throws -> LocationArea
+    
+    // MARK: - Move
+
+    public var fetchMoveSummaryList: @Sendable () async throws -> [Move.Summary]
+    public var fetchMove: @Sendable (_ name: Move.Name) async throws -> Move
 
     public static let testValue = Self()
 }

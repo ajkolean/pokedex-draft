@@ -79,6 +79,25 @@ extension PokemonRepo: DependencyKey {
                     try await dataStoreClient.saveLocationAreas([result])
                     return result
                 }
+            },
+            fetchMoveSummaryList: {
+                let cachedTypes = try await dataStoreClient.fetchMoveSummaryList()
+                if !cachedTypes.isEmpty {
+                    return cachedTypes
+                } else {
+                    let results = try await pokemonAPIClient.fetchMoveSummaryList()
+                    try await dataStoreClient.saveMoveSummaries(moves: results)
+                    return results
+                }
+            },
+            fetchMove: { name in
+                if let cachedItem = try await dataStoreClient.fetchMove(name: name) {
+                    return cachedItem
+                } else {
+                    let result = try await pokemonAPIClient.fetchMove(name: name)
+                    try await dataStoreClient.saveMoves([result])
+                    return result
+                }
             }
         )
     }()

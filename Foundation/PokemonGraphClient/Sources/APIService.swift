@@ -54,6 +54,22 @@ actor APIService {
         let fragment = data.area.first!.fragments.locationAreaFragment
         return LocationArea(fragment)
     }
+    
+    // MARK: - Move
+    
+    public func fetchMoveSummaryList(limit: Int? = nil, offset: Int? = nil) async throws -> [Move.Summary] {
+        let query = GraphClient.GetMoveSummaryListQuery(limit: GraphQLNullable(limit), offset: GraphQLNullable(offset))
+        let data = try await fetch(query: query)
+        return data.moves.compactMap { Move.Summary($0.fragments.moveSummaryFragment) }
+    }
+    
+    public func fetchMove(name: Move.Name) async throws -> Move {
+        let query = GraphClient.GetMoveByNameQuery(name: name.rawValue)
+        let data = try await fetch(query: query)
+        // throw error here
+        let fragment = data.move.first!.fragments.moveFragment
+        return Move(fragment)
+    }
 
     // MARK: - Helpers
 

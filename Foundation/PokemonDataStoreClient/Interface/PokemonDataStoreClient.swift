@@ -29,6 +29,12 @@ public struct DataStoreClient: Sendable, TestDependencyKey {
     public var saveLocations: @Sendable ([Location]) async throws -> Void
     public var fetchLocationArea: @Sendable (_ id: LocationArea.ID) async throws -> LocationArea?
     public var saveLocationAreas: @Sendable ([LocationArea]) async throws -> Void
+    
+    // MARK: - Move
+    public var fetchMoveSummaryList: @Sendable () async throws -> [Move.Summary]
+    public var fetchMove: @Sendable (_ name: Move.Name) async throws -> Move?
+    public var saveMoveSummaries: @Sendable (_ moves: [Move.Summary]) async throws -> Void
+    public var saveMoves: @Sendable (_ moves: [Move]) async throws -> Void
 
     public static let testValue = Self()
 }

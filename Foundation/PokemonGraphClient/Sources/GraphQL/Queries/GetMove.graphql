@@ -1,0 +1,5 @@
+query GetMoveByName($name: String!) {
+  move: pokemon_v2_move(where: { name: { _eq: $name } }) {
+    ...MoveFragment
+  }
+}
