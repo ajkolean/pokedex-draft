@@ -25,9 +25,6 @@ extension DataStoreClient: DependencyKey {
             fetchMove: { try await dataStore.fetchMove(name: $0) },
             saveMoveSummaries: { try await dataStore.saveMoveSummaries($0) },
             saveMoves: { try await dataStore.saveMoves($0) }
-
         )
     }()
 }
-
-

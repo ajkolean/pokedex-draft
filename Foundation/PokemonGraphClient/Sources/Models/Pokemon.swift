@@ -8,9 +8,7 @@ extension Pokemon {
             type: PokemonTypeEnum(rawValue: $0.type?.name ?? "") ?? .unknown
         ) }
         let stats = apiModel.stats.map { Stat(baseStat: $0.base_stat, effort: $0.effort, name: $0.statName?.name ?? "") }
-        let descriptions = apiModel.species?.descriptions.map(\.text).map {
-            $0.cleaned
-        } ?? []
+        let descriptions = apiModel.species?.descriptions.map(\.text).map(\.cleaned) ?? []
         self.init(
             _id: apiModel.id,
             _name: apiModel.name,

@@ -10,7 +10,7 @@ public final class MoveSummaryEntity {
     public let power: Int?
     public let pp: Int?
     public let type: PokemonTypeEnum
-  
+
     public init(id: Int, name: String, accuracy: Int?, power: Int?, pp: Int?, type: PokemonTypeEnum) {
         self.id = id
         self.name = name
@@ -23,12 +23,26 @@ public final class MoveSummaryEntity {
 
 extension MoveSummaryEntity {
     convenience init(_ model: Move.Summary) {
-        self.init(id: model.id.rawValue, name: model.name.rawValue, accuracy: model.accuracy, power: model.power, pp: model.pp, type: model.type)
+        self.init(
+            id: model.id.rawValue,
+            name: model.name.rawValue,
+            accuracy: model.accuracy,
+            power: model.power,
+            pp: model.pp,
+            type: model.type
+        )
     }
 }
 
 extension Move.Summary {
     init(_ model: MoveSummaryEntity) {
-        self.init(id: Move.ID(rawValue: model.id), name: Move.Name(rawValue: model.name), accuracy: model.accuracy, power: model.power, pp: model.pp, type: model.type)
+        self.init(
+            id: Move.ID(rawValue: model.id),
+            name: Move.Name(rawValue: model.name),
+            accuracy: model.accuracy,
+            power: model.power,
+            pp: model.pp,
+            type: model.type
+        )
     }
 }

@@ -10,20 +10,20 @@ public struct MovesListFeature: Reducer {
     @ObservableState
     public struct State: Equatable, Sendable {
         public var moves: IdentifiedArrayOf<Move.Summary> = []
-        
+
         public init() {}
     }
-    
+
     public enum Action: Equatable, Sendable {
         case onAppear
         case setMoves(Result<[Move.Summary], EquatableError>)
         case moveTapped(Move.Summary)
     }
-    
+
     @Dependency(\.pokemonRepo) var pokemonRepo
-    
+
     public init() {}
-    
+
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
@@ -39,7 +39,7 @@ public struct MovesListFeature: Reducer {
             case let .setMoves(.success(moves)):
                 state.moves = .init(uniqueElements: moves)
                 return .none
-                
+
             case let .setMoves(.failure(error)):
                 fatalError("Failed to fetch pokemon list: \(error)")
             case .moveTapped:
@@ -52,11 +52,11 @@ public struct MovesListFeature: Reducer {
 public struct MovesListFeatureView: View {
     @Bindable public var store: StoreOf<MovesListFeature>
     private let gridItems = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
-    
+
     public init(store: StoreOf<MovesListFeature>) {
         self.store = store
     }
-    
+
     public var body: some View {
         ScrollView {
             LazyVGrid(columns: gridItems, spacing: 16) {

@@ -73,7 +73,7 @@ public struct ItemListFeature: Reducer {
 
 public struct ItemListFeatureView: View {
     @Bindable public var store: StoreOf<ItemListFeature>
-    @State private var selectedItem: Item? = nil
+    @State private var selectedItem: Item?
 
     public init(store: StoreOf<ItemListFeature>) {
         self.store = store
@@ -91,7 +91,7 @@ public struct ItemListFeatureView: View {
                     .presentationDetents([.medium, .large])
             }
     }
-    
+
     @ViewBuilder
     var listView: some View {
         switch store.filteredItems {
@@ -164,10 +164,9 @@ public struct ItemListFeatureView: View {
     )
 }
 
-
 public struct ItemDetailView: View {
     let item: Item
-    
+
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -177,7 +176,7 @@ public struct ItemDetailView: View {
                     .scaledToFit()
                     .frame(width: 100, height: 100) // Adjust the frame size as needed
                     .padding(.top)
-                
+
                 // Title Section
                 Text(item._name.capitalized)
                     .font(.largeTitle)
@@ -186,7 +185,7 @@ public struct ItemDetailView: View {
                     .background(Color.purple.opacity(0.2))
                     .cornerRadius(10)
                     .frame(maxWidth: .infinity, alignment: .center)
-                
+
                 // Fling Power Section
                 if let flingPower = item.flingPower {
                     HStack {
@@ -196,7 +195,7 @@ public struct ItemDetailView: View {
                     }
                     .boxStyle()
                 }
-                
+
                 // Cost Section
                 if let cost = item.cost {
                     HStack {
@@ -207,7 +206,7 @@ public struct ItemDetailView: View {
                     }
                     .boxStyle()
                 }
-                
+
                 // Flavor Text Section
                 if let flavorText = item.flavorText?.cleaned {
                     VStack(alignment: .leading, spacing: 8) {
@@ -218,7 +217,7 @@ public struct ItemDetailView: View {
                     }
                     .boxStyle()
                 }
-                
+
                 // Effect Text Section
                 if let effectText = item.effectText?.cleaned {
                     VStack(alignment: .leading, spacing: 8) {
@@ -228,7 +227,7 @@ public struct ItemDetailView: View {
                     }
                     .boxStyle()
                 }
-                
+
                 // Fling Effect Section
                 if let flingEffect = item.flingEffect {
                     VStack(alignment: .leading) {
@@ -257,13 +256,12 @@ struct ItemDetailView_Previews: PreviewProvider {
             effectText: "Restores 20 HP.",
             flingEffect: "None"
         )
-        
+
         NavigationView {
             ItemDetailView(item: mockItem)
         }
     }
 }
-
 
 struct BoxModifier: ViewModifier {
     func body(content: Content) -> some View {
@@ -277,6 +275,6 @@ struct BoxModifier: ViewModifier {
 
 extension View {
     func boxStyle() -> some View {
-        self.modifier(BoxModifier())
+        modifier(BoxModifier())
     }
 }

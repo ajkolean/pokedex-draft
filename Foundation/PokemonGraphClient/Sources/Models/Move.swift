@@ -7,7 +7,7 @@ extension Move.Summary {
         self.init(
             id: Move.ID(rawValue: apiModel.id),
             name: Move.Name(rawValue: apiModel.name),
-            accuracy: apiModel.accuracy, 
+            accuracy: apiModel.accuracy,
             power: apiModel.power,
             pp: apiModel.pp,
             type: type ?? .unknown
@@ -27,6 +27,7 @@ extension Move {
             summary: summary,
             damageClass: damageClass ?? .physical,
             generation: Generation(_id: apiModel.id, _name: apiModel.name),
-            pokemon: pokemon)
+            pokemon: pokemon
+        )
     }
 }

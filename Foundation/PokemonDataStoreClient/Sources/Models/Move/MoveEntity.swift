@@ -10,8 +10,15 @@ public final class MoveEntity {
     public let damageClass: Move.DamageClass
     public let generation: Generation
     public let pokemon: [PokemonSummary]
-    
-    public init(id: Int, name: String, summary: Move.Summary, damageClass: Move.DamageClass, generation: Generation, pokemon: [PokemonSummary]) {
+
+    public init(
+        id: Int,
+        name: String,
+        summary: Move.Summary,
+        damageClass: Move.DamageClass,
+        generation: Generation,
+        pokemon: [PokemonSummary]
+    ) {
         self.id = id
         self.name = name
         self.summary = summary
@@ -23,7 +30,14 @@ public final class MoveEntity {
 
 extension MoveEntity {
     convenience init(_ model: Move) {
-        self.init(id: model.id.rawValue, name: model.summary.name.rawValue, summary: model.summary, damageClass: model.damageClass, generation: model.generation, pokemon: model.pokemon)
+        self.init(
+            id: model.id.rawValue,
+            name: model.summary.name.rawValue,
+            summary: model.summary,
+            damageClass: model.damageClass,
+            generation: model.generation,
+            pokemon: model.pokemon
+        )
     }
 }
 

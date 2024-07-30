@@ -42,6 +42,6 @@ public func pokemonRed() -> Color {
 
 extension String {
     public var cleaned: String {
-        self.replacingOccurrences(of: "\u{0C}", with: " ").replacingOccurrences(of: "\n", with: " ")
+        replacingOccurrences(of: "\u{0C}", with: " ").replacingOccurrences(of: "\n", with: " ")
     }
 }

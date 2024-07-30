@@ -4,14 +4,14 @@ import SwiftUI
 
 struct MoveCardView: View {
     let move: Move.Summary
-    
+
     var body: some View {
         ZStack {
             VStack {
                 Spacer()
                 HStack {
                     Spacer()
-                    
+
                     move
                         .type
                         .icon
@@ -30,7 +30,7 @@ struct MoveCardView: View {
                     Text(move.name.rawValue.capitalized)
                         .font(.headline)
                         .bold()
-         
+
                     Group {
                         HStack(spacing: 2) {
                             Text("Accuracy:")
@@ -38,13 +38,12 @@ struct MoveCardView: View {
                             Text(move.accuracyString)
                                 .italic()
                         }
-                        
+
                         HStack(spacing: 2) {
                             Text("PP:")
                                 .bold()
                             Text(move.ppString)
                                 .italic()
-                            
                         }
                         HStack(spacing: 2) {
                             Text("Power:")
