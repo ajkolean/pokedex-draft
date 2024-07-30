@@ -52,6 +52,8 @@ public struct MoveDetailFeature: Reducer {
 }
 
 public struct MoveDetailView: View {
+    private let gridItems = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
+
     public var store: StoreOf<MoveDetailFeature>
 
     public init(store: StoreOf<MoveDetailFeature>) {
@@ -200,7 +202,7 @@ public struct MoveDetailView: View {
                             .shadow(color: store.moveSummary.type.color(), radius: 4, x: 1.0, y: 1.0)
                             .padding(.vertical, 24)
 
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                        LazyVGrid(columns: gridItems, spacing: 16) {
                             ForEach(move.pokemon) { pokemon in
                                 PokemonCardView(pokemon: pokemon)
                                     .tappable {

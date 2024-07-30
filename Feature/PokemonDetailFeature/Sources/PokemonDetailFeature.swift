@@ -72,9 +72,12 @@ public struct PokemonDetailView: View {
                     .resizable()
                     .frame(width: 200, height: 200)
                     .background(
-                        ModelsAsset
-                            .spinningball
-                            .swiftUIImage
+                        store
+                            .pokemonSummary
+                            .primaryType
+                            .icon
+//                            .spinningball
+//                            .swiftUIImage
                             .resizable()
                             .renderingMode(.template)
                             .opacity(0.2)

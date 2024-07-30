@@ -1,0 +1,10 @@
+fragment AbilitySummaryFragment on pokemon_v2_ability {
+  id
+  name
+  efectTexts: pokemon_v2_abilityeffecttexts(
+    where: { language_id: { _eq: 9 } }
+  ) {
+    effect
+    shortEffect: short_effect
+  }
+}

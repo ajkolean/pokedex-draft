@@ -1,0 +1,18 @@
+fragment AbilityFragment on pokemon_v2_ability {
+  ...AbilitySummaryFragment
+  flavorTexts: pokemon_v2_abilityflavortexts(
+    where: { language_id: { _eq: 9 } }
+    distinct_on: flavor_text
+  ) {
+    flavorText: flavor_text
+  }
+  pokemonAbilities: pokemon_v2_pokemonabilities(
+    distinct_on: pokemon_id
+    order_by: { pokemon_id: asc }
+  ) {
+    pokemon: pokemon_v2_pokemon {
+      ...PokemonSummaryFragment
+    }
+  }
+}
+
