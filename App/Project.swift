@@ -1,4 +1,5 @@
 import ProjectDescription
+import ProjectDescriptionHelpers
 
 let project = Project(
     name: "Pokedex",
@@ -21,7 +22,7 @@ let project = Project(
             dependencies: [
                 .project(target: "AppFeature", path: .relativeToRoot("Feature/AppFeature")),
             ],
-            environmentVariables: envVar()
+            environmentVariables: ["TCG_API_KEY": .environmentVariable(value: Environment.tcgApiKey.getString(default: ""), isEnabled: true)]
         ),
         .target(
             name: "PokedexTests",
@@ -35,11 +36,3 @@ let project = Project(
         ),
     ]
 )
-
-func envVar() -> [String: EnvironmentVariable] {
-    if case let .string(tcgApiKey) = Environment.tcgApiKey {
-        ["TUIST_TCG_API_KEY": .environmentVariable(value: tcgApiKey, isEnabled: true)]
-    } else {
-        [:]
-    }
-}

@@ -165,6 +165,10 @@ public actor DataStore {
         return models.map(TCG.Set.init)
     }
     
+//    public func fetchTCGSetList() async throws -> [TCG.Set] {
+//        return []
+//    }
+    
     public func saveTCGSets(_ sets: [TCG.Set]) async throws {
         for set in sets.map(TCGSetEntity.init) {
             await db.insert(set)
@@ -189,7 +193,7 @@ public actor DataStore {
     
     public func fetchTCGCard(name: TCG.Card.Name) async throws -> [TCG.Card] {
         let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
-        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0.name == name.rawValue })
+        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0.name == name.rawValue }, sortBy: [sortDescriptor])
         let models = try await db.fetch(fetchDescriptor)
         return models.map(TCG.Card.init)
     }

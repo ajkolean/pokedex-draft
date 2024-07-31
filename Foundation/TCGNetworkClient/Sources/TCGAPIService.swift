@@ -18,7 +18,6 @@ public class TCGAPIService {
         apiKey: String? = ProcessInfo.processInfo.environment["TCG_API_KEY"],
         session: URLSession = .shared
     ) {
-        if apiKey == nil { print("No TCG_API_KEY SET")}
         self.apiKey = apiKey
         self.session = session
     }
@@ -30,8 +29,8 @@ public class TCGAPIService {
     
     // Function to fetch cards by set name
     public func fetchTCGCardsBySetName(_ setName: TCG.Set.Name) async throws -> TCG.CardList {
-        let queryItem = URLQueryItem(name: "q", value: "!set.name:\(setName)")
-        return try await fetchData(endpoint: "/cards", queryItems: [queryItem], decodeType: TCG.CardList.self)
+        try await self.fetchTCGCardsBySetName(setName, page: 1)
+        
     }
     
     // Function to fetch cards by Pokémon name
@@ -41,6 +40,27 @@ public class TCGAPIService {
     }
     
     // MARK: - Helpers
+    
+    public func fetchTCGCardsBySetName(
+        _ setName: TCG.Set.Name,
+        page: Int
+    ) async throws -> TCG.CardList {
+        let queryItems = [
+            URLQueryItem(name: "q", value: "!set.name:\(setName)"),
+            URLQueryItem(name: "page", value: "\(page)")
+            
+        ]
+        
+        var results = try await fetchData(endpoint: "/cards", queryItems: queryItems, decodeType: TCG.CardList.self)
+        var page = results.page
+        while results.cards.count < results.totalCount || results.count < 250 {
+            let nextPage = try await fetchTCGCardsBySetName(setName, page: page)
+            page += 1
+            results.cards.append(contentsOf: nextPage.cards)
+        }
+        
+        return results
+    }
     
     private func createRequest(
         endpoint: String,
@@ -54,6 +74,10 @@ public class TCGAPIService {
         
         var request = URLRequest(url: url)
         request.setValue(apiKey, forHTTPHeaderField: "X-Api-Key")
+        let apiHeader = request.allHTTPHeaderFields?["X-Api-Key"]
+        if apiHeader.isNilOrEmpty {
+            print("No TCG_API_KEY SET")
+        }
         return request
     }
     

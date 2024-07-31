@@ -7,7 +7,7 @@ public enum MenuItem: String, CaseIterable, Identifiable, Sendable {
 
     case pokedex
     case moves
-    case abilities
+    case cards
     case items
     case regions
     case types
@@ -16,7 +16,7 @@ public enum MenuItem: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .pokedex:
             return "Pokédex"
-        case .moves, .abilities, .items, .regions, .types:
+        case .moves, .cards, .items, .regions, .types:
             return rawValue.capitalized
         }
     }
@@ -27,7 +27,7 @@ public enum MenuItem: String, CaseIterable, Identifiable, Sendable {
             return .green
         case .moves:
             return .red
-        case .abilities:
+        case .cards:
             return .blue
         case .items:
             return .yellow

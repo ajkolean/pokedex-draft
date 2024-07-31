@@ -2,7 +2,7 @@ import Foundation
 
 extension TCG {
     public struct CardList: Hashable, Codable, Sendable {
-        public let cards: [Card]
+        public var cards: [Card]
         public let page: Int
         public let pageSize: Int
         public let count: Int

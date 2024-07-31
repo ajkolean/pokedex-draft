@@ -29,6 +29,8 @@ public class ModelContainerProvider {
                 LocationAreaEntity.self,
                 MoveEntity.self,
                 MoveSummaryEntity.self,
+                TCGSetEntity.self,
+                TCGCardEntity.self,
                 configurations: config
             )
         } catch {
