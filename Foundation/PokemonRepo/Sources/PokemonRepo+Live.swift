@@ -5,15 +5,15 @@ import PokemonDataStoreClientInterface
 import PokemonGraphClient
 import PokemonGraphClientInterface
 import PokemonRepoInterface
-import TCGNetworkClientInterface
 import TCGNetworkClient
+import TCGNetworkClientInterface
 
 extension PokemonRepo: DependencyKey {
     public static let liveValue: PokemonRepo = {
         let dataStoreClient = DataStoreClient.liveValue
         let pokemonAPIClient = PokemonAPIClient.liveValue
         let tcgClient = TCGNetworkClient.liveValue
-        
+
         return PokemonRepo(
             fetchPokemonSummaryList: {
                 let cachedPokemons = try await dataStoreClient.fetchPokemonSummaryList()
@@ -123,7 +123,7 @@ extension PokemonRepo: DependencyKey {
                 }
             },
             fetchCardsByPokemonName: { name in
-                let cachedTypes = try await dataStoreClient.fetchTCGCard(name: name) 
+                let cachedTypes = try await dataStoreClient.fetchTCGCard(name: name)
                 if !cachedTypes.isEmpty {
                     return cachedTypes
                 } else {
@@ -131,7 +131,6 @@ extension PokemonRepo: DependencyKey {
                     try await dataStoreClient.saveTCGCards(result.cards)
                     return result.cards
                 }
-                
             }
         )
     }()

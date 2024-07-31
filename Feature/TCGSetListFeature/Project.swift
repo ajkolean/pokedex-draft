@@ -14,7 +14,7 @@ let project: Project = .moduleProject(
                 .Models,
                 .PokemonRepoImplementation,
                 .PokemonRepoInterface,
-                .Kingfisher
+                .Kingfisher,
             ]
         ),
         .moduleTarget(
@@ -23,15 +23,15 @@ let project: Project = .moduleProject(
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
                 .TCGSetListFeature,
-                .ComposableArchitecture
+                .ComposableArchitecture,
             ]
         ),
         .moduleTarget(
             module: feature,
             targetType: .tests,
             dependencies: [
-                .TCGSetListFeature
+                .TCGSetListFeature,
             ]
-        )
+        ),
     ]
 )

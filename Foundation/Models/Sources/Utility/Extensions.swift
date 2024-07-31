@@ -68,7 +68,7 @@ extension View {
     }
 }
 
-extension Optional where Wrapped == String {
+extension String? {
     public var isNilOrEmpty: Bool {
         return self?.isEmpty ?? true
     }

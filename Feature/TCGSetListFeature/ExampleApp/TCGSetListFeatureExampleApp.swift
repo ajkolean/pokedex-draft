@@ -7,7 +7,7 @@ struct TCGSetListFeatureExampleApp: App {
     static let store = Store(initialState: TCGSetListFeature.State()) {
         TCGSetListFeature()
     }
-    
+
     var body: some Scene {
         WindowGroup {
             TCGSetListFeatureView(store: Self.store)

@@ -1,7 +1,6 @@
 import Foundation
 
 extension JSONDecoder {
-    
     /// Assign multiple DateFormatter to dateDecodingStrategy
     ///
     /// Usage :
@@ -17,22 +16,21 @@ extension JSONDecoder {
         set {
             guard let formatters = newValue else { return }
             self.dateDecodingStrategy = .custom { decoder in
-                
+
                 let container = try decoder.singleValueContainer()
                 let dateString = try container.decode(String.self)
-                
+
                 for formatter in formatters {
                     if let date = formatter.date(from: dateString) {
                         return date
                     }
                 }
-                
+
                 throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode date string \(dateString)")
             }
         }
     }
 }
-
 
 extension DateFormatter {
     static var yearMonthDay: DateFormatter {
@@ -40,7 +38,7 @@ extension DateFormatter {
         formatter.dateFormat = "yyyy/MM/dd"
         return formatter
     }
-    
+
     static var yearMonthDayTime: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"

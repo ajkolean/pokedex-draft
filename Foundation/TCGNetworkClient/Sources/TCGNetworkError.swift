@@ -8,13 +8,13 @@ enum TCGNetworkError: Error {
 
     var localizedDescription: String {
         switch self {
-        case .invalidURL(let endpoint):
+        case let .invalidURL(endpoint):
             return "Invalid URL for endpoint: \(endpoint)"
-        case .badServerResponse(let endpoint, let statusCode):
+        case let .badServerResponse(endpoint, statusCode):
             return "Bad server response for endpoint: \(endpoint), status code: \(statusCode)"
-        case .noData(let endpoint):
+        case let .noData(endpoint):
             return "No data received for endpoint: \(endpoint)"
-        case .decodingError(let endpoint, let context):
+        case let .decodingError(endpoint, context):
             return """
             Decoding error for endpoint: \(endpoint)
             Debug description: \(context.debugDescription)

@@ -3,6 +3,4 @@ import XCTest
 @testable import TCGSetListFeature
 
 @MainActor
-final class TCGSetListFeatureTests: XCTestCase {
-
-}
+final class TCGSetListFeatureTests: XCTestCase {}

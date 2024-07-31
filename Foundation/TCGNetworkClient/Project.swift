@@ -33,4 +33,3 @@ let project: Project = .moduleProject(
         ),
     ]
 )
-

@@ -3,6 +3,4 @@ import XCTest
 @testable import TCGCardDetailFeature
 
 @MainActor
-final class TCGCardDetailFeatureTests: XCTestCase {
-
-}
+final class TCGCardDetailFeatureTests: XCTestCase {}

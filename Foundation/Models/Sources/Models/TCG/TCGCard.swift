@@ -7,7 +7,7 @@ extension TCG {
         public let pageSize: Int
         public let count: Int
         public let totalCount: Int
-        
+
         private enum CodingKeys: String, CodingKey {
             case cards = "data"
             case page
@@ -16,14 +16,14 @@ extension TCG {
             case totalCount
         }
     }
-    
+
     public struct Card: Hashable, Codable, Identifiable, Sendable {
         public typealias Name = Identifier<String>
         public typealias ID = Identifier<String>
-        
+
         public var id: ID { ID(rawValue: _id) }
         public var name: Name { Name(rawValue: _name) }
-        
+
         public struct AncientTrait: Codable, Hashable, Sendable {
             public let name: String
             public let text: String
@@ -85,10 +85,38 @@ extension TCG {
         public let images: Image
         public let tcgplayer: TCG.Player?
         public let cardmarket: TCG.CardMarket?
-        
-        public init(id: ID, name: Name, supertype: TCG.SuperType?, subtypes: [TCG.Subtype]?, level: String?, hp: String?, types: [TCG.CardType]?, evolvesFrom: String?, evolvesTo: [String]?, rules: [String]?, ancientTrait: AncientTrait?, abilities: [Ability]?, attacks: [Attack]?, weaknesses: [Weakness]?, resistances: [Resistance]?, retreatCost: [TCG.CardType]?, convertedRetreatCost: Int?, set: TCG.Set, number: String?, artist: String?, rarity: TCG.Rarity?, flavorText: String?, nationalPokedexNumbers: [Int]?, regulationMark: String?, images: Image, tcgplayer: TCG.Player?, cardmarket: TCG.CardMarket?) {
-            self._id = id.rawValue
-            self._name = name.rawValue
+
+        public init(
+            id: ID,
+            name: Name,
+            supertype: TCG.SuperType?,
+            subtypes: [TCG.Subtype]?,
+            level: String?,
+            hp: String?,
+            types: [TCG.CardType]?,
+            evolvesFrom: String?,
+            evolvesTo: [String]?,
+            rules: [String]?,
+            ancientTrait: AncientTrait?,
+            abilities: [Ability]?,
+            attacks: [Attack]?,
+            weaknesses: [Weakness]?,
+            resistances: [Resistance]?,
+            retreatCost: [TCG.CardType]?,
+            convertedRetreatCost: Int?,
+            set: TCG.Set,
+            number: String?,
+            artist: String?,
+            rarity: TCG.Rarity?,
+            flavorText: String?,
+            nationalPokedexNumbers: [Int]?,
+            regulationMark: String?,
+            images: Image,
+            tcgplayer: TCG.Player?,
+            cardmarket: TCG.CardMarket?
+        ) {
+            _id = id.rawValue
+            _name = name.rawValue
             self.supertype = supertype
             self.subtypes = subtypes
             self.level = level
@@ -115,7 +143,7 @@ extension TCG {
             self.tcgplayer = tcgplayer
             self.cardmarket = cardmarket
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case _id = "id"
             case _name = "name"
@@ -145,6 +173,5 @@ extension TCG {
             case tcgplayer
             case cardmarket
         }
-
     }
 }

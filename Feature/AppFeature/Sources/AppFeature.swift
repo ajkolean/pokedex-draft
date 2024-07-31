@@ -10,11 +10,11 @@ import PokemonListFeature
 import PokemonRepo
 import RegionListFeature
 import SwiftUI
+import TCGCardDetailFeature
+import TCGCardListFeature
+import TCGSetListFeature
 import TypeDetailFeature
 import TypeListFeature
-import TCGSetListFeature
-import TCGCardListFeature
-import TCGCardDetailFeature
 
 @Reducer
 public struct AppFeature: Reducer {
@@ -44,9 +44,8 @@ public struct AppFeature: Reducer {
         case tcgCardList(TCGCardListFeature)
         case tcgCardDetail(TCGCardDetailFeature)
     }
-    
-    @Dependency(\.pokemonRepo) var pokemonRepo
 
+    @Dependency(\.pokemonRepo) var pokemonRepo
 
     public init() {}
 
@@ -101,7 +100,7 @@ public struct AppFeature: Reducer {
                 state.path.append(.tcgCardList(TCGCardListFeature.State(set: set)))
             case let .path(.element(id: _, action: .tcgCardList(.tcgCardTapped(card)))):
                 state.path.append(.tcgCardDetail(TCGCardDetailFeature.State(card: card)))
-                
+
             case .path:
                 return .none
             }

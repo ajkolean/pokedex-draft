@@ -31,10 +31,38 @@ public final class TCGCardEntity {
     public let images: TCG.Card.Image
     public let tcgplayer: TCG.Player?
     public let cardmarket: TCG.CardMarket?
-    
-    public init(id: String, name: String, supertype: TCG.SuperType?, subtypes: [TCG.Subtype]?, level: String?, hp: String?, types: [TCG.CardType]?, evolvesFrom: String?, evolvesTo: [String]?, rules: [String]?, ancientTrait: TCG.Card.AncientTrait?, abilities: [TCG.Card.Ability]?, attacks: [TCG.Card.Attack]?, weaknesses: [TCG.Card.Weakness]?, resistances: [TCG.Card.Resistance]?, retreatCost: [TCG.CardType]?, convertedRetreatCost: Int?, set: TCG.Set, number: String?, artist: String?, rarity: TCG.Rarity?, flavorText: String?, nationalPokedexNumbers: [Int]?, regulationMark: String?, images: TCG.Card.Image, tcgplayer: TCG.Player?, cardmarket: TCG.CardMarket?) {
-        self._id = id
-        self._name = name
+
+    public init(
+        id: String,
+        name: String,
+        supertype: TCG.SuperType?,
+        subtypes: [TCG.Subtype]?,
+        level: String?,
+        hp: String?,
+        types: [TCG.CardType]?,
+        evolvesFrom: String?,
+        evolvesTo: [String]?,
+        rules: [String]?,
+        ancientTrait: TCG.Card.AncientTrait?,
+        abilities: [TCG.Card.Ability]?,
+        attacks: [TCG.Card.Attack]?,
+        weaknesses: [TCG.Card.Weakness]?,
+        resistances: [TCG.Card.Resistance]?,
+        retreatCost: [TCG.CardType]?,
+        convertedRetreatCost: Int?,
+        set: TCG.Set,
+        number: String?,
+        artist: String?,
+        rarity: TCG.Rarity?,
+        flavorText: String?,
+        nationalPokedexNumbers: [Int]?,
+        regulationMark: String?,
+        images: TCG.Card.Image,
+        tcgplayer: TCG.Player?,
+        cardmarket: TCG.CardMarket?
+    ) {
+        _id = id
+        _name = name
         self.supertype = supertype
         self.subtypes = subtypes
         self.level = level
@@ -62,7 +90,6 @@ public final class TCGCardEntity {
         self.cardmarket = cardmarket
     }
 }
-
 
 extension TCGCardEntity {
     convenience init(_ model: TCG.Card) {
@@ -108,7 +135,7 @@ extension TCG.Card {
             level: entity.level,
             hp: entity.hp,
             types: entity.types,
-            evolvesFrom:  entity.evolvesFrom,
+            evolvesFrom: entity.evolvesFrom,
             evolvesTo: entity.evolvesTo,
             rules: entity.rules,
             ancientTrait: entity.ancientTrait,

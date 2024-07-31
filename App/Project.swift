@@ -22,7 +22,8 @@ let project = Project(
             dependencies: [
                 .project(target: "AppFeature", path: .relativeToRoot("Feature/AppFeature")),
             ],
-            environmentVariables: ["TCG_API_KEY": .environmentVariable(value: Environment.tcgApiKey.getString(default: ""), isEnabled: true)]
+            environmentVariables: ["TCG_API_KEY": .environmentVariable(value: Environment.tcgApiKey.getString(default: ""),
+                                                                       isEnabled: true)]
         ),
         .target(
             name: "PokedexTests",

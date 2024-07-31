@@ -7,7 +7,7 @@ struct TCGCardDetailFeatureExampleApp: App {
     static let store = Store(initialState: TCGCardDetailFeature.State()) {
         TCGCardDetailFeature()
     }
-    
+
     var body: some Scene {
         WindowGroup {
             TCGCardDetailFeatureView(store: Self.store)

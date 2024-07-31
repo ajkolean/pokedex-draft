@@ -14,8 +14,18 @@ public final class TCGSetEntity {
     public let releaseDate: Date
     public let updatedAt: Date
     public let images: TCG.Set.Image
-    
-    public init(id: String, name: String, series: String, printedTotal: Int, total: Int, ptcgoCode: String?, releaseDate: Date, updatedAt: Date, images: TCG.Set.Image) {
+
+    public init(
+        id: String,
+        name: String,
+        series: String,
+        printedTotal: Int,
+        total: Int,
+        ptcgoCode: String?,
+        releaseDate: Date,
+        updatedAt: Date,
+        images: TCG.Set.Image
+    ) {
         self.id = id
         self.name = name
         self.series = series
@@ -27,7 +37,6 @@ public final class TCGSetEntity {
         self.images = images
     }
 }
-
 
 extension TCGSetEntity {
     convenience init(_ model: TCG.Set) {

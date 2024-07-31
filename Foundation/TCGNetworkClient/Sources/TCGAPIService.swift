@@ -3,7 +3,6 @@ import Models
 
 // Define the TCGNetworkClient
 public class TCGAPIService {
-    
     private lazy var jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategyFormatters = [DateFormatter.yearMonthDay, DateFormatter.yearMonthDayTime]
@@ -13,7 +12,7 @@ public class TCGAPIService {
     private let baseURL = "https://api.pokemontcg.io/v2"
     private let apiKey: String?
     private let session: URLSession
-    
+
     public init(
         apiKey: String? = ProcessInfo.processInfo.environment["TCG_API_KEY"],
         session: URLSession = .shared
@@ -21,36 +20,34 @@ public class TCGAPIService {
         self.apiKey = apiKey
         self.session = session
     }
-    
+
     // Function to fetch all sets
     public func fetchAllTCGSets() async throws -> TCG.SetList {
         return try await fetchData(endpoint: "/sets", decodeType: TCG.SetList.self)
     }
-    
+
     // Function to fetch cards by set name
     public func fetchTCGCardsBySetName(_ setName: TCG.Set.Name) async throws -> TCG.CardList {
-        try await self.fetchTCGCardsBySetName(setName, page: 1)
-        
+        try await fetchTCGCardsBySetName(setName, page: 1)
     }
-    
+
     // Function to fetch cards by Pokémon name
     func fetchCardsByPokemonName(_ pokemonName: TCG.Card.Name) async throws -> TCG.CardList {
         let queryItem = URLQueryItem(name: "q", value: "!name:\(pokemonName)")
         return try await fetchData(endpoint: "/cards", queryItems: [queryItem], decodeType: TCG.CardList.self)
     }
-    
+
     // MARK: - Helpers
-    
+
     public func fetchTCGCardsBySetName(
         _ setName: TCG.Set.Name,
         page: Int
     ) async throws -> TCG.CardList {
         let queryItems = [
             URLQueryItem(name: "q", value: "!set.name:\(setName)"),
-            URLQueryItem(name: "page", value: "\(page)")
-            
+            URLQueryItem(name: "page", value: "\(page)"),
         ]
-        
+
         var results = try await fetchData(endpoint: "/cards", queryItems: queryItems, decodeType: TCG.CardList.self)
         var page = results.page
         while results.cards.count < results.totalCount || results.count == 250 {
@@ -58,10 +55,10 @@ public class TCGAPIService {
             page += 1
             results.cards.append(contentsOf: nextPage.cards)
         }
-        
+
         return results
     }
-    
+
     private func createRequest(
         endpoint: String,
         queryItems: [URLQueryItem]? = nil
@@ -71,7 +68,7 @@ public class TCGAPIService {
         guard let url = urlComponents?.url else {
             throw TCGNetworkError.invalidURL(endpoint: endpoint)
         }
-        
+
         var request = URLRequest(url: url)
         request.setValue(apiKey, forHTTPHeaderField: "X-Api-Key")
         let apiHeader = request.allHTTPHeaderFields?["X-Api-Key"]
@@ -80,7 +77,7 @@ public class TCGAPIService {
         }
         return request
     }
-    
+
     // Helper function to perform data task and decode response
     private func fetchData<T: Codable>(
         endpoint: String,
@@ -88,39 +85,40 @@ public class TCGAPIService {
         decodeType: T.Type
     ) async throws -> T {
         let request = try createRequest(endpoint: endpoint, queryItems: queryItems)
-        
+
         let (data, response): (Data, URLResponse)
         do {
             (data, response) = try await session.data(for: request)
         } catch {
             throw TCGNetworkError.noData(endpoint: endpoint)
         }
-        
+
         guard let httpResponse = response as? HTTPURLResponse,
-              (200 ... 299).contains(httpResponse.statusCode) else {
+              (200 ... 299).contains(httpResponse.statusCode)
+        else {
             let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
             throw TCGNetworkError.badServerResponse(endpoint: endpoint, statusCode: statusCode)
         }
-        
+
         do {
             return try jsonDecoder.decode(decodeType, from: data)
         } catch let error as DecodingError {
-            if case .dataCorrupted(let context) = error {
+            if case let .dataCorrupted(context) = error {
                 if let dataString = String(data: data, encoding: .utf8) {
                     print("Corrupted data: \(dataString)")
                 }
                 throw TCGNetworkError.decodingError(endpoint: endpoint, context: context)
-            } else if case .keyNotFound(_, let context) = error {
+            } else if case let .keyNotFound(_, context) = error {
                 if let dataString = String(data: data, encoding: .utf8) {
                     print("Data with missing key: \(dataString)")
                 }
                 throw TCGNetworkError.decodingError(endpoint: endpoint, context: context)
-            } else if case .typeMismatch(_, let context) = error {
+            } else if case let .typeMismatch(_, context) = error {
                 if let dataString = String(data: data, encoding: .utf8) {
                     print("Data with type mismatch: \(dataString)")
                 }
                 throw TCGNetworkError.decodingError(endpoint: endpoint, context: context)
-            } else if case .valueNotFound(_, let context) = error {
+            } else if case let .valueNotFound(_, context) = error {
                 if let dataString = String(data: data, encoding: .utf8) {
                     print("Data with missing value: \(dataString)")
                 }
@@ -130,4 +128,3 @@ public class TCGAPIService {
         }
     }
 }
-

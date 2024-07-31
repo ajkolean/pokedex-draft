@@ -1,8 +1,8 @@
 import ComposableArchitecture
+import Kingfisher
 import Models
 import PokemonRepo
 import SwiftUI
-import Kingfisher
 
 @Reducer
 public struct TCGCardListFeature: Reducer {
@@ -10,22 +10,22 @@ public struct TCGCardListFeature: Reducer {
     public struct State: Equatable, Sendable {
         public var cards: IdentifiedArrayOf<TCG.Card> = []
         public let set: TCG.Set
-        
+
         public init(set: TCG.Set) {
             self.set = set
         }
     }
-    
+
     public enum Action: Equatable, Sendable {
         case fetchTCGCards
         case setTCGCards(Result<[TCG.Card], EquatableError>)
         case tcgCardTapped(TCG.Card)
     }
-    
+
     @Dependency(\.pokemonRepo) var pokemonRepo
-    
+
     public init() {}
-    
+
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
@@ -41,7 +41,7 @@ public struct TCGCardListFeature: Reducer {
             case let .setTCGCards(.success(cards)):
                 state.cards = .init(uniqueElements: cards)
                 return .none
-                
+
             case let .setTCGCards(.failure(error)):
                 fatalError("Failed to fetch pokemon list: \(error.localizedDescription)")
             case .tcgCardTapped:
@@ -54,11 +54,11 @@ public struct TCGCardListFeature: Reducer {
 public struct TCGCardListFeatureView: View {
     @Bindable public var store: StoreOf<TCGCardListFeature>
     private let gridItems = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
-    
+
     public init(store: StoreOf<TCGCardListFeature>) {
         self.store = store
     }
-    
+
     public var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
@@ -80,7 +80,6 @@ public struct TCGCardListFeatureView: View {
                             store.send(.tcgCardTapped(card))
                         }
                 }
-                
             }
             .padding()
             .navigationTitle("\(store.set.name.rawValue) Set")
@@ -89,5 +88,4 @@ public struct TCGCardListFeatureView: View {
             }
         }
     }
-    
 }

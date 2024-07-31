@@ -7,7 +7,7 @@ extension TCG {
         public let pageSize: Int
         public let count: Int
         public let totalCount: Int
-        
+
         private enum CodingKeys: String, CodingKey {
             case sets = "data"
             case page
@@ -16,11 +16,11 @@ extension TCG {
             case totalCount
         }
     }
-    
+
     public struct Set: Codable, Hashable, Sendable, Identifiable {
         public typealias Name = Identifier<String>
         public typealias ID = Identifier<String>
-        
+
         public var id: ID { ID(rawValue: _id) }
         public var name: Name { Name(rawValue: _name) }
 
@@ -31,7 +31,7 @@ extension TCG {
 
         private var _id: String
         public var _name: String
-        
+
         public let series: String
         public let printedTotal: Int
         public let total: Int
@@ -39,10 +39,20 @@ extension TCG {
         public let releaseDate: Date
         public let updatedAt: Date
         public let images: Image
-        
-        public init(id: ID, name: Name, series: String, printedTotal: Int, total: Int, ptcgoCode: String?, releaseDate: Date, updatedAt: Date, images: Image) {
-            self._id = id.rawValue
-            self._name = name.rawValue
+
+        public init(
+            id: ID,
+            name: Name,
+            series: String,
+            printedTotal: Int,
+            total: Int,
+            ptcgoCode: String?,
+            releaseDate: Date,
+            updatedAt: Date,
+            images: Image
+        ) {
+            _id = id.rawValue
+            _name = name.rawValue
             self.series = series
             self.printedTotal = printedTotal
             self.total = total
@@ -51,7 +61,7 @@ extension TCG {
             self.updatedAt = updatedAt
             self.images = images
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case _id = "id"
             case _name = "name"
