@@ -24,7 +24,12 @@ extension DataStoreClient: DependencyKey {
             fetchMoveSummaryList: { try await dataStore.fetchMoveSummaryList() },
             fetchMove: { try await dataStore.fetchMove(name: $0) },
             saveMoveSummaries: { try await dataStore.saveMoveSummaries($0) },
-            saveMoves: { try await dataStore.saveMoves($0) }
+            saveMoves: { try await dataStore.saveMoves($0) },
+            fetchTCGSetList: { try await dataStore.fetchTCGSetList() },
+            saveTCGSets: { try await dataStore.saveTCGSets($0) },
+            fetchTCGCardList: { try await dataStore.fetchTCGCardList($0) },
+            fetchTCGCard: { try await dataStore.fetchTCGCard(name: $0) },
+            saveTCGCards: { try await dataStore.saveTCGCards($0) }
         )
     }()
 }

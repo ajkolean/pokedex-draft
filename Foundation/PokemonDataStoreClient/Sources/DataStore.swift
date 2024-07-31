@@ -156,6 +156,44 @@ public actor DataStore {
         }
         try await db.debounceSave()
     }
+    
+    // MARK: - TCG
+    public func fetchTCGSetList() async throws -> [TCG.Set] {
+        let sortDescriptor = SortDescriptor(\TCGSetEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<TCGSetEntity>(sortBy: [sortDescriptor])
+        let models = try await db.fetch(fetchDescriptor)
+        return models.map(TCG.Set.init)
+    }
+    
+    public func saveTCGSets(_ sets: [TCG.Set]) async throws {
+        for set in sets.map(TCGSetEntity.init) {
+            await db.insert(set)
+        }
+        try await db.debounceSave()
+    }
+    
+    public func fetchTCGCardList(_ setName: TCG.Set.Name) async throws -> [TCG.Card] {
+        let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(sortBy: [sortDescriptor])
+        let models = try await db.fetch(fetchDescriptor)
+        
+        return models.map(TCG.Card.init)
+    }
+    
+    public func saveTCGCards(_ cards: [TCG.Card]) async throws {
+        for card in cards.map(TCGCardEntity.init) {
+            await db.insert(card)
+        }
+        try await db.debounceSave()
+    }
+    
+    public func fetchTCGCard(name: TCG.Card.Name) async throws -> TCG.Card? {
+        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0.name == name.rawValue })
+        guard let entity = try await db.fetchOne(fetchDescriptor) else { return nil }
+        try await db.insertAndSave(entity)
+        return TCG.Card(entity)
+    }
+    
 }
 
 extension DataStore {

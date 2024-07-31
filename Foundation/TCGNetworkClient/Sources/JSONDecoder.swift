@@ -32,3 +32,18 @@ extension JSONDecoder {
         }
     }
 }
+
+
+extension DateFormatter {
+    static var yearMonthDay: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        return formatter
+    }
+    
+    static var yearMonthDayTime: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        return formatter
+    }
+}

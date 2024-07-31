@@ -63,8 +63,8 @@ public struct AppFeature: Reducer {
                 case .abilities:
                     
                     return .run { send in
-                        let sets = try await TCGNetworkClient().fetchAllSets()
-                        print(sets)
+                        let sets = try await TCGAPIService().fetchAllSets()
+//                        print(sets)
                     }
                 default:
                     return .none

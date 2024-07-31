@@ -2,17 +2,18 @@ import Foundation
 import Models
 
 // Define the TCGNetworkClient
-public class TCGNetworkClient {
-    // Base URL for the Pokémon TCG API
+public class TCGAPIService {
+    
+    private lazy var jsonDecoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategyFormatters = [DateFormatter.yearMonthDay, DateFormatter.yearMonthDayTime]
+        return decoder
+    }()
+
     private let baseURL = "https://api.pokemontcg.io/v2"
-    
-    // API Key fetched from the environment
     private let apiKey: String?
-    
-    // Shared URLSession instance
     private let session: URLSession
     
-    // Initialize the client with the API key and URLSession
     public init(
         apiKey: String? = ProcessInfo.processInfo.environment["TCG_API_KEY"],
         session: URLSession = .shared
@@ -78,14 +79,7 @@ public class TCGNetworkClient {
         }
         
         do {
-            let decoder = JSONDecoder()
-            let dateFormatter1 = DateFormatter()
-            dateFormatter1.dateFormat = "yyyy/MM/dd"
-            let dateFormatter2 = DateFormatter()
-            dateFormatter2.dateFormat = "yyyy/MM/dd HH:mm:ss"
-            decoder.dateDecodingStrategyFormatters = [dateFormatter1, dateFormatter2]
-            
-            return try decoder.decode(decodeType, from: data)
+            return try jsonDecoder.decode(decodeType, from: data)
         } catch let error as DecodingError {
             if case .dataCorrupted(let context) = error {
                 if let dataString = String(data: data, encoding: .utf8) {

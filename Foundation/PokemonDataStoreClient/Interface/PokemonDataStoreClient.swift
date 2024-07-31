@@ -36,6 +36,13 @@ public struct DataStoreClient: Sendable, TestDependencyKey {
     public var fetchMove: @Sendable (_ name: Move.Name) async throws -> Move?
     public var saveMoveSummaries: @Sendable (_ moves: [Move.Summary]) async throws -> Void
     public var saveMoves: @Sendable (_ moves: [Move]) async throws -> Void
+    
+    // MARK: - TCG
+    public var fetchTCGSetList: @Sendable () async throws -> [TCG.Set]
+    public var saveTCGSets: @Sendable ([TCG.Set]) async throws -> Void
+    public var fetchTCGCardList: @Sendable (_ name: TCG.Set.Name) async throws -> [TCG.Card]
+    public var fetchTCGCard: @Sendable (_ name: TCG.Card.Name) async throws -> TCG.Card?
+    public var saveTCGCards: @Sendable ([TCG.Card]) async throws -> Void
 
     public static let testValue = Self()
 }

@@ -48,5 +48,17 @@ extension TCG {
         public let releaseDate: Date
         public let updatedAt: Date
         public let images: Image
+        
+        public init(id: ID, name: Name, series: String, printedTotal: Int, total: Int, ptcgoCode: String?, releaseDate: Date, updatedAt: Date, images: Image) {
+            self.id = id
+            self.name = name
+            self.series = series
+            self.printedTotal = printedTotal
+            self.total = total
+            self.ptcgoCode = ptcgoCode
+            self.releaseDate = releaseDate
+            self.updatedAt = updatedAt
+            self.images = images
+        }
     }
 }

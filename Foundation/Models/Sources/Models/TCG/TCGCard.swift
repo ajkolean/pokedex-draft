@@ -95,5 +95,35 @@ extension TCG {
         public let images: Image
         public let tcgplayer: TCG.Player
         public let cardmarket: TCG.CardMarket
+        
+        public init(id: ID, name: Name, supertype: TCG.SuperType, subtypes: [TCG.Subtype], level: String, hp: String, types: [TCG.CardType], evolvesFrom: Pokemon.Name, evolvesTo: [Pokemon.Name], rules: [String], ancientTrait: AncientTrait, abilities: [Ability], attacks: [Attack], weaknesses: [Weakness], resistances: [Resistance], retreatCost: [TCG.CardType], convertedRetreatCost: Int, set: TCG.Set, number: String, artist: String, rarity: TCG.Rarity, flavorText: String, nationalPokedexNumbers: [Int], regulationMark: String, images: Image, tcgplayer: TCG.Player, cardmarket: TCG.CardMarket) {
+            self.id = id
+            self.name = name
+            self.supertype = supertype
+            self.subtypes = subtypes
+            self.level = level
+            self.hp = hp
+            self.types = types
+            self.evolvesFrom = evolvesFrom
+            self.evolvesTo = evolvesTo
+            self.rules = rules
+            self.ancientTrait = ancientTrait
+            self.abilities = abilities
+            self.attacks = attacks
+            self.weaknesses = weaknesses
+            self.resistances = resistances
+            self.retreatCost = retreatCost
+            self.convertedRetreatCost = convertedRetreatCost
+            self.set = set
+            self.number = number
+            self.artist = artist
+            self.rarity = rarity
+            self.flavorText = flavorText
+            self.nationalPokedexNumbers = nationalPokedexNumbers
+            self.regulationMark = regulationMark
+            self.images = images
+            self.tcgplayer = tcgplayer
+            self.cardmarket = cardmarket
+        }
     }
 }
