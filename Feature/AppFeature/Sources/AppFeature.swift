@@ -12,6 +12,7 @@ import RegionListFeature
 import SwiftUI
 import TypeDetailFeature
 import TypeListFeature
+import TCGSetListFeature
 
 @Reducer
 public struct AppFeature: Reducer {
@@ -37,6 +38,7 @@ public struct AppFeature: Reducer {
         case locationsList(LocationsListFeature)
         case movesList(MovesListFeature)
         case moveDetail(MoveDetailFeature)
+        case tcgSetList(TCGSetListFeature)
     }
     
     @Dependency(\.pokemonRepo) var pokemonRepo
@@ -63,6 +65,8 @@ public struct AppFeature: Reducer {
                     state.path.append(.movesList(MovesListFeature.State()))
                     return .none
                 case .cards:
+                    state.path.append(.tcgSetList(TCGSetListFeature.State()))
+
                     return .none
                 }
                 return .none
@@ -89,9 +93,12 @@ public struct AppFeature: Reducer {
             case let .path(.element(id: _, action: .moveDetail(.pokemonCardTapped(pokemon)))):
                 state.path.append(.pokemonDetail(PokemonDetailFeature.State(pokemonSummary: pokemon)))
                 return .none
+            case let .path(.element(id: _, action: .tcgSetList(.tcgSetTapped(pokemon)))):
+                break
             case .path:
                 return .none
             }
+            return .none
         }
         .forEach(\.path, action: \.path)
     }
@@ -186,6 +193,8 @@ public struct AppView: View {
                 MovesListFeatureView(store: store)
             case let .moveDetail(store):
                 MoveDetailView(store: store)
+            case let .tcgSetList(store):
+                TCGSetListFeatureView(store: store)
             }
         }
     }
