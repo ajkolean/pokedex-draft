@@ -34,7 +34,7 @@ public struct LocationsListFeature: Reducer {
         }
     }
 
-    public enum Action: BindableAction, Equatable {
+    public enum Action: BindableAction, Equatable, Sendable {
         case binding(BindingAction<State>)
         case fetchLocationsList
         case setLocationsList(Result<[Location], EquatableError>)

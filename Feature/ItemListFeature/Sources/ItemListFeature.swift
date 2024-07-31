@@ -32,7 +32,7 @@ public struct ItemListFeature: Reducer {
         public init() {}
     }
 
-    public enum Action: BindableAction, Equatable {
+    public enum Action: BindableAction, Equatable, Sendable {
         case binding(BindingAction<State>)
         case fetchItemNames
         case setItemCategoryList(Result<[ItemCategory], EquatableError>)

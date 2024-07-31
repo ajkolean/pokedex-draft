@@ -12,7 +12,7 @@ public struct RegionListFeature {
         public init() {}
     }
 
-    public enum Action {
+    public enum Action: Equatable, Sendable {
         case onAppear
         case regionTapped(_ region: Region)
         case setRegionList([Region])
