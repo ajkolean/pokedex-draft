@@ -7,6 +7,7 @@ public enum Foundation: String, CaseIterable, Module {
     case PokemonDataStoreClient
     case PokemonRepo
     case PokemonGraphClient
+    case TCGNetworkClient
     
     public var type: ModuleType { .foundation }
 }

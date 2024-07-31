@@ -1,7 +1,7 @@
 import Foundation
 
 extension TCG {
-    public enum Rarity: String, Codable, Hashable, Sendable  {
+    public enum Rarity: String, Codable, Hashable, Sendable {
         case aceSpecRare = "ACE SPEC Rare"
         case amazingRare = "Amazing Rare"
         case classicCollection = "Classic Collection"

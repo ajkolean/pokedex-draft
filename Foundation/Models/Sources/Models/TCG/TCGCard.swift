@@ -1,45 +1,44 @@
 import Foundation
 
-
 extension TCG {
-    public struct Card: Hashable, Codable, Identifiable, Sendable  {
+    public struct Card: Hashable, Codable, Identifiable, Sendable {
         public typealias Name = Identifier<String>
         public typealias ID = Identifier<Int>
-        
+
         public struct AncientTrait: Codable, Hashable, Sendable {
             public let name: String
             public let text: String
         }
-        
-        public struct Ability: Codable, Hashable, Sendable  {
+
+        public struct Ability: Codable, Hashable, Sendable {
             public let name: String
             public let text: String
             public let type: String
         }
-        
-        public struct Attack: Codable, Hashable, Sendable  {
+
+        public struct Attack: Codable, Hashable, Sendable {
             public let cost: [TCG.CardType]
             public let name: String
             public let text: String
             public let damage: String
             public let convertedEnergyCost: Int
         }
-        
-        public struct Image: Codable, Hashable, Sendable  {
+
+        public struct Image: Codable, Hashable, Sendable {
             public let small: URL
             public let large: URL
         }
-        
-        public struct Weakness: Codable, Hashable, Sendable  {
+
+        public struct Weakness: Codable, Hashable, Sendable {
             public let type: TCG.CardType
             public let value: String
         }
-        
-        public struct Resistance: Codable, Hashable, Sendable  {
+
+        public struct Resistance: Codable, Hashable, Sendable {
             public let type: TCG.CardType
             public let value: String
         }
-        
+
         public let id: ID
         public let name: Name
         public let supertype: TCG.SuperType
@@ -68,6 +67,4 @@ extension TCG {
         public let tcgplayer: TCG.Player
         public let cardmarket: TCG.CardMarket
     }
-    
-    
 }

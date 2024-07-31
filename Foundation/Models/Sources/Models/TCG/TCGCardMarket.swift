@@ -1,15 +1,15 @@
 import Foundation
 
-public enum TCG { }
+public enum TCG {}
 
 extension TCG {
-    public struct CardMarket: Codable, Hashable, Sendable  {
+    public struct CardMarket: Codable, Hashable, Sendable {
         public let url: URL
         public let updatedAt: Date
         public let prices: CardMarketPrice
     }
-    
-    public struct CardMarketPrice: Codable, Hashable, Sendable  {
+
+    public struct CardMarketPrice: Codable, Hashable, Sendable {
         public let averageSellPrice: Decimal
         public let lowPrice: Decimal
         public let trendPrice: Decimal

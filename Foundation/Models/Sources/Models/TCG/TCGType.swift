@@ -1,7 +1,7 @@
 import Foundation
 
 extension TCG {
-    public enum CardType: String, Codable, Hashable, Sendable  {
+    public enum CardType: String, Codable, Hashable, Sendable {
         case colorless = "Colorless"
         case darkness = "Darkness"
         case dragon = "Dragon"
@@ -14,8 +14,8 @@ extension TCG {
         case psychic = "Psychic"
         case water = "Water"
     }
-    
-    public enum Subtype: String, Codable, Hashable, Sendable  {
+
+    public enum Subtype: String, Codable, Hashable, Sendable {
         case aceSpec = "ACE SPEC"
         case ancient = "Ancient"
         case `break` = "BREAK"
@@ -58,8 +58,8 @@ extension TCG {
         case vstar = "VSTAR"
         case exLowercase = "ex"
     }
-    
-    public enum SuperType: String, Codable, Hashable, Sendable  {
+
+    public enum SuperType: String, Codable, Hashable, Sendable {
         case energy = "Energy"
         case pokemon = "Pokémon"
         case trainer = "Trainer"
