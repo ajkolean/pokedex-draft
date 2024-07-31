@@ -1,10 +1,39 @@
 import Foundation
 
 extension TCG {
+    public struct CardList: Hashable, Codable, Sendable {
+        public let cards: [Card]
+        public let page: Int
+        public let pageSize: Int
+        public let count: Int
+        public let totalCount: Int
+        
+        private enum CodingKeys: String, CodingKey {
+            case cards = "data"
+            case page
+            case pageSize
+            case count
+            case totalCount
+        }
+    }
+    
     public struct Card: Hashable, Codable, Identifiable, Sendable {
-        public typealias Name = Identifier<String>
-        public typealias ID = Identifier<Int>
-
+        public struct Name: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
+            public let rawValue: String
+            
+            public init(rawValue: String) {
+                self.rawValue = rawValue
+            }
+        }
+                        
+        public struct ID: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
+            public let rawValue: String
+            
+            public init(rawValue: String) {
+                self.rawValue = rawValue
+            }
+        }
+        
         public struct AncientTrait: Codable, Hashable, Sendable {
             public let name: String
             public let text: String

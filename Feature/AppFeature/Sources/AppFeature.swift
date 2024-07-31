@@ -12,6 +12,7 @@ import RegionListFeature
 import SwiftUI
 import TypeDetailFeature
 import TypeListFeature
+import TCGNetworkClient
 
 @Reducer
 public struct AppFeature: Reducer {
@@ -59,6 +60,12 @@ public struct AppFeature: Reducer {
                 case .moves:
                     state.path.append(.movesList(MovesListFeature.State()))
                     return .none
+                case .abilities:
+                    
+                    return .run { send in
+                        let sets = try await TCGNetworkClient().fetchAllSets()
+                        print(sets)
+                    }
                 default:
                     return .none
                 }

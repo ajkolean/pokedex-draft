@@ -20,7 +20,8 @@ let project = Project(
             resources: ["Resources/**"],
             dependencies: [
                 .project(target: "AppFeature", path: .relativeToRoot("Feature/AppFeature")),
-            ]
+            ],
+            environmentVariables: envVar()
         ),
         .target(
             name: "PokedexTests",
@@ -34,3 +35,11 @@ let project = Project(
         ),
     ]
 )
+
+func envVar() -> [String: EnvironmentVariable] {
+    if case let .string(tcgApiKey) = Environment.tcgApiKey {
+        ["TUIST_TCG_API_KEY": .environmentVariable(value: tcgApiKey, isEnabled: true)]
+    } else {
+        [:]
+    }
+}

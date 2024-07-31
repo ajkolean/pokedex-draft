@@ -13,6 +13,7 @@ let project: Project = .moduleProject(
             dependencies: [
                 .ComposableArchitecture,
                 .Models,
+                .TCGNetworkClient,
             ] + Feature.allCases.filter { $0 != .AppFeature }.map { $0.target(.implementation) }
         ),
         .moduleTarget(
