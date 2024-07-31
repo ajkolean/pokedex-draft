@@ -1,0 +1,67 @@
+import Foundation
+
+extension TCG {
+    public enum CardType: String, Codable, Hashable, Sendable  {
+        case colorless = "Colorless"
+        case darkness = "Darkness"
+        case dragon = "Dragon"
+        case fairy = "Fairy"
+        case fighting = "Fighting"
+        case fire = "Fire"
+        case grass = "Grass"
+        case lightning = "Lightning"
+        case metal = "Metal"
+        case psychic = "Psychic"
+        case water = "Water"
+    }
+    
+    public enum Subtype: String, Codable, Hashable, Sendable  {
+        case aceSpec = "ACE SPEC"
+        case ancient = "Ancient"
+        case `break` = "BREAK"
+        case baby = "Baby"
+        case basic = "Basic"
+        case ex = "EX"
+        case eternamax = "Eternamax"
+        case fusionStrike = "Fusion Strike"
+        case future = "Future"
+        case gx = "GX"
+        case goldenrodGameCorner = "Goldenrod Game Corner"
+        case item = "Item"
+        case legend = "LEGEND"
+        case levelUp = "Level-Up"
+        case mega = "MEGA"
+        case pokemonTool = "Pokémon Tool"
+        case pokemonToolF = "Pokémon Tool F"
+        case prime = "Prime"
+        case prismStar = "Prism Star"
+        case radiant = "Radiant"
+        case rapidStrike = "Rapid Strike"
+        case restored = "Restored"
+        case rocketsSecretMachine = "Rocket's Secret Machine"
+        case sp = "SP"
+        case singleStrike = "Single Strike"
+        case special = "Special"
+        case stadium = "Stadium"
+        case stage1 = "Stage 1"
+        case stage2 = "Stage 2"
+        case star = "Star"
+        case supporter = "Supporter"
+        case tagTeam = "TAG TEAM"
+        case teamPlasma = "Team Plasma"
+        case technicalMachine = "Technical Machine"
+        case tera = "Tera"
+        case ultraBeast = "Ultra Beast"
+        case v = "V"
+        case vUnion = "V-UNION"
+        case vmax = "VMAX"
+        case vstar = "VSTAR"
+        case exLowercase = "ex"
+    }
+    
+    public enum SuperType: String, Codable, Hashable, Sendable  {
+        case energy = "Energy"
+        case pokemon = "Pokémon"
+        case trainer = "Trainer"
+    }
+}
