@@ -33,7 +33,7 @@ struct ImageCarouselView<Item: Identifiable & Hashable & Sendable, ItemView: Vie
     var body: some View {
         let widthDifference = UIScreen.main.bounds.width - pageWidth
 
-        VStack {
+        VStack(spacing: 16) {
             ScrollView(.horizontal) {
                 HStack(spacing: 0) {
                     ForEach(items) { item in
@@ -57,24 +57,7 @@ struct ImageCarouselView<Item: Identifiable & Hashable & Sendable, ItemView: Vie
             .scrollTargetBehavior(.viewAligned)
             .scrollPosition(id: scrollPositionId, anchor: .center)
             .scrollIndicators(.hidden)
-            .frame(height: pageHeight * 1.2)
-     
-
-//            HStack {
-//                ForEach(items) { item in
-//                    Button(action: {
-//                        withAnimation(.default) {
-//                            selectedItem = item
-//                        }
-//                    }, label: {
-//                        Circle()
-//                            .fill(Color.gray.opacity(
-//                                (item == selectedItem) ? 0.8 : 0.3
-//                            ))
-//                            .frame(width: 20)
-//                    })
-//                }
-//            }
+            .frame(height: pageHeight)
         }
     }
 }
