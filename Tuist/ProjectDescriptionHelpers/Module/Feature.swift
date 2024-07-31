@@ -14,6 +14,7 @@ public enum Feature: String, CaseIterable, Module {
     case MoveDetailFeature
     case TCGSetListFeature
     case TCGCardListFeature
+    case TCGCardDetailFeature
 
     public var type: ModuleType { .feature }
 }

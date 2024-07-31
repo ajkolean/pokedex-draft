@@ -194,10 +194,11 @@ public actor DataStore {
     }
     
     public func fetchTCGCard(name: TCG.Card.Name) async throws -> [TCG.Card] {
-        let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
-        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0._name == name.rawValue }, sortBy: [sortDescriptor])
-        let models = try await db.fetch(fetchDescriptor)
-        return models.map(TCG.Card.init)
+        return []
+//        let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
+//        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0._name == name.rawValue }, sortBy: [sortDescriptor])
+//        let models = try await db.fetch(fetchDescriptor)
+//        return models.map(TCG.Card.init)
     }
     
 }
