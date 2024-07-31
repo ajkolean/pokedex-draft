@@ -7,11 +7,11 @@ extension TCGNetworkClient: DependencyKey {
     public static let liveValue: TCGNetworkClient = {
         let service = TCGAPIService()
         return TCGNetworkClient(
-            fetchAllSets: {
-                try await service.fetchAllSets()
+            fetchAllTCGSets: {
+                try await service.fetchAllTCGSets()
             },
-            fetchCardsBySetName: { setName in
-                try await service.fetchCardsBySetName(setName)
+            fetchTCGCardsBySetName: { setName in
+                try await service.fetchTCGCardsBySetName(setName)
             },
             fetchCardsByPokemonName: { pokemonName in
                 try await service.fetchCardsByPokemonName(pokemonName)

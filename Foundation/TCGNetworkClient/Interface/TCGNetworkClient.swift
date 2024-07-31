@@ -4,8 +4,8 @@ import Models
 
 @DependencyClient
 public struct TCGNetworkClient: Sendable {
-    public var fetchAllSets: @Sendable () async throws -> TCG.SetList
-    public var fetchCardsBySetName: @Sendable (_ setName: TCG.Set.Name) async throws -> TCG.CardList
+    public var fetchAllTCGSets: @Sendable () async throws -> TCG.SetList
+    public var fetchTCGCardsBySetName: @Sendable (_ setName: TCG.Set.Name) async throws -> TCG.CardList
     public var fetchCardsByPokemonName: @Sendable (_ pokemonName: TCG.Card.Name) async throws -> TCG.CardList
 }
 

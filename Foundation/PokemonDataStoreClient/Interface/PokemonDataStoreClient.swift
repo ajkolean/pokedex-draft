@@ -41,8 +41,9 @@ public struct DataStoreClient: Sendable, TestDependencyKey {
     public var fetchTCGSetList: @Sendable () async throws -> [TCG.Set]
     public var saveTCGSets: @Sendable ([TCG.Set]) async throws -> Void
     public var fetchTCGCardList: @Sendable (_ name: TCG.Set.Name) async throws -> [TCG.Card]
-    public var fetchTCGCard: @Sendable (_ name: TCG.Card.Name) async throws -> TCG.Card?
+    public var fetchTCGCard: @Sendable (_ name: TCG.Card.Name) async throws -> [TCG.Card]
     public var saveTCGCards: @Sendable ([TCG.Card]) async throws -> Void
+    
 
     public static let testValue = Self()
 }

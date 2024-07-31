@@ -24,12 +24,12 @@ public class TCGAPIService {
     }
     
     // Function to fetch all sets
-    public func fetchAllSets() async throws -> TCG.SetList {
+    public func fetchAllTCGSets() async throws -> TCG.SetList {
         return try await fetchData(endpoint: "/sets", decodeType: TCG.SetList.self)
     }
     
     // Function to fetch cards by set name
-    public func fetchCardsBySetName(_ setName: TCG.Set.Name) async throws -> TCG.CardList {
+    public func fetchTCGCardsBySetName(_ setName: TCG.Set.Name) async throws -> TCG.CardList {
         let queryItem = URLQueryItem(name: "q", value: "!set.name:\(setName)")
         return try await fetchData(endpoint: "/cards", queryItems: [queryItem], decodeType: TCG.CardList.self)
     }

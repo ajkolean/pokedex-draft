@@ -187,11 +187,11 @@ public actor DataStore {
         try await db.debounceSave()
     }
     
-    public func fetchTCGCard(name: TCG.Card.Name) async throws -> TCG.Card? {
+    public func fetchTCGCard(name: TCG.Card.Name) async throws -> [TCG.Card] {
+        let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
         let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0.name == name.rawValue })
-        guard let entity = try await db.fetchOne(fetchDescriptor) else { return nil }
-        try await db.insertAndSave(entity)
-        return TCG.Card(entity)
+        let models = try await db.fetch(fetchDescriptor)
+        return models.map(TCG.Card.init)
     }
     
 }

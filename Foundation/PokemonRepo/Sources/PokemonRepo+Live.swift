@@ -5,12 +5,15 @@ import PokemonDataStoreClientInterface
 import PokemonGraphClient
 import PokemonGraphClientInterface
 import PokemonRepoInterface
+import TCGNetworkClientInterface
+import TCGNetworkClient
 
 extension PokemonRepo: DependencyKey {
     public static let liveValue: PokemonRepo = {
         let dataStoreClient = DataStoreClient.liveValue
         let pokemonAPIClient = PokemonAPIClient.liveValue
-
+        let tcgClient = TCGNetworkClient.liveValue
+        
         return PokemonRepo(
             fetchPokemonSummaryList: {
                 let cachedPokemons = try await dataStoreClient.fetchPokemonSummaryList()
@@ -98,6 +101,37 @@ extension PokemonRepo: DependencyKey {
                     try await dataStoreClient.saveMoves([result])
                     return result
                 }
+            },
+            fetchAllTCGSets: {
+                let cachedTypes = try await dataStoreClient.fetchTCGSetList()
+                if !cachedTypes.isEmpty {
+                    return cachedTypes
+                } else {
+                    let results = try await tcgClient.fetchAllTCGSets()
+                    try await dataStoreClient.saveTCGSets(results.sets)
+                    return results.sets
+                }
+            },
+            fetchTCGCardsBySetName: { name in
+                let cachedTypes = try await dataStoreClient.fetchTCGCardList(name: name)
+                if !cachedTypes.isEmpty {
+                    return cachedTypes
+                } else {
+                    let results = try await tcgClient.fetchTCGCardsBySetName(setName: name)
+                    try await dataStoreClient.saveTCGCards(results.cards)
+                    return results.cards
+                }
+            },
+            fetchCardsByPokemonName: { name in
+                let cachedTypes = try await dataStoreClient.fetchTCGCard(name: name) 
+                if !cachedTypes.isEmpty {
+                    return cachedTypes
+                } else {
+                    let result = try await tcgClient.fetchCardsByPokemonName(pokemonName: name)
+                    try await dataStoreClient.saveTCGCards(result.cards)
+                    return result.cards
+                }
+                
             }
         )
     }()
