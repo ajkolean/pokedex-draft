@@ -4,37 +4,37 @@ import SwiftData
 @Model
 public final class TCGCardEntity {
     @Attribute(.unique)
-    public let id: String
-    public let name: String
-    public let supertype: TCG.SuperType
-    public let subtypes: [TCG.Subtype]
-    public let level: String
-    public let hp: String
-    public let types: [TCG.CardType]
-    public let evolvesFrom: Pokemon.Name
-    public let evolvesTo: [Pokemon.Name]
-    public let rules: [String]
-    public let ancientTrait: TCG.Card.AncientTrait
-    public let abilities: [TCG.Card.Ability]
-    public let attacks: [TCG.Card.Attack]
-    public let weaknesses: [TCG.Card.Weakness]
-    public let resistances: [TCG.Card.Resistance]
-    public let retreatCost: [TCG.CardType]
-    public let convertedRetreatCost: Int
+    public let _id: String
+    public let _name: String
+    public let supertype: TCG.SuperType?
+    public let subtypes: [TCG.Subtype]?
+    public let level: String?
+    public let hp: String?
+    public let types: [TCG.CardType]?
+    public let evolvesFrom: String?
+    public let evolvesTo: [String]?
+    public let rules: [String]?
+    public let ancientTrait: TCG.Card.AncientTrait?
+    public let abilities: [TCG.Card.Ability]?
+    public let attacks: [TCG.Card.Attack]?
+    public let weaknesses: [TCG.Card.Weakness]?
+    public let resistances: [TCG.Card.Resistance]?
+    public let retreatCost: [TCG.CardType]?
+    public let convertedRetreatCost: Int?
     public let set: TCG.Set
-    public let number: String
-    public let artist: String
-    public let rarity: TCG.Rarity
-    public let flavorText: String
-    public let nationalPokedexNumbers: [Int]
-    public let regulationMark: String
+    public let number: String?
+    public let artist: String?
+    public let rarity: TCG.Rarity?
+    public let flavorText: String?
+    public let nationalPokedexNumbers: [Int]?
+    public let regulationMark: String?
     public let images: TCG.Card.Image
-    public let tcgplayer: TCG.Player
-    public let cardmarket: TCG.CardMarket
+    public let tcgplayer: TCG.Player?
+    public let cardmarket: TCG.CardMarket?
     
-    public init(id: String, name: String, supertype: TCG.SuperType, subtypes: [TCG.Subtype], level: String, hp: String, types: [TCG.CardType], evolvesFrom: Pokemon.Name, evolvesTo: [Pokemon.Name], rules: [String], ancientTrait: TCG.Card.AncientTrait, abilities: [TCG.Card.Ability], attacks: [TCG.Card.Attack], weaknesses: [TCG.Card.Weakness], resistances: [TCG.Card.Resistance], retreatCost: [TCG.CardType], convertedRetreatCost: Int, set: TCG.Set, number: String, artist: String, rarity: TCG.Rarity, flavorText: String, nationalPokedexNumbers: [Int], regulationMark: String, images: TCG.Card.Image, tcgplayer: TCG.Player, cardmarket: TCG.CardMarket) {
-        self.id = id
-        self.name = name
+    public init(id: String, name: String, supertype: TCG.SuperType?, subtypes: [TCG.Subtype]?, level: String?, hp: String?, types: [TCG.CardType]?, evolvesFrom: String?, evolvesTo: [String]?, rules: [String]?, ancientTrait: TCG.Card.AncientTrait?, abilities: [TCG.Card.Ability]?, attacks: [TCG.Card.Attack]?, weaknesses: [TCG.Card.Weakness]?, resistances: [TCG.Card.Resistance]?, retreatCost: [TCG.CardType]?, convertedRetreatCost: Int?, set: TCG.Set, number: String?, artist: String?, rarity: TCG.Rarity?, flavorText: String?, nationalPokedexNumbers: [Int]?, regulationMark: String?, images: TCG.Card.Image, tcgplayer: TCG.Player?, cardmarket: TCG.CardMarket?) {
+        self._id = id
+        self._name = name
         self.supertype = supertype
         self.subtypes = subtypes
         self.level = level
@@ -101,14 +101,14 @@ extension TCGCardEntity {
 extension TCG.Card {
     init(_ entity: TCGCardEntity) {
         self.init(
-            id: TCG.Card.ID(rawValue: entity.id),
-            name: TCG.Card.Name(rawValue: entity.name),
+            id: TCG.Card.Name(rawValue: entity._id),
+            name: TCG.Card.Name(rawValue: entity._name),
             supertype: entity.supertype,
             subtypes: entity.subtypes,
             level: entity.level,
             hp: entity.hp,
             types: entity.types,
-            evolvesFrom: entity.evolvesFrom,
+            evolvesFrom:  entity.evolvesFrom,
             evolvesTo: entity.evolvesTo,
             rules: entity.rules,
             ancientTrait: entity.ancientTrait,

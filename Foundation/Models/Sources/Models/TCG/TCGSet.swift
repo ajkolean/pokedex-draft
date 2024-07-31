@@ -18,29 +18,20 @@ extension TCG {
     }
     
     public struct Set: Codable, Hashable, Sendable, Identifiable {
-        public struct Name: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
-            public let rawValue: String
-            
-            public init(rawValue: String) {
-                self.rawValue = rawValue
-            }
-        }
+        public typealias Name = Identifier<String>
+        public typealias ID = Identifier<String>
         
-        public struct ID: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
-            public let rawValue: String
-            
-            public init(rawValue: String) {
-                self.rawValue = rawValue
-            }
-        }
+        public var id: ID { ID(rawValue: _id) }
+        public var name: Name { Name(rawValue: _name) }
 
         public struct Image: Codable, Hashable, Sendable {
             public let symbol: URL
             public let logo: URL
         }
 
-        public let id: ID
-        public let name: Name
+        private var _id: String
+        public var _name: String
+        
         public let series: String
         public let printedTotal: Int
         public let total: Int
@@ -50,8 +41,8 @@ extension TCG {
         public let images: Image
         
         public init(id: ID, name: Name, series: String, printedTotal: Int, total: Int, ptcgoCode: String?, releaseDate: Date, updatedAt: Date, images: Image) {
-            self.id = id
-            self.name = name
+            self._id = id.rawValue
+            self._name = name.rawValue
             self.series = series
             self.printedTotal = printedTotal
             self.total = total
@@ -59,6 +50,15 @@ extension TCG {
             self.releaseDate = releaseDate
             self.updatedAt = updatedAt
             self.images = images
+        }
+        
+        private enum CodingKeys: String, CodingKey {
+            case _id = "id"
+            case _name = "name"
+            case series
+            case printedTotal
+            case total
+            case ptcgoCode, releaseDate, updatedAt, images
         }
     }
 }

@@ -84,7 +84,7 @@ public struct TCGSetListFeatureView: View {
             }
             .padding()
         }
-        .navigationTitle("Types")
+        .navigationTitle("Card Sets")
         .onAppear {
             store.send(.fetchTCGSets)
         }

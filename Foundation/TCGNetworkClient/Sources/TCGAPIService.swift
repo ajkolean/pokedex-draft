@@ -53,7 +53,7 @@ public class TCGAPIService {
         
         var results = try await fetchData(endpoint: "/cards", queryItems: queryItems, decodeType: TCG.CardList.self)
         var page = results.page
-        while results.cards.count < results.totalCount || results.count < 250 {
+        while results.cards.count < results.totalCount || results.count == 250 {
             let nextPage = try await fetchTCGCardsBySetName(setName, page: page)
             page += 1
             results.cards.append(contentsOf: nextPage.cards)

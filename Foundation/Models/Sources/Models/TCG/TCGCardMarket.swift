@@ -6,7 +6,7 @@ extension TCG {
     public struct CardMarket: Codable, Hashable, Sendable {
         public let url: URL
         public let updatedAt: Date
-        public let prices: CardMarketPrice
+        public let prices: CardMarketPrice?
     }
 
     public struct CardMarketPrice: Codable, Hashable, Sendable {

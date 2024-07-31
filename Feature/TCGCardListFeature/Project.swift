@@ -1,7 +1,7 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let feature = Feature.TCGSetListFeature
+let feature = Feature.TCGCardListFeature
 
 let project: Project = .moduleProject(
     module: feature,
@@ -22,7 +22,7 @@ let project: Project = .moduleProject(
             targetType: .exampleApp,
             infoPlist: .exampleAppInfoPlist,
             dependencies: [
-                .TCGSetListFeature,
+                .TCGCardListFeature,
                 .ComposableArchitecture
             ]
         ),
@@ -30,7 +30,7 @@ let project: Project = .moduleProject(
             module: feature,
             targetType: .tests,
             dependencies: [
-                .TCGSetListFeature
+                .TCGCardListFeature
             ]
         )
     ]

@@ -18,21 +18,11 @@ extension TCG {
     }
     
     public struct Card: Hashable, Codable, Identifiable, Sendable {
-        public struct Name: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
-            public let rawValue: String
-            
-            public init(rawValue: String) {
-                self.rawValue = rawValue
-            }
-        }
-                        
-        public struct ID: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
-            public let rawValue: String
-            
-            public init(rawValue: String) {
-                self.rawValue = rawValue
-            }
-        }
+        public typealias Name = Identifier<String>
+        public typealias ID = Identifier<String>
+        
+        public var id: ID { ID(rawValue: _id) }
+        public var name: Name { Name(rawValue: _name) }
         
         public struct AncientTrait: Codable, Hashable, Sendable {
             public let name: String
@@ -46,7 +36,7 @@ extension TCG {
         }
 
         public struct Attack: Codable, Hashable, Sendable {
-            public let cost: [TCG.CardType]
+            public let cost: [TCG.CardType]?
             public let name: String
             public let text: String
             public let damage: String
@@ -68,37 +58,37 @@ extension TCG {
             public let value: String
         }
 
-        public let id: ID
-        public let name: Name
-        public let supertype: TCG.SuperType
-        public let subtypes: [TCG.Subtype]
-        public let level: String
-        public let hp: String
-        public let types: [TCG.CardType]
-        public let evolvesFrom: Pokemon.Name
-        public let evolvesTo: [Pokemon.Name]
-        public let rules: [String]
-        public let ancientTrait: AncientTrait
-        public let abilities: [Ability]
-        public let attacks: [Attack]
-        public let weaknesses: [Weakness]
-        public let resistances: [Resistance]
-        public let retreatCost: [TCG.CardType]
-        public let convertedRetreatCost: Int
+        public let _id: String
+        public let _name: String
+        public let supertype: TCG.SuperType?
+        public let subtypes: [TCG.Subtype]?
+        public let level: String?
+        public let hp: String?
+        public let types: [TCG.CardType]?
+        public let evolvesFrom: String?
+        public let evolvesTo: [String]?
+        public let rules: [String]?
+        public let ancientTrait: AncientTrait?
+        public let abilities: [Ability]?
+        public let attacks: [Attack]?
+        public let weaknesses: [Weakness]?
+        public let resistances: [Resistance]?
+        public let retreatCost: [TCG.CardType]?
+        public let convertedRetreatCost: Int?
         public let set: TCG.Set
-        public let number: String
-        public let artist: String
-        public let rarity: TCG.Rarity
-        public let flavorText: String
-        public let nationalPokedexNumbers: [Int]
-        public let regulationMark: String
+        public let number: String?
+        public let artist: String?
+        public let rarity: TCG.Rarity?
+        public let flavorText: String?
+        public let nationalPokedexNumbers: [Int]?
+        public let regulationMark: String?
         public let images: Image
-        public let tcgplayer: TCG.Player
-        public let cardmarket: TCG.CardMarket
+        public let tcgplayer: TCG.Player?
+        public let cardmarket: TCG.CardMarket?
         
-        public init(id: ID, name: Name, supertype: TCG.SuperType, subtypes: [TCG.Subtype], level: String, hp: String, types: [TCG.CardType], evolvesFrom: Pokemon.Name, evolvesTo: [Pokemon.Name], rules: [String], ancientTrait: AncientTrait, abilities: [Ability], attacks: [Attack], weaknesses: [Weakness], resistances: [Resistance], retreatCost: [TCG.CardType], convertedRetreatCost: Int, set: TCG.Set, number: String, artist: String, rarity: TCG.Rarity, flavorText: String, nationalPokedexNumbers: [Int], regulationMark: String, images: Image, tcgplayer: TCG.Player, cardmarket: TCG.CardMarket) {
-            self.id = id
-            self.name = name
+        public init(id: ID, name: Name, supertype: TCG.SuperType?, subtypes: [TCG.Subtype]?, level: String?, hp: String?, types: [TCG.CardType]?, evolvesFrom: String?, evolvesTo: [String]?, rules: [String]?, ancientTrait: AncientTrait?, abilities: [Ability]?, attacks: [Attack]?, weaknesses: [Weakness]?, resistances: [Resistance]?, retreatCost: [TCG.CardType]?, convertedRetreatCost: Int?, set: TCG.Set, number: String?, artist: String?, rarity: TCG.Rarity?, flavorText: String?, nationalPokedexNumbers: [Int]?, regulationMark: String?, images: Image, tcgplayer: TCG.Player?, cardmarket: TCG.CardMarket?) {
+            self._id = id.rawValue
+            self._name = name.rawValue
             self.supertype = supertype
             self.subtypes = subtypes
             self.level = level
@@ -125,5 +115,36 @@ extension TCG {
             self.tcgplayer = tcgplayer
             self.cardmarket = cardmarket
         }
+        
+        private enum CodingKeys: String, CodingKey {
+            case _id = "id"
+            case _name = "name"
+            case supertype
+            case subtypes
+            case level
+            case hp
+            case types
+            case evolvesFrom
+            case evolvesTo
+            case rules
+            case ancientTrait
+            case abilities
+            case attacks
+            case weaknesses
+            case resistances
+            case retreatCost
+            case convertedRetreatCost
+            case set
+            case number
+            case artist
+            case rarity
+            case flavorText
+            case nationalPokedexNumbers
+            case regulationMark
+            case images
+            case tcgplayer
+            case cardmarket
+        }
+
     }
 }
