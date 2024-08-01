@@ -18,11 +18,10 @@ extension TCG {
     }
 
     public struct Card: Hashable, Codable, Identifiable, Sendable {
-        public typealias Name = Identifier<String>
-        public typealias ID = Identifier<String>
+ 
+        public var cardName: CardName { .init(rawValue: name) }
 
-        public var id: ID { ID(rawValue: _id) }
-        public var name: Name { Name(rawValue: _name) }
+        public var cardID: CardID { .init(rawValue: id) }
 
         public struct AncientTrait: Codable, Hashable, Sendable {
             public let name: String
@@ -58,15 +57,16 @@ extension TCG {
             public let value: String
         }
 
-        public let _id: String
-        public let _name: String
+        public var id: String
+        public var name: String
+
         public let supertype: TCG.SuperType?
         public let subtypes: [TCG.Subtype]?
         public let level: String?
         public let hp: String?
         public let types: [TCG.CardType]?
         public let evolvesFrom: String?
-        public let evolvesTo: [String]?
+        public let evolvesTo: [TCG.CardName]?
         public let rules: [String]?
         public let ancientTrait: AncientTrait?
         public let abilities: [Ability]?
@@ -87,15 +87,15 @@ extension TCG {
         public let cardmarket: TCG.CardMarket?
 
         public init(
-            id: ID,
-            name: Name,
+            id: String,
+            name: String,
             supertype: TCG.SuperType?,
             subtypes: [TCG.Subtype]?,
             level: String?,
             hp: String?,
             types: [TCG.CardType]?,
             evolvesFrom: String?,
-            evolvesTo: [String]?,
+            evolvesTo: [TCG.CardName]?,
             rules: [String]?,
             ancientTrait: AncientTrait?,
             abilities: [Ability]?,
@@ -115,8 +115,8 @@ extension TCG {
             tcgplayer: TCG.Player?,
             cardmarket: TCG.CardMarket?
         ) {
-            _id = id.rawValue
-            _name = name.rawValue
+            self.id = id
+            self.name = name
             self.supertype = supertype
             self.subtypes = subtypes
             self.level = level
@@ -143,35 +143,27 @@ extension TCG {
             self.tcgplayer = tcgplayer
             self.cardmarket = cardmarket
         }
+    }
+}
 
-        private enum CodingKeys: String, CodingKey {
-            case _id = "id"
-            case _name = "name"
-            case supertype
-            case subtypes
-            case level
-            case hp
-            case types
-            case evolvesFrom
-            case evolvesTo
-            case rules
-            case ancientTrait
-            case abilities
-            case attacks
-            case weaknesses
-            case resistances
-            case retreatCost
-            case convertedRetreatCost
-            case set
-            case number
-            case artist
-            case rarity
-            case flavorText
-            case nationalPokedexNumbers
-            case regulationMark
-            case images
-            case tcgplayer
-            case cardmarket
+extension TCG {
+    public struct CardName: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
+        public let rawValue: String
+        
+        public init(rawValue: String) {
+            self.rawValue = rawValue
         }
     }
+    
+    
+    // MARK: - PokemonID
+    
+    public struct CardID: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
+        public let rawValue: String
+        
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+    }
+    
 }

@@ -4,9 +4,9 @@ import SwiftData
 @Model
 public final class RegionEntity {
     @Attribute(.unique)
-    public let id: Int
-    public let name: String
-    public let generation: Generation?
+    public var id: Int
+    public var name: String
+    public var generation: Generation?
 
     public init(id: Int, name: String, generation: Generation?) {
         self.id = id

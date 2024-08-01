@@ -32,7 +32,7 @@ public struct TCGCardListFeature: Reducer {
             case .fetchTCGCards:
                 return .run { [pokemonRepo = self.pokemonRepo, cardSet = state.set] send in
                     do {
-                        let cards = try await pokemonRepo.fetchTCGCardsBySetName(setName: cardSet.name)
+                        let cards = try await pokemonRepo.fetchTCGCardsBySetID(cardSet.setID)
                         await send(.setTCGCards(.success(cards)))
                     } catch {
                         await send(.setTCGCards(.failure(EquatableError(error))))
@@ -82,7 +82,7 @@ public struct TCGCardListFeatureView: View {
                 }
             }
             .padding()
-            .navigationTitle("\(store.set.name.rawValue) Set")
+            .navigationTitle("\(store.set.name) Set")
             .onAppear {
                 store.send(.fetchTCGCards)
             }

@@ -159,48 +159,44 @@ public actor DataStore {
 
     // MARK: - TCG
 
-//    public func fetchTCGSetList() async throws -> [TCG.Set] {
-//        let sortDescriptor = SortDescriptor(\TCGSetEntity.id, order: .forward)
-//        let fetchDescriptor = FetchDescriptor<TCGSetEntity>(sortBy: [sortDescriptor])
-//        let models = try await db.fetch(fetchDescriptor)
-//        return models.map(TCG.Set.init)
-//    }
-
     public func fetchTCGSetList() async throws -> [TCG.Set] {
-        return []
+        let sortDescriptor = SortDescriptor(\TCGSetEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<TCGSetEntity>(sortBy: [sortDescriptor])
+        let models = try await db.fetch(fetchDescriptor)
+        return models.map(\.setModel)
     }
 
-    public func saveTCGSets(_: [TCG.Set]) async throws {
-//        for set in sets.map(TCGSetEntity.init) {
-//            await db.insert(set)
-//        }
-//        try await db.debounceSave()
+
+    public func saveTCGSets(_ sets: [TCG.Set]) async throws {
+        for set in sets.map(TCGSetEntity.init) {
+            await db.insert(set)
+        }
+        try await db.debounceSave()
     }
 
-    public func fetchTCGCardList(_: TCG.Set.Name) async throws -> [TCG.Card] {
-//        let sortDescriptor = SortDescriptor(\TCGCardEntity._id, order: .forward)
-//        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(sortBy: [sortDescriptor])
-//        let models = try await db.fetch(fetchDescriptor)
-//
-//        return models.map(TCG.Card.init)
-//
-        return []
+    public func fetchTCGCardsBySetID(_ setID: TCG.SetID) async throws -> [TCG.Card] {
+        
+        let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
+        let raw = setID.rawValue
+        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0.entitySetID == setID.rawValue }, sortBy: [sortDescriptor])
+        let models = try await db.fetch(fetchDescriptor)
+        return models.map { try! JSONDecoder().decode(TCG.Card.self, from: $0.cardData) }
     }
 
-    public func saveTCGCards(_: [TCG.Card]) async throws {
-//        for card in cards.map(TCGCardEntity.init) {
-//            await db.insert(card)
-//        }
-//        try await db.debounceSave()
+    public func saveTCGCards(_ cards: [TCG.Card]) async throws {
+        for card in cards.map(TCGCardEntity.init) {
+            await db.insert(card)
+        }
+        try await db.save()
+        
     }
 
-    public func fetchTCGCard(name _: TCG.Card.Name) async throws -> [TCG.Card] {
-        return []
-//        let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
-//        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0._name == name.rawValue }, sortBy:
-//        [sortDescriptor])
-//        let models = try await db.fetch(fetchDescriptor)
-//        return models.map(TCG.Card.init)
+    public func fetchTCGCard(name: TCG.CardName) async throws -> [TCG.Card] {
+        let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
+        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0.name == name.rawValue }, sortBy:
+        [sortDescriptor])
+        let models = try await db.fetch(fetchDescriptor)
+        return models.map { try! JSONDecoder().decode(TCG.Card.self, from: $0.cardData) }
     }
 }
 

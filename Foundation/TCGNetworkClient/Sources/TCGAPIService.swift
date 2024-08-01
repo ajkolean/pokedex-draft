@@ -27,31 +27,31 @@ public class TCGAPIService {
     }
 
     // Function to fetch cards by set name
-    public func fetchTCGCardsBySetName(_ setName: TCG.Set.Name) async throws -> TCG.CardList {
-        try await fetchTCGCardsBySetName(setName, page: 1)
+    public func fetchTCGCardsBySetID(_ id: TCG.SetID) async throws -> TCG.CardList {
+        try await fetchTCGCardsBySetID(id, page: 1)
     }
 
     // Function to fetch cards by Pokémon name
-    func fetchCardsByPokemonName(_ pokemonName: TCG.Card.Name) async throws -> TCG.CardList {
+    func fetchCardsByPokemonName(_ pokemonName: TCG.CardName) async throws -> TCG.CardList {
         let queryItem = URLQueryItem(name: "q", value: "!name:\(pokemonName)")
         return try await fetchData(endpoint: "/cards", queryItems: [queryItem], decodeType: TCG.CardList.self)
     }
 
     // MARK: - Helpers
 
-    public func fetchTCGCardsBySetName(
-        _ setName: TCG.Set.Name,
+    public func fetchTCGCardsBySetID(
+        _ setID: TCG.SetID,
         page: Int
     ) async throws -> TCG.CardList {
         let queryItems = [
-            URLQueryItem(name: "q", value: "!set.name:\(setName)"),
+            URLQueryItem(name: "q", value: "!set.id:\(setID)"),
             URLQueryItem(name: "page", value: "\(page)"),
         ]
 
         var results = try await fetchData(endpoint: "/cards", queryItems: queryItems, decodeType: TCG.CardList.self)
         var page = results.page
         while results.cards.count < results.totalCount || results.count == 250 {
-            let nextPage = try await fetchTCGCardsBySetName(setName, page: page)
+            let nextPage = try await fetchTCGCardsBySetID(setID, page: page)
             page += 1
             results.cards.append(contentsOf: nextPage.cards)
         }
@@ -68,7 +68,7 @@ public class TCGAPIService {
         guard let url = urlComponents?.url else {
             throw TCGNetworkError.invalidURL(endpoint: endpoint)
         }
-
+        print(url.absoluteString)
         var request = URLRequest(url: url)
         request.setValue(apiKey, forHTTPHeaderField: "X-Api-Key")
         let apiHeader = request.allHTTPHeaderFields?["X-Api-Key"]
@@ -85,7 +85,7 @@ public class TCGAPIService {
         decodeType: T.Type
     ) async throws -> T {
         let request = try createRequest(endpoint: endpoint, queryItems: queryItems)
-
+        
         let (data, response): (Data, URLResponse)
         do {
             (data, response) = try await session.data(for: request)

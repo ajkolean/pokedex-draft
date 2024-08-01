@@ -4,9 +4,9 @@ import SwiftData
 @Model
 public final class PokemonSummaryEntity {
     @Attribute(.unique)
-    public let id: Int
-    public let name: String
-    public let types: [Pokemon.TypeSlot]
+    public var id: Int
+    public var name: String
+    public var types: [Pokemon.TypeSlot]
 
     public init(id: Int, name: String, types: [Pokemon.TypeSlot]) {
         self.id = id

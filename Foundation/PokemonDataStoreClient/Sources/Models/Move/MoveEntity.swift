@@ -4,15 +4,15 @@ import SwiftData
 @Model
 public final class MoveEntity {
     @Attribute(.unique)
-    public let id: Int
-    public let name: String
-    public let summary: Move.Summary
-    public let damageClass: Move.DamageClass
-    public let generation: Generation
-    public let pokemon: [PokemonSummary]
-    public let descriptions: [String]
-    public let moveEffectChance: Int?
-    public let moveEffectTexts: [String]
+    public var id: Int
+    public var name: String
+    public var summary: Move.Summary
+    public var damageClass: Move.DamageClass
+    public var generation: Generation
+    public var pokemon: [PokemonSummary]
+    public var descriptions: [String]
+    public var moveEffectChance: Int?
+    public var moveEffectTexts: [String]
 
     public init(
         id: Int,

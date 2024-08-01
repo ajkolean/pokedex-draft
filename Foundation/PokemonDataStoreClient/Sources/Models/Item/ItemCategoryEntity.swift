@@ -4,10 +4,10 @@ import SwiftData
 @Model
 public final class ItemCategoryEntity {
     @Attribute(.unique)
-    public let id: Int
-    public let name: String
-    public let items: [Item]
-    public let pocket: String?
+    public var id: Int
+    public var name: String
+    public var items: [Item]
+    public var pocket: String?
 
     public init(id: Int, name: String, items: [Item], pocket: String? = nil) {
         self.id = id

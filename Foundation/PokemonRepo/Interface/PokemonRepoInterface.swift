@@ -27,8 +27,8 @@ public struct PokemonRepo: TestDependencyKey, Sendable {
     // MARK: - Move
 
     public var fetchAllTCGSets: @Sendable () async throws -> [TCG.Set]
-    public var fetchTCGCardsBySetName: @Sendable (_ setName: TCG.Set.Name) async throws -> [TCG.Card]
-    public var fetchCardsByPokemonName: @Sendable (_ pokemonName: TCG.Card.Name) async throws -> [TCG.Card]
+    public var fetchTCGCardsBySetID: @Sendable (_ setID: TCG.SetID) async throws -> [TCG.Card]
+    public var fetchCardsByPokemonName: @Sendable (_ pokemonName: TCG.CardName) async throws -> [TCG.Card]
 
     public static let testValue = Self()
 }

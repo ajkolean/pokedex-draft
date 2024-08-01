@@ -112,19 +112,19 @@ extension PokemonRepo: DependencyKey {
                     return results.sets
                 }
             },
-            fetchTCGCardsBySetName: { name in
-                let cachedTypes = try await dataStoreClient.fetchTCGCardList(name: name)
+            fetchTCGCardsBySetID: { id in
+                let cachedTypes = try await dataStoreClient.fetchTCGCardsBySetID(id)
                 if !cachedTypes.isEmpty {
                     return cachedTypes
                 } else {
-                    let results = try await tcgClient.fetchTCGCardsBySetName(setName: name)
+                    let results = try await tcgClient.fetchTCGCardsBySetID(id)
                     try await dataStoreClient.saveTCGCards(results.cards)
                     return results.cards
                 }
             },
             fetchCardsByPokemonName: { name in
                 let cachedTypes = try await dataStoreClient.fetchTCGCard(name: name)
-                if !cachedTypes.isEmpty {
+                if cachedTypes.count > 1 {
                     return cachedTypes
                 } else {
                     let result = try await tcgClient.fetchCardsByPokemonName(pokemonName: name)

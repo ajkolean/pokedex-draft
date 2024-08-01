@@ -4,9 +4,9 @@ import SwiftData
 @Model
 public final class LocationAreaEntity {
     @Attribute(.unique)
-    public let id: Int
-    public let name: String
-    public let encouters: [LocationArea.Encounter]
+    public var id: Int
+    public var name: String
+    public var encouters: [LocationArea.Encounter]
 
     public init(id: Int, name: String, encouters: [LocationArea.Encounter]) {
         self.id = id

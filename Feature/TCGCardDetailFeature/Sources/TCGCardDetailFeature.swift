@@ -38,8 +38,7 @@ public struct TCGCardDetailFeature: Reducer {
                 state.rotationAngle += 180
                 state.isCardFlipped.toggle()
                 return .run { [card = state.card] send in
-                    let a = try await pokemonRepo.fetchCardsByPokemonName(card.name)
-                    dump(a)
+                    let a = try await pokemonRepo.fetchCardsByPokemonName(card.cardName)
                     await send(.setPokemonCards(a), animation: .easeInOut)
                 }
 

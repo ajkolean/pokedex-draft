@@ -3,7 +3,7 @@ import Foundation
 import Models
 import PokemonDataStoreClientInterface
 
-extension DataStoreClient: DependencyKey {
+extension DataStoreClient: @retroactive DependencyKey {
     public static let liveValue: DataStoreClient = {
         let dataStore = DataStore.shared
         return DataStoreClient(
@@ -27,7 +27,7 @@ extension DataStoreClient: DependencyKey {
             saveMoves: { try await dataStore.saveMoves($0) },
             fetchTCGSetList: { try await dataStore.fetchTCGSetList() },
             saveTCGSets: { try await dataStore.saveTCGSets($0) },
-            fetchTCGCardList: { try await dataStore.fetchTCGCardList($0) },
+            fetchTCGCardsBySetID: { try await dataStore.fetchTCGCardsBySetID($0) },
             fetchTCGCard: { try await dataStore.fetchTCGCard(name: $0) },
             saveTCGCards: { try await dataStore.saveTCGCards($0) }
         )

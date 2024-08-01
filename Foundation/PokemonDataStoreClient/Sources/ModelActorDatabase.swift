@@ -67,7 +67,7 @@ public actor ModelActorDatabase: ModelActor, Database {
         saveTask = Task {
             try await Task.sleep(for: .seconds(debounceDelay))
             print("Saving Pokemon, savesCancelled: \(savesCancelled)")
-            try await self.save()
+            try self.save()
             savesCancelled = 0
         }
     }
@@ -91,7 +91,7 @@ public actor ModelActorDatabase: ModelActor, Database {
     }
 
     private func handleWillResignActive() async throws {
-        try await save()
+        try save()
     }
 }
 

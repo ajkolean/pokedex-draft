@@ -4,11 +4,11 @@ import SwiftData
 @Model
 public final class PokemonTypeEntity {
     @Attribute(.unique)
-    public let id: Int
-    public let type: PokemonTypeEnum
-    public let attackDamageRelations: [PokemonType.DamageRelation]
-    public let defenseDamageRelations: [PokemonType.DamageRelation]
-    public let pokemonByTypeSlot: [PokemonByTypeSlot]
+    public var id: Int
+    public var type: PokemonTypeEnum
+    public var attackDamageRelations: [PokemonType.DamageRelation]
+    public var defenseDamageRelations: [PokemonType.DamageRelation]
+    public var pokemonByTypeSlot: [PokemonByTypeSlot]
 
     public init(
         id: PokemonType.ID,

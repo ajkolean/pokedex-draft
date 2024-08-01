@@ -61,7 +61,7 @@ public struct TCGSetListFeatureView: View {
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
                 ForEach(store.sets) { set in
                     VStack(spacing: 16) {
-                        Text(set.name.rawValue)
+                        Text(set.name)
                             .font(.headline)
                         Text("Total cards: \(set.total)")
                         HStack {

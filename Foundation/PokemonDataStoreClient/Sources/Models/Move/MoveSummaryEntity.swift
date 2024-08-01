@@ -4,13 +4,13 @@ import SwiftData
 @Model
 public final class MoveSummaryEntity {
     @Attribute(.unique)
-    public let id: Int
-    public let name: String
-    public let accuracy: Int?
-    public let power: Int?
-    public let pp: Int?
-    public let priority: Int?
-    public let type: PokemonTypeEnum
+    public var id: Int
+    public var name: String
+    public var accuracy: Int?
+    public var power: Int?
+    public var pp: Int?
+    public var priority: Int?
+    public var type: PokemonTypeEnum
 
     public init(id: Int, name: String, accuracy: Int?, power: Int?, pp: Int?, priority: Int?, type: PokemonTypeEnum) {
         self.id = id

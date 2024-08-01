@@ -4,15 +4,15 @@ import SwiftData
 @Model
 public final class PokemonEntity {
     @Attribute(.unique)
-    public let id: Int
-    public let name: String
-    public let height: Int?
-    public let weight: Int?
-    public let order: Int?
-    public let baseExperience: Int?
-    public let types: [Pokemon.TypeSlot]
-    public let stats: [Pokemon.Stat]
-    public let descriptions: [String]
+    public var id: Int
+    public var name: String
+    public var height: Int?
+    public var weight: Int?
+    public var order: Int?
+    public var baseExperience: Int?
+    public var types: [Pokemon.TypeSlot]
+    public var stats: [Pokemon.Stat]
+    public var descriptions: [String]
 
     public init(
         id: Int,

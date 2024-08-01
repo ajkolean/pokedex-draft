@@ -18,19 +18,16 @@ extension TCG {
     }
 
     public struct Set: Codable, Hashable, Sendable, Identifiable {
-        public typealias Name = Identifier<String>
-        public typealias ID = Identifier<String>
-
-        public var id: ID { ID(rawValue: _id) }
-        public var name: Name { Name(rawValue: _name) }
-
         public struct Image: Codable, Hashable, Sendable {
             public let symbol: URL
             public let logo: URL
         }
+        
+        public var setName: SetName { .init(rawValue: name) }
+        public var setID: SetID { .init(rawValue: id) }
 
-        private var _id: String
-        public var _name: String
+        public let id: String
+        public let name: String
 
         public let series: String
         public let printedTotal: Int
@@ -41,8 +38,8 @@ extension TCG {
         public let images: Image
 
         public init(
-            id: ID,
-            name: Name,
+            id: String,
+            name: String,
             series: String,
             printedTotal: Int,
             total: Int,
@@ -51,8 +48,8 @@ extension TCG {
             updatedAt: Date,
             images: Image
         ) {
-            _id = id.rawValue
-            _name = name.rawValue
+            self.id = id
+            self.name = name
             self.series = series
             self.printedTotal = printedTotal
             self.total = total
@@ -61,14 +58,27 @@ extension TCG {
             self.updatedAt = updatedAt
             self.images = images
         }
+    }
+}
 
-        private enum CodingKeys: String, CodingKey {
-            case _id = "id"
-            case _name = "name"
-            case series
-            case printedTotal
-            case total
-            case ptcgoCode, releaseDate, updatedAt, images
+extension TCG {
+    public struct SetName: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
+        public let rawValue: String
+        
+        public init(rawValue: String) {
+            self.rawValue = rawValue
         }
     }
+    
+    
+    // MARK: - PokemonID
+    
+    public struct SetID: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
+        public let rawValue: String
+        
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+    }
+    
 }

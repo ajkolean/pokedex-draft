@@ -3,15 +3,15 @@ import Foundation
 import Models
 import TCGNetworkClientInterface
 
-extension TCGNetworkClient: DependencyKey {
+extension TCGNetworkClient: @retroactive DependencyKey {
     public static let liveValue: TCGNetworkClient = {
         let service = TCGAPIService()
         return TCGNetworkClient(
             fetchAllTCGSets: {
                 try await service.fetchAllTCGSets()
             },
-            fetchTCGCardsBySetName: { setName in
-                try await service.fetchTCGCardsBySetName(setName)
+            fetchTCGCardsBySetID: { id in
+                try await service.fetchTCGCardsBySetID(id)
             },
             fetchCardsByPokemonName: { pokemonName in
                 try await service.fetchCardsByPokemonName(pokemonName)
