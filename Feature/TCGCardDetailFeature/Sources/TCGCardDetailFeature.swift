@@ -13,32 +13,32 @@ public struct TCGCardDetailFeature: Reducer {
             placeholder.id = UUID().uuidString
             return placeholder
         }
-
+        
         public var card: TCG.Card
         public var hiddenCards: IdentifiedArrayOf<TCG.Card> = []
-
+        
         public var allCards: IdentifiedArrayOf<TCG.Card> = []
         public var isCardFlipped = false
         public var flipAnimationComplete = false
         public var rotationAngle: Double = 0
-
+        
         public init(card: TCG.Card) {
             self.card = card
             allCards = [card]
         }
     }
-
+    
     public enum Action: Equatable, Sendable, BindableAction {
         case binding(BindingAction<State>)
         case onAppear
         case setPokemonCards([TCG.Card])
         case setVisiblePokemonCards
     }
-
+    
     @Dependency(\.pokemonRepo) var pokemonRepo
-
+    
     public init() {}
-
+    
     public var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce<State, Action> { state, action in
@@ -50,9 +50,9 @@ public struct TCGCardDetailFeature: Reducer {
                     let a = try await pokemonRepo.fetchCardsByPokemonName(card.cardName)
                     await send(.setPokemonCards(a), animation: .easeInOut)
                 }
-
+                
             case let .setPokemonCards(cards):
-
+                
                 let c = cards.filter { $0.id != state.card.id }
                 let hiddenCards = IdentifiedArray(uniqueElements: [state.card] + c)
                 if state.flipAnimationComplete {
@@ -61,7 +61,7 @@ public struct TCGCardDetailFeature: Reducer {
                 } else {
                     state.hiddenCards = hiddenCards
                 }
-
+                
                 return .none
             case .setVisiblePokemonCards:
                 state.flipAnimationComplete = true
@@ -77,81 +77,111 @@ public struct TCGCardDetailFeature: Reducer {
 public struct TCGCardDetailView: View {
     @Bindable public var store: StoreOf<TCGCardDetailFeature>
     @Namespace private var animation
-
+    
     public init(store: StoreOf<TCGCardDetailFeature>) {
         self.store = store
     }
-
+    
     public var body: some View {
-        ScrollView {
-            VStack {
-                ZStack(alignment: .center) {
+        ZStack {
+            LinearGradient(
+                gradient: Gradient(colors: [PokemonTypeEnum.psychic.color(), Color(UIColor.systemBackground)]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+            
+            Color(UIColor.systemBackground).offset(y: 500)
+            
+            ScrollView {
+                carouselView
+
+                VStack {
+                    HStack { Spacer() }
+                        .padding(.top, 75)
+                    
                     ModelsAsset
                         .pokemonCardBack
                         .swiftUIImage
                         .resizable()
                         .scaledToFit()
                         .frame(width: 250)
+                    
+                    ModelsAsset
+                        .pokemonCardBack
+                        .swiftUIImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 250)
+                    
+                
+                }
+                .background(Color(UIColor.systemBackground))
+                .cornerRadius(40)
+                .padding(.top, -40)
+                .zIndex(-1)
+            }
+
+            .onAppear {
+                var animation = Transaction(animation: Animation.easeInOut(duration: 1))
+                animation.addAnimationCompletion {
+                    store.send(.setVisiblePokemonCards, animation: .easeInOut)
+                }
+                store.send(.onAppear, transaction: animation)
+            }
+            .navigationTitle(store.card.cardName.rawValue)
+        }
+
+    }
+    
+    @ViewBuilder
+    var carouselView: some View {
+        VStack {
+            ZStack(alignment: .center) {
+                ModelsAsset
+                    .pokemonCardBack
+                    .swiftUIImage
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 250)
+                    .shadow(color: .gray, radius: 10)
+                    .cardStyle()
+                    .opacity(store.isCardFlipped ? 0 : 1)
+                
+                ImageCarouselView(
+                    items: $store.allCards,
+                    selectedItem: $store.card
+                ) { selectedCard in
+                    
+                    KFImage(selectedCard.images.large)
+                        .resizable()
+                        .scaledToFit()
                         .shadow(color: .gray, radius: 10)
                         .cardStyle()
-                        .opacity(store.isCardFlipped ? 0 : 1)
-
-                    ImageCarouselView(
-                        items: $store.allCards,
-                        selectedItem: $store.card
-                    ) { selectedCard in
-
-                        KFImage(selectedCard.images.large)
-                            .resizable()
-                            .scaledToFit()
-                            .shadow(color: .gray, radius: 10)
-                            .cardStyle()
-                            .opacity(store.isCardFlipped ? 1 : 0)
-                    }
-                    .disabled(!store.flipAnimationComplete)
-                    .rotation3DEffect(
-                        Angle(degrees: 180),
-                        axis: (x: 0, y: 1, z: 0)
-                    )
+                        .opacity(store.isCardFlipped ? 1 : 0)
                 }
-
+                .disabled(!store.flipAnimationComplete)
                 .rotation3DEffect(
-                    Angle(degrees: store.rotationAngle),
+                    Angle(degrees: 180),
                     axis: (x: 0, y: 1, z: 0)
                 )
-                .background(carouselPlaceholderView)
             }
-
-            Group {
-                if !store.allCards.isEmpty {
-                    LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                        ForEach(store.allCards) { card in
-                            KFImage(card.images.small)
-                                .resizable()
-                                .scaledToFit()
-                                .cardStyle()
-                        }
-                    }
-                }
-            }
-            .padding()
+            
+            .rotation3DEffect(
+                Angle(degrees: store.rotationAngle),
+                axis: (x: 0, y: 1, z: 0)
+            )
+            .background(carouselPlaceholderView)
         }
-
-        .onAppear {
-            var animation = Transaction(animation: Animation.easeInOut(duration: 1))
-            animation.addAnimationCompletion {
-                store.send(.setVisiblePokemonCards, animation: .easeInOut)
-            }
-            store.send(.onAppear, transaction: animation)
-        }
+        
     }
-
+    
     var carouselPlaceholderView: some View {
         ImageCarouselView(
             items: .constant([store.card, store.placeholder]),
             selectedItem: .constant(store.card)
         ) { selectedCard in
-
+            
             if selectedCard == store.card {
                 ModelsAsset
                     .pokemonCardBack
@@ -159,7 +189,7 @@ public struct TCGCardDetailView: View {
                     .resizable()
                     .scaledToFit()
                     .hidden()
-
+                
             } else {
                 ModelsAsset
                     .pokemonCardBack

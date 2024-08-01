@@ -57,7 +57,7 @@ struct ImageCarouselView<Item: Identifiable & Hashable & Sendable, ItemView: Vie
             .scrollTargetBehavior(.viewAligned)
             .scrollPosition(id: scrollPositionId, anchor: .center)
             .scrollIndicators(.hidden)
-            .frame(height: pageHeight)
+            .frame(height: pageHeight * 1.0)
         }
     }
 }
