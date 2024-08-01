@@ -53,8 +53,23 @@ public actor ModelActorDatabase: ModelActor, Database {
         try modelContext.save()
     }
 
+    // remove this, use below
     public func fetch<T>(_ descriptor: FetchDescriptor<T>) throws -> [T] where T: PersistentModel & Sendable {
         return try modelContext.fetch(descriptor)
+    }
+
+    public func fetchObj<T>(_ descriptor: FetchDescriptor<T>) throws -> [T]
+        where T: PersistentModel & Sendable & ExpirableEntity
+    {
+        let models = try modelContext.fetch(descriptor)
+
+        let currentDate = Date()
+        if let expiredModels = models.first(where: { $0.expiresAt < currentDate }) {
+            print("Expired model: \(expiredModels)")
+            return []
+        } else {
+            return models
+        }
     }
 
     public func fetchOne<T>(_ descriptor: FetchDescriptor<T>) throws -> T? where T: PersistentModel & Sendable {

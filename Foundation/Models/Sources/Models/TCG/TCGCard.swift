@@ -7,6 +7,7 @@ extension TCG {
         public let pageSize: Int
         public let count: Int
         public let totalCount: Int
+        public var lastFetch: Date?
 
         private enum CodingKeys: String, CodingKey {
             case cards = "data"
@@ -14,11 +15,11 @@ extension TCG {
             case pageSize
             case count
             case totalCount
+            case lastFetch
         }
     }
 
     public struct Card: Hashable, Codable, Identifiable, Sendable {
- 
         public var cardName: CardName { .init(rawValue: name) }
 
         public var cardID: CardID { .init(rawValue: id) }
@@ -149,21 +150,19 @@ extension TCG {
 extension TCG {
     public struct CardName: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
         public let rawValue: String
-        
+
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
     }
-    
-    
+
     // MARK: - PokemonID
-    
+
     public struct CardID: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
         public let rawValue: String
-        
+
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
     }
-    
 }

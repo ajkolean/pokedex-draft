@@ -2,11 +2,16 @@ import Foundation
 import Models
 import SwiftData
 
+public protocol ExpirableEntity {
+    var expiresAt: Date { get set }
+}
+
 @Model
-public final class TCGSetEntity {
+public final class TCGSetEntity: ExpirableEntity {
     @Attribute(.unique)
     public var id: String
     public var name: String
+    public var expiresAt = Date.expirationDate
     public var setModel: TCG.Set
 
     public init(id: String, name: String, setModel: TCG.Set) {
@@ -25,4 +30,3 @@ extension TCGSetEntity {
         )
     }
 }
-

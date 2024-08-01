@@ -1,8 +1,8 @@
+import Foundation
 import Models
 import SwiftData
-import Foundation
 
-public struct TCGCardEntityDetail: Codable, Hashable, Sendable  {
+public struct TCGCardEntityDetail: Codable, Hashable, Sendable {
     public var types: [TCG.CardType]?
     public var subtypes: [TCG.Subtype]?
     public var evolvesTo: [TCG.CardName]?
@@ -12,11 +12,13 @@ public struct TCGCardEntityDetail: Codable, Hashable, Sendable  {
 }
 
 @Model
-public final class TCGCardEntity {
+public final class TCGCardEntity: ExpirableEntity {
     @Attribute(.unique)
     public var id: String
     public var name: String
     public var entitySetID: String
+    public var expiresAt = Date.expirationDate
+
     public var cardData: Data
 //    public var cardModel: TCG.Card
 //    public var supertype: TCG.SuperType?
@@ -40,7 +42,11 @@ public final class TCGCardEntity {
 //    public var cardmarket: TCG.CardMarket?
 //    public var details: TCGCardEntityDetail?
 //
-//    public init(id: String, name: String, setName: String, supertype: TCG.SuperType? = nil, level: String? = nil, hp: String? = nil, evolvesFrom: String? = nil, rules: [String]? = nil, ancientTrait: TCG.Card.AncientTrait? = nil, abilities: [TCG.Card.Ability]? = nil, attacks: [TCG.Card.Attack]? = nil, weaknesses: [TCG.Card.Weakness]? = nil, resistances: [TCG.Card.Resistance]? = nil, convertedRetreatCost: Int? = nil, set: TCG.Set, number: String? = nil, artist: String? = nil, rarity: TCG.Rarity? = nil, flavorText: String? = nil, regulationMark: String? = nil, images: TCG.Card.Image, tcgplayer: TCG.Player? = nil, cardmarket: TCG.CardMarket? = nil, details: TCGCardEntityDetail? = nil) {
+//    public init(id: String, name: String, setName: String, supertype: TCG.SuperType? = nil, level: String? = nil, hp: String? =
+//    nil, evolvesFrom: String? = nil, rules: [String]? = nil, ancientTrait: TCG.Card.AncientTrait? = nil, abilities:
+//    [TCG.Card.Ability]? = nil, attacks: [TCG.Card.Attack]? = nil, weaknesses: [TCG.Card.Weakness]? = nil, resistances:
+//    [TCG.Card.Resistance]? = nil, convertedRetreatCost: Int? = nil, set: TCG.Set, number: String? = nil, artist: String? = nil,
+//    rarity: TCG.Rarity? = nil, flavorText: String? = nil, regulationMark: String? = nil, images: TCG.Card.Image, tcgplayer: TCG.Player? = nil, cardmarket: TCG.CardMarket? = nil, details: TCGCardEntityDetail? = nil) {
 //        self.id = id
 //        self.name = name
 //        self.setName = setName
@@ -65,7 +71,7 @@ public final class TCGCardEntity {
 //        self.cardmarket = cardmarket
 //        self.details = details
 //    }
-    
+
     public init(id: String, name: String, entitySetID: String, cardData: Data) {
         self.id = id
         self.name = name
@@ -76,8 +82,6 @@ public final class TCGCardEntity {
 
 extension TCGCardEntity {
     convenience init(_ model: TCG.Card) {
-
-
         self.init(
             id: model.id,
             name: model.name,
@@ -107,8 +111,9 @@ extension TCGCardEntity {
         )
     }
 }
+
 //
-//extension TCG.Card {
+// extension TCG.Card {
 //    init(_ entity: TCGCardEntity) {
 //        self.init(
 //            id: entity.id,
@@ -140,4 +145,4 @@ extension TCGCardEntity {
 //            cardmarket: entity.cardmarket
 //        )
 //    }
-//}
+// }

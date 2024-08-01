@@ -2,11 +2,12 @@ import Foundation
 
 extension TCG {
     public struct SetList: Hashable, Codable, Sendable {
-        public let sets: [Set]
+        public var sets: [Set]
         public let page: Int
         public let pageSize: Int
         public let count: Int
         public let totalCount: Int
+        public var lastFetch: Date?
 
         private enum CodingKeys: String, CodingKey {
             case sets = "data"
@@ -22,7 +23,7 @@ extension TCG {
             public let symbol: URL
             public let logo: URL
         }
-        
+
         public var setName: SetName { .init(rawValue: name) }
         public var setID: SetID { .init(rawValue: id) }
 
@@ -64,21 +65,19 @@ extension TCG {
 extension TCG {
     public struct SetName: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
         public let rawValue: String
-        
+
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
     }
-    
-    
+
     // MARK: - PokemonID
-    
+
     public struct SetID: Codable, IdentifierProtocol, ExpressibleByStringLiteral {
         public let rawValue: String
-        
+
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
     }
-    
 }

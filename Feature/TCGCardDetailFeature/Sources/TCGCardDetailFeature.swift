@@ -8,7 +8,15 @@ import SwiftUI
 public struct TCGCardDetailFeature: Reducer {
     @ObservableState
     public struct State: Equatable, Sendable {
+        public var placeholder: TCG.Card {
+            var placeholder = card
+            placeholder.id = UUID().uuidString
+            return placeholder
+        }
+
         public var card: TCG.Card
+        public var hiddenCards: IdentifiedArrayOf<TCG.Card> = []
+
         public var allCards: IdentifiedArrayOf<TCG.Card> = []
         public var isCardFlipped = false
         public var flipAnimationComplete = false
@@ -16,7 +24,7 @@ public struct TCGCardDetailFeature: Reducer {
 
         public init(card: TCG.Card) {
             self.card = card
-            self.allCards = [card]
+            allCards = [card]
         }
     }
 
@@ -24,6 +32,7 @@ public struct TCGCardDetailFeature: Reducer {
         case binding(BindingAction<State>)
         case onAppear
         case setPokemonCards([TCG.Card])
+        case setVisiblePokemonCards
     }
 
     @Dependency(\.pokemonRepo) var pokemonRepo
@@ -35,17 +44,28 @@ public struct TCGCardDetailFeature: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .onAppear:
+                state.isCardFlipped = true
                 state.rotationAngle += 180
-                state.isCardFlipped.toggle()
                 return .run { [card = state.card] send in
                     let a = try await pokemonRepo.fetchCardsByPokemonName(card.cardName)
                     await send(.setPokemonCards(a), animation: .easeInOut)
                 }
 
             case let .setPokemonCards(cards):
-  
-                let c = cards.filter { $0.id != state.card.id}
-                state.allCards = IdentifiedArray(uniqueElements: ([state.card] + c))
+
+                let c = cards.filter { $0.id != state.card.id }
+                let hiddenCards = IdentifiedArray(uniqueElements: [state.card] + c)
+                if state.flipAnimationComplete {
+                    state.hiddenCards = hiddenCards
+                    state.allCards = hiddenCards
+                } else {
+                    state.hiddenCards = hiddenCards
+                }
+
+                return .none
+            case .setVisiblePokemonCards:
+                state.flipAnimationComplete = true
+                state.allCards = state.hiddenCards
                 return .none
             case .binding:
                 return .none
@@ -87,8 +107,8 @@ public struct TCGCardDetailView: View {
                             .shadow(color: .gray, radius: 10)
                             .cardStyle()
                             .opacity(store.isCardFlipped ? 1 : 0)
-                    
                     }
+                    .disabled(!store.flipAnimationComplete)
                     .rotation3DEffect(
                         Angle(degrees: 180),
                         axis: (x: 0, y: 1, z: 0)
@@ -99,6 +119,7 @@ public struct TCGCardDetailView: View {
                     Angle(degrees: store.rotationAngle),
                     axis: (x: 0, y: 1, z: 0)
                 )
+                .background(carouselPlaceholderView)
             }
 
             Group {
@@ -117,8 +138,40 @@ public struct TCGCardDetailView: View {
         }
 
         .onAppear {
-            store.send(.onAppear, animation: Animation.easeInOut(duration: 1))
+            var animation = Transaction(animation: Animation.easeInOut(duration: 1))
+            animation.addAnimationCompletion {
+                store.send(.setVisiblePokemonCards, animation: .easeInOut)
+            }
+            store.send(.onAppear, transaction: animation)
         }
+    }
+
+    var carouselPlaceholderView: some View {
+        ImageCarouselView(
+            items: .constant([store.card, store.placeholder]),
+            selectedItem: .constant(store.card)
+        ) { selectedCard in
+
+            if selectedCard == store.card {
+                ModelsAsset
+                    .pokemonCardBack
+                    .swiftUIImage
+                    .resizable()
+                    .scaledToFit()
+                    .hidden()
+
+            } else {
+                ModelsAsset
+                    .pokemonCardBack
+                    .swiftUIImage
+                    .resizable()
+                    .scaledToFit()
+                    .cardStyle()
+                    .blur(radius: 20)
+            }
+        }
+        .disabled(true)
+        .opacity(store.flipAnimationComplete ? 0 : 1)
     }
 }
 
@@ -140,6 +193,6 @@ struct CardModifier: ViewModifier {
 
 extension View {
     func cardStyle() -> some View {
-        self.modifier(CardModifier())
+        modifier(CardModifier())
     }
 }

@@ -162,10 +162,9 @@ public actor DataStore {
     public func fetchTCGSetList() async throws -> [TCG.Set] {
         let sortDescriptor = SortDescriptor(\TCGSetEntity.id, order: .forward)
         let fetchDescriptor = FetchDescriptor<TCGSetEntity>(sortBy: [sortDescriptor])
-        let models = try await db.fetch(fetchDescriptor)
+        let models = try await db.fetchObj(fetchDescriptor)
         return models.map(\.setModel)
     }
-
 
     public func saveTCGSets(_ sets: [TCG.Set]) async throws {
         for set in sets.map(TCGSetEntity.init) {
@@ -175,10 +174,11 @@ public actor DataStore {
     }
 
     public func fetchTCGCardsBySetID(_ setID: TCG.SetID) async throws -> [TCG.Card] {
-        
         let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
-        let raw = setID.rawValue
-        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0.entitySetID == setID.rawValue }, sortBy: [sortDescriptor])
+        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(
+            predicate: #Predicate { $0.entitySetID == setID.rawValue },
+            sortBy: [sortDescriptor]
+        )
         let models = try await db.fetch(fetchDescriptor)
         return models.map { try! JSONDecoder().decode(TCG.Card.self, from: $0.cardData) }
     }
@@ -188,13 +188,15 @@ public actor DataStore {
             await db.insert(card)
         }
         try await db.save()
-        
     }
 
     public func fetchTCGCard(name: TCG.CardName) async throws -> [TCG.Card] {
         let sortDescriptor = SortDescriptor(\TCGCardEntity.id, order: .forward)
-        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(predicate: #Predicate { $0.name == name.rawValue }, sortBy:
-        [sortDescriptor])
+        let fetchDescriptor = FetchDescriptor<TCGCardEntity>(
+            predicate: #Predicate { $0.name == name.rawValue },
+            sortBy:
+            [sortDescriptor]
+        )
         let models = try await db.fetch(fetchDescriptor)
         return models.map { try! JSONDecoder().decode(TCG.Card.self, from: $0.cardData) }
     }

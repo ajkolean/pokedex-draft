@@ -73,3 +73,20 @@ extension String? {
         return self?.isEmpty ?? true
     }
 }
+
+extension Date {
+    public static var expirationDate: Date {
+        Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func applyIf(_ condition: Bool, transform: (Self) -> some View) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+}
