@@ -9,7 +9,7 @@ public class TCGAPIService {
         return decoder
     }()
 
-    private let baseURL = "https://api.pokemontcg.io/v2"
+    private let baseURL = "https://api.pokemontcg.io/v2/"
     private let apiKey: String?
     private let session: URLSession
 
@@ -23,35 +23,32 @@ public class TCGAPIService {
 
     // Function to fetch all sets
     public func fetchAllTCGSets() async throws -> TCG.SetList {
-        return try await fetchData(endpoint: "/sets", decodeType: TCG.SetList.self)
+        return try await fetchData(endpoint: .sets, decodeType: TCG.SetList.self)
     }
 
     // Function to fetch cards by set name
     public func fetchTCGCardsBySetID(_ id: TCG.SetID) async throws -> TCG.CardList {
-        try await fetchTCGCardsBySetID(id, page: 1)
+        try await fetchTCGCardsByForQuery(queryItems: [.setID(id: id)])
     }
 
     // Function to fetch cards by Pokémon name
     func fetchCardsByPokemonName(_ pokemonName: TCG.CardName) async throws -> TCG.CardList {
-        let queryItem = URLQueryItem(name: "q", value: "!name:\(pokemonName)")
-        return try await fetchData(endpoint: "/cards", queryItems: [queryItem], decodeType: TCG.CardList.self)
+        try await fetchTCGCardsByForQuery(queryItems: [.name(name: pokemonName)])
     }
 
     // MARK: - Helpers
 
-    public func fetchTCGCardsBySetID(
-        _ setID: TCG.SetID,
-        page: Int
+    public func fetchTCGCardsByForQuery(
+        queryItems: [TCGCardQueryComponent] = [],
+        page: Int = 1,
+        pageSize: Int = 250
     ) async throws -> TCG.CardList {
-        let queryItems = [
-            URLQueryItem(name: "q", value: "!set.id:\(setID)"),
-            URLQueryItem(name: "page", value: "\(page)"),
-        ]
+        let endpoint = TCGEndpoint.cards(queryItems)
 
-        var results = try await fetchData(endpoint: "/cards", queryItems: queryItems, decodeType: TCG.CardList.self)
+        var results = try await fetchData(endpoint: endpoint, decodeType: TCG.CardList.self)
         var page = results.page
         while results.cards.count < results.totalCount || results.count == 250 {
-            let nextPage = try await fetchTCGCardsBySetID(setID, page: page)
+            let nextPage = try await fetchTCGCardsByForQuery(queryItems: queryItems, page: page)
             page += 1
             results.cards.append(contentsOf: nextPage.cards)
         }
@@ -60,11 +57,11 @@ public class TCGAPIService {
     }
 
     private func createRequest(
-        endpoint: String,
-        queryItems: [URLQueryItem]? = nil
+        endpoint: TCGEndpoint,
+        page: Int = 1,
+        pageSize: Int = 250
     ) throws -> URLRequest {
-        var urlComponents = URLComponents(string: baseURL + endpoint)
-        urlComponents?.queryItems = queryItems
+        let urlComponents = endpoint.urlComponents(baseURL: baseURL, page: page, pageSize: pageSize)
         guard let url = urlComponents?.url else {
             throw TCGNetworkError.invalidURL(endpoint: endpoint)
         }
@@ -80,12 +77,11 @@ public class TCGAPIService {
 
     // Helper function to perform data task and decode response
     private func fetchData<T: Codable>(
-        endpoint: String,
-        queryItems: [URLQueryItem]? = nil,
+        endpoint: TCGEndpoint,
         decodeType: T.Type
     ) async throws -> T {
-        let request = try createRequest(endpoint: endpoint, queryItems: queryItems)
-        
+        let request = try createRequest(endpoint: endpoint)
+ 
         let (data, response): (Data, URLResponse)
         do {
             (data, response) = try await session.data(for: request)

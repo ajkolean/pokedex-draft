@@ -1,10 +1,10 @@
 import Foundation
 
 enum TCGNetworkError: Error {
-    case invalidURL(endpoint: String)
-    case badServerResponse(endpoint: String, statusCode: Int)
-    case noData(endpoint: String)
-    case decodingError(endpoint: String, context: DecodingError.Context)
+    case invalidURL(endpoint: TCGEndpoint)
+    case badServerResponse(endpoint: TCGEndpoint, statusCode: Int)
+    case noData(endpoint: TCGEndpoint)
+    case decodingError(endpoint: TCGEndpoint, context: DecodingError.Context)
 
     var localizedDescription: String {
         switch self {

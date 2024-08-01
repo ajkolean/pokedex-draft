@@ -5,7 +5,7 @@ import PokemonDataStoreClientInterface
 
 extension DataStoreClient: @retroactive DependencyKey {
     public static let liveValue: DataStoreClient = {
-        let dataStore = DataStore.shared
+        let dataStore = DataStore.test
         return DataStoreClient(
             fetchPokemonSummaryList: { try await dataStore.fetchPokemonSummaryList() },
             savePokemonSummaries: { try await dataStore.savePokemonSummaries($0) },
